@@ -1,0 +1,47 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<head>
+	<meta name="description" content="Directing Template">
+    <meta name="keywords" content="Directing, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <!-- css引用 -->
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/front-customer-end/member/css/font-awesome.min.css" type="text/css">
+  
+    <!-- 自定義的css -->
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/front-customer-end/member/css/Header_Footer.css" type="text/css">
+    <link rel="icon" href="<%=request.getContextPath() %>/front-customer-end/member/img/favicon.ico" type="image/x-icon">
+
+</head>
+<body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+        <img class="loaderpic" src="<%=request.getContextPath() %>/front-customer-end/member/img/logo-07.png" alt="">
+    </div>
+    <!-- ===========================================Header====================================== -->
+    <header class="header">
+        <div class="header__logo">
+            <a href="./index.html"><img src="<%=request.getContextPath() %>/front-customer-end/member/img/logo.png" alt=""></a>
+        </div>
+        </div>
+        <div class="header__nav">
+            <nav class="header__menu mobile-menu">
+                <ul>
+                    <li><a href="<%=request.getContextPath() %>/front-customer-end/member/memLogin.jsp" id="to_position">會員專區</a>
+                    	<ul class="dropdown">
+                            <li><a href="<%=request.getContextPath() %>/front-customer-end/member/memLogin.jsp">會員登入</a></li>
+                            <li><a href="<%=request.getContextPath() %>/front-customer-end/member/memLogin.jsp">會員註冊</a></li>
+                            <li><a href="<%=request.getContextPath() %>/front-customer-end/member/memUpdate.jsp">個人資料與修改</a></li>
+                            <li><a href="<%=request.getContextPath() %>/front-customer-end/member/memHistory.jsp">訂單查詢與評分</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            <div class="header__menu__right">
+                <a href='<%=request.getContextPath() %>/member/member.do?action=logout' class="login-btn" title="會員登出"><i class="fa fa-user"></i></a>
+            </div>
+        </div>
+        </div>
+    </header>

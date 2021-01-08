@@ -1,0 +1,120 @@
+ <meta charset="UTF-8">
+ <%@page pageEncoding="UTF-8"%>
+    <meta name="description" content="Directing Template">
+    <meta name="keywords" content="Directing, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>非食不可後臺管理頁面</title>
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/back-end/emp/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/back-end/emp/css/font-awesome.min.css" type="text/css">
+    <!-- 自訂新增 -->
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/back-end/emp/css/back_system/backStyle.css" type="text/css">
+    <style type="text/css">
+        div.top-banner {
+            height: 70px;
+            width: 100vw;
+            background-color: rgb(34, 39, 54);
+        }
+        .banner-div {
+            padding-top: 10px;
+            padding-left: 10px;
+            height: 60px;
+            float: left;
+        }
+        .login-icon {
+            float: right;
+        }
+        .banner-div img {
+            max-height: 100%;
+        }
+        .login-icon a i {
+            font-size: 30px;
+        }
+        .login-icon {
+            padding-top: 20px;
+        }
+        .fa-user:before {
+            color: white;
+        }
+        .fa-user{
+			margin-right: 50px;
+		}
+    </style>
+</head>
+
+<body class="ov-hid">
+    <!-- Page Preloder -->
+    <!-- <div id="preloder">
+        <div class="loader"></div>
+    </div> -->
+    <!-- Header Section Begin -->
+    <header class="header">
+        <div class="top-banner">
+            <div class="banner-div">
+                <img class="banner" src="<%=request.getContextPath()%>/back-end/emp/img/logo-04.png" alt="">
+            </div>
+            <div class="login-icon">
+                <a href="#" class="login-btn" title="登出"><i class="fa fa-user"></i></a>
+            </div>
+        </div>
+    </header>
+    <!-- Header Section End -->
+    <!-- Sidebar Begin -->
+    <div class="filter nice-scroll">
+        <div class="dropdown_area">
+            <button class="btn btn-secondary" type="button">
+                員工管理
+            </button>
+            <div class="dropdown_content">
+                <a id="test" class="dropdown-item" href="<%=request.getContextPath()%>/back-end/emp/back_emplist.jsp">員工列表</a>
+                <a class="dropdown-item" href="#">員工權限管理</a>
+            </div>
+        </div>
+        <div class="dropdown_area">
+            <button class="btn btn-secondary" type="button">
+                會員管理
+            </button>
+            <div class="dropdown_content">
+                <a class="dropdown-item" href="<%=request.getContextPath() %>/back-end/member/mem_back.jsp">一般會員管理</a>
+            </div>
+        </div>
+        <div class="dropdown_area">
+            <button class="btn btn-secondary" type="button">
+                審核管理
+            </button>
+            <div class="dropdown_content">
+                <a class="dropdown-item" href="#">店家管理</a>
+                <a class="dropdown-item" href="#">店家審核</a>
+                <a class="dropdown-item" href="#">商品上架審核</a>
+            </div>
+        </div>
+        <div class="dropdown_area">
+            <button class="btn btn-secondary" type="button">
+                檢舉管理
+            </button>
+            <div class="dropdown_content">
+                <a class="dropdown-item" href="#">待審核</a>
+                <a class="dropdown-item" href="<%=request.getContextPath()%>/back-end/emp/report/back_reportlist.jsp">檢舉紀錄</a>
+            </div>
+        </div>
+        <div class="dropdown_area">
+            <button class="btn btn-secondary" type="button">
+                商品管理
+            </button>
+            <div class="dropdown_content">
+                <a class="dropdown-item" href="#">商品規格管理</a>
+            </div>
+        </div>
+        <div class="dropdown_area">
+            <button class="btn btn-secondary" type="button">
+                帳務管理
+            </button>
+            <div class="dropdown_content">
+                <a class="dropdown-item" href="#">帳務歷史記錄查詢</a>
+                <a class="dropdown-item" href="#">帳務歷史記錄查詢</a>
+            </div>
+        </div>
+    </div>

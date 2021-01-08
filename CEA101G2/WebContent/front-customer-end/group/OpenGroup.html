@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>我要揪團</title>
+    <!-- ↑↑↑↑請記得修改title為自己製作頁面的名稱↑↑↑ -->
+    <!-- css引用 -->
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/Header_Footer.css" type="text/css">
+    <!-- 自訂 -->
+    <link rel="stylesheet" href="css/OpenGroup.css" type="text/css">
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    <!-- <div id="preloder">
+        <div class="loader"></div>
+        <img class="loaderpic" src="img/logo-07.png" alt="">
+    </div> -->
+    <!-- header -->
+    <header class="header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3 col-md-3">
+                    <div class="header__logo">
+                        <a href="./index.html"><img src="img/logo.png" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-9">
+                    <div class="header__nav">
+                        <nav class="header__menu mobile-menu">
+                            <ul>
+                                <li><a href="#position" id="to_position">平台緣起</a>
+                                </li>
+                                <li><a href="./blog.html">會員專區</a>
+                                    <ul class="dropdown">
+                                        <li><a href="./blog-details.html">我的行事曆</a></li>
+                                        <li><a href="./blog-details.html">我要加值</a></li>
+                                        <li><a href="./blog-details.html">我最愛的餐廳</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#">我要揪團</a>
+                                    <ul class="dropdown">
+                                        <li><a href="togetherList.html">瀏覽揪團</a></li>
+                                        <li><a href="#">我的揪團</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#">店家專區</a>
+                                    <ul class="dropdown">
+                                        <li><a href="./about.html">店家資料管理</a></li>
+                                        <li><a href="./blog-details.html">我的行事曆</a></li>
+                                        <li><a href="./blog-details.html">商店管理</a></li>
+                                        <li><a href="./blog-details.html">我的帳務</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </nav>
+                        <div class="header__menu__right">
+                            <a href="#" class="primary-btn" title="註冊會員"><i class="fa fa-plus"></i>加入我們</a>
+                            <a href="#" class="login-btn" title="我要登入"><i class="fa fa-user"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="mobile-menu-wrap"></div>
+        </div>
+    </header>
+    <!-- header end-->
+    <section>
+        <div class="main">
+            <form>
+                <div class="groupForm">
+                    <h3> 填寫揪團資料 <i class="fas fa-pencil-alt"></i></h3>
+                    <div class="formDetail">
+                        <div class="rest_img">
+                            <img src="http://lorempixel.com/400/400/food/" alt="">
+                        </div>
+                        <div class="diyForm">
+                            <!-- 隱藏欄位，把值帶到資料庫，若不需要就刪掉↓ -->
+                            <input type="text" value="團主名字" style=display:none>
+                            <div>
+                                <label>開團時間：</label><span value="start_date" id="start_date"></span></div>
+                            <div>
+                                <label>結團時間：</label><input type="date" id="end_date">
+                            </div>
+                            <div>
+                                <label>所在地區：</label>
+                                <select id="addr">
+                                    <option value="">請選擇地區</option>
+                                    <option value="">台北市</option>
+                                    <option value="">新北市</option>
+                                    <option value="">桃園市</option>
+                                    <option value="">台中市</option>
+                                    <option value="">台南市</option>
+                                    <option value="">高雄市</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label>餐廳名稱：</label>
+                                <input type="text" placeholder="請輸入餐廳名稱" id="store_name">
+                            </div>
+                            <div><label>揪團分類：</label>
+                                <input type="radio" value="0" id="public" name="gp_kind" checked><label for="public">公開</label>
+                                <input type="radio" value="1" id="private" name="gp_kind"><label for="private">私密</label></div>
+                            <div>
+                                <label>用餐時間：</label><input type="date" id="dining_date">
+                            </div>
+                            <div>
+                                <label>參團人數：</label>
+                                <span class="memcount">最少</span>
+                                <select id="mem_least">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select><span>人</span>
+                                <span class="memcount">最多</span>
+                                <select id="mem_limit">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                    <option>7</option>
+                                    <option>8</option>
+                                    <option>9</option>
+                                    <option>10</option>
+                                </select><span>人</span>
+                            </div>
+                            <div id="group_memo"><label>揪團簡介：</label>
+                                <textarea id="gp_info" placeholder="最多輸入50個文字" maxlength="50" value="gp_info"></textarea>
+                            </div>
+                            <div id="gpbtn">
+                                <input type="submit" value="送出" id="groupSend">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+    <!-- footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer__about">
+                        <div class="footer__about__logo">
+                            <a href="./index.html"><img src="img/logo-06.png" alt=""></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 offset-lg-1 col-md-6">
+                    <div class="footer__address">
+                        <ul>
+                            <li>
+                                <span>Call Us:</span>
+                                <p>(+12) 345-678-910</p>
+                            </li>
+                            <li>
+                                <span>Email:</span>
+                                <p>info.colorlib@gmail .com</p>
+                            </li>
+                            <li>
+                                <span>Fax:</span>
+                                <p>(+12) 345-678-910</p>
+                            </li>
+                            <li>
+                                <span>Connect Us:</span>
+                                <div class="foote -->r__social">
+                                    <img src="img/icon/iconfinder_46-facebook_104458.png">
+                                    <img src="img/icon/iconfinder_Instagram_1298747.png">
+                                    <img src="img/icon/iconfinder_Twitter_570625.png">
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="footer__copyright">
+                            <div class="footer__copyright__text">
+                                <p>
+                                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                    Copyright &copy;<script>
+                                    document.write(new Date().getFullYear());
+                                    </script> All rights reserved | We are Group2 CEA_101 <i class="fa fa-heart" aria-hidden="true"></i> I appreciate that we are the "team".
+                                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </footer>
+    <!-- footer end 以上內容待置換-->
+    <!-- JS引用 -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/bootstrap.bundle.js"></script>
+    <!-- 自訂 -->
+    <script src="js/Preloader.js"></script>
+    <!-- 神的指示，感謝輯神 -->
+    <script>
+    window.addEventListener("scroll", function() {
+        let opac = "rgba(34, 39, 54," + ((window.scrollY + 62.5) / 125).toString() + ")";
+        $(".header").css("background-color", opac);
+    });
+    </script>
+    <script>
+    // 開團=今天
+    var Today = new Date();
+
+    document.getElementById('start_date').innerHTML = Today.getFullYear() + " 年 " + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日";
+
+    // 結團只能選今天的日期加七天
+    function convertToISO(timebit) {
+        // remove GMT offset
+        timebit.setHours(0, -timebit.getTimezoneOffset(), 0, 0);
+        // format convert and take first 10 characters of result
+        var isodate = timebit.toISOString().slice(0, 10);
+        return isodate;
+    }
+
+    var end_date = document.getElementById('end_date');
+    var currentdate = new Date();
+    end_date.min = convertToISO(currentdate);
+    end_date.placeholder = end_date.min;
+    var futuredate = new Date();
+    // go forward 7 days into the future
+    futuredate.setDate(futuredate.getDate() + 7);
+    end_date.max = convertToISO(futuredate);
+    </script>
+    <!-- 神的指示，感謝輯神 -->
+</body>
+
+</html>

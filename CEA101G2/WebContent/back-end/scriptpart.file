@@ -1,0 +1,10 @@
+	<script src="<%=request.getContextPath()%>/back-end/emp/js/jquery-3.3.1.min.js"></script>
+    <script src="<%=request.getContextPath()%>/back-end/emp/js/bootstrap.bundle.min.js"></script>
+    <script src="<%=request.getContextPath()%>/back-end/emp/js/main.js"></script>
+    
+    <!-- 自訂新增 -->
+    <script>
+        $(".btn").on("click", function() {
+            $(this).next().slideToggle(300); //500是速度，可設定
+        });
+    </script>

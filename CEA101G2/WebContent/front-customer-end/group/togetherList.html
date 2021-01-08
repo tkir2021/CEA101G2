@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>瀏覽揪團</title>
+    <!-- ↑↑↑↑請記得修改title為自己製作頁面的名稱↑↑↑ -->
+    <!-- css引用 -->
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/Header_Footer.css" type="text/css">
+    <!-- 自訂 -->
+    <link rel="stylesheet" href="css/togetherList.css" type="text/css">
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    <!-- <div id="preloder">
+        <div class="loader"></div>
+        <img class="loaderpic" src="img/logo-07.png" alt="">
+    </div> -->
+    <!-- header -->
+    <header class="header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3 col-md-3">
+                    <div class="header__logo">
+                        <a href="./index.html"><img src="img/logo.png" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-9">
+                    <div class="header__nav">
+                        <nav class="header__menu mobile-menu">
+                            <ul>
+                                <li><a href="#position" id="to_position">平台緣起</a>
+                                </li>
+                                <li><a href="./blog.html">會員專區</a>
+                                    <ul class="dropdown">
+                                        <li><a href="./blog-details.html">我的行事曆</a></li>
+                                        <li><a href="./blog-details.html">我要加值</a></li>
+                                        <li><a href="./blog-details.html">我最愛的餐廳</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#">我要揪團</a>
+                                    <ul class="dropdown">
+                                        <li><a href="togetherList.html">瀏覽揪團</a></li>
+                                        <li><a href="#">我的揪團</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#">店家專區</a>
+                                    <ul class="dropdown">
+                                        <li><a href="./about.html">店家資料管理</a></li>
+                                        <li><a href="./blog-details.html">我的行事曆</a></li>
+                                        <li><a href="./blog-details.html">商店管理</a></li>
+                                        <li><a href="./blog-details.html">我的帳務</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </nav>
+                        <div class="header__menu__right">
+                            <a href="#" class="primary-btn" title="註冊會員"><i class="fa fa-plus"></i>加入我們</a>
+                            <a href="#" class="login-btn" title="我要登入"><i class="fa fa-user"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="mobile-menu-wrap"></div>
+        </div>
+    </header>
+    <!-- header end-->
+    <section>
+        <div id="togethereat">
+            <div class="tabs">
+                <div class="tab-2">
+                    <label for="tab2-1">
+                        <h4>公開揪團</h4>
+                    </label>
+                    <input id="tab2-1" name="tabs-two" type="radio" checked="checked">
+                    <div>
+                        <div class="togetherList">
+                            <div class="groupList">
+                                <div class="groupPic">
+                                    <img src="http://lorempixel.com/350/350/food/" alt="">
+                                </div>
+                                <div class="groupinfo">
+                                    <form>
+                                        <div class="groupTime">
+                                            <h6>開團時間：<span class="groupStarting">2020-11-15 00:00</span></h6>
+                                        </div>
+                                        <div>
+                                            <h4 class="groupRestaurant">師傅海鮮餐廳</h4>
+                                        </div>
+                                        <div>
+                                            <h5>主揪：<span class="groupLeader">小吳</span>
+                                            </h5>
+                                        </div>
+                                        <div>用餐時間：<span class="groupDate">2020-12-24 18:00</span></div>
+                                        <div>結團時間：<span class="groupDeadline">2020-12-01 12:00</span></div>
+                                        <div>目前人數：<span class="groupPeople">8人</span></div>
+                                        <div class="goButton">
+                                            <input type="submit" value="我要參加" class="joinGroup">
+                                            <a href="groupMore.html" class="groupDesc">詳情</a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="groupList">
+                                <div class="groupPic">
+                                    <img src="http://lorempixel.com/350/350/food/" alt="">
+                                </div>
+                                <div class="groupinfo">
+                                    <form>
+                                        <div class="groupTime">
+                                            <h6>開團時間：<span class="groupStarting">2020-11-15 00:00</span></h6>
+                                        </div>
+                                        <div>
+                                            <h4 class="groupRestaurant">夏慕尼</h4>
+                                        </div>
+                                        <div>
+                                            <h5>主揪：<span class="groupLeader">何神</span>
+                                            </h5>
+                                        </div>
+                                        <div>用餐時間：<span class="groupDate">2021-01-22 18:00</span></div>
+                                        <div>結團時間：<span class="groupDeadline">2020-12-31 12:00</span></div>
+                                        <div>目前人數：<span class="groupPeople">5人</span></div>
+                                        <div class="goButton">
+                                            <input type="submit" value="我要參加" class="joinGroup">
+                                            <a href="#" class="groupDesc">詳情</a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="groupList">
+                                <div class="groupPic">
+                                    <img src="http://lorempixel.com/350/350/food/" alt="">
+                                </div>
+                                <div class="groupinfo">
+                                    <form>
+                                        <div class="groupTime">
+                                            <h6>開團時間：<span class="groupStarting">2020-11-17 00:00</span></h6>
+                                        </div>
+                                        <div>
+                                            <h4 class="groupRestaurant">無限便當</h4>
+                                        </div>
+                                        <div>
+                                            <h5>主揪：<span class="groupLeader">炎柱</span>
+                                            </h5>
+                                        </div>
+                                        <div>用餐時間：<span class="groupDate">2021-02-29 00:00</span></div>
+                                        <div>結團時間：<span class="groupDeadline">2020-12-31 12:00</span></div>
+                                        <div>目前人數：<span class="groupPeople">1人</span></div>
+                                        <div class="goButton">
+                                            <input type="submit" value="我要參加" class="joinGroup">
+                                            <a href="#" class="groupDesc">詳情</a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="groupList">
+                                <div class="groupPic">
+                                    <img src="http://lorempixel.com/350/350/food/" alt="">
+                                </div>
+                                <div class="groupinfo">
+                                    <form>
+                                        <div class="groupTime">
+                                            <h6>開團時間：<span class="groupStarting">2020-11-18 08:05</span></h6>
+                                        </div>
+                                        <div>
+                                            <h4 class="groupRestaurant">深海大鳳梨</h4>
+                                        </div>
+                                        <div>
+                                            <h5>主揪：<span class="groupLeader">海綿寶寶</span>
+                                            </h5>
+                                        </div>
+                                        <div>用餐時間：<span class="groupDate">2020-12-01 18:00</span></div>
+                                        <div>結團時間：<span class="groupDeadline">2020-11-20 12:00</span></div>
+                                        <div>目前人數：<span class="groupPeople">2人</span></div>
+                                        <div class="goButton">
+                                            <input type="submit" value="我要參加" class="joinGroup">
+                                            <a href="#" class="groupDesc">詳情</a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="groupList">
+                                <div class="groupPic">
+                                    <img src="http://lorempixel.com/350/350/food/" alt="">
+                                </div>
+                                <div class="groupinfo">
+                                    <form>
+                                        <div class="groupTime">
+                                            <h6>開團時間：<span class="groupStarting">2020-11-20 00:00</span></h6>
+                                        </div>
+                                        <div>
+                                            <h4 class="groupRestaurant">Never Stop梅亭</h4>
+                                        </div>
+                                        <div>
+                                            <h5>主揪：<span class="groupLeader">萬哥</span>
+                                            </h5>
+                                        </div>
+                                        <div>用餐時間：<span class="groupDate">2020-11-21 12:00</span></div>
+                                        <div>結團時間：<span class="groupDeadline">2020-11-20 13:00</span></div>
+                                        <div>目前人數：<span class="groupPeople">5人</span></div>
+                                        <div class="goButton">
+                                            <input type="submit" value="我要參加" class="joinGroup">
+                                            <a href="#" class="groupDesc">詳情</a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-2">
+                    <label for="tab2-2">
+                        <h4>私密揪團</h4>
+                    </label>
+                    <input id="tab2-2" name="tabs-two" type="radio">
+                    <div>
+                        <h4>Tab Two</h4>
+                        <p>Quisque sit amet turpis leo. Maecenas sed dolor mi. Pellentesque varius elit in neque ornare commodo ac non tellus. Mauris id iaculis quam. Donec eu felis quam. Morbi tristique lorem eget iaculis consectetur. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean at tellus eget risus tempus ultrices. Nam condimentum nisi enim, scelerisque faucibus lectus sodales at.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer__about">
+                        <div class="footer__about__logo">
+                            <a href="./index.html"><img src="img/logo-06.png" alt=""></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 offset-lg-1 col-md-6">
+                    <div class="footer__address">
+                        <ul>
+                            <li>
+                                <span>Call Us:</span>
+                                <p>(+12) 345-678-910</p>
+                            </li>
+                            <li>
+                                <span>Email:</span>
+                                <p>info.colorlib@gmail .com</p>
+                            </li>
+                            <li>
+                                <span>Fax:</span>
+                                <p>(+12) 345-678-910</p>
+                            </li>
+                            <li>
+                                <span>Connect Us:</span>
+                                <div class="foote -->r__social">
+                                    <img src="img/icon/iconfinder_46-facebook_104458.png">
+                                    <img src="img/icon/iconfinder_Instagram_1298747.png">
+                                    <img src="img/icon/iconfinder_Twitter_570625.png">
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="footer__copyright">
+                            <div class="footer__copyright__text">
+                                <p>
+                                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                    Copyright &copy;<script>
+                                    document.write(new Date().getFullYear());
+                                    </script> All rights reserved | We are Group2 CEA_101 <i class="fa fa-heart" aria-hidden="true"></i> I appreciate that we are the "team".
+                                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </footer>
+    <!-- footer end 以上內容待置換-->
+    <!-- JS引用 -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/bootstrap.bundle.js"></script>
+    <!-- 自訂 -->
+    <script src="js/Preloader.js"></script>
+    <!-- 神的指示，感謝輯神 -->
+    <script>
+    window.addEventListener("scroll", function() {
+        let opac = "rgba(34, 39, 54," + ((window.scrollY + 62.5) / 125).toString() + ")";
+        $(".header").css("background-color", opac);
+    });
+    </script>
+    <!-- 神的指示，感謝輯神 -->
+</body>
+
+</html>

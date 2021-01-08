@@ -1,0 +1,87 @@
+        code,
+        pre {
+            color: #c0392b;
+            font-family: Inconsolata, "Andale Mono", Andale, monowidth;
+            background-color: #ecf0f1;
+            border: 1px solid #dfdfdf;
+            border-radius: 2px;
+        }
+
+        code {
+            padding: 2px 6px;
+        }
+
+        pre {
+            padding: 12px;
+            line-height: 1.6;
+        }
+        pre strong {
+            color: #444444;
+            font-weight: normal;
+        }
+
+        table {
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        .tbl-header {
+            background-color: #f8f9fa;
+            border: 1px solid darkgrey;
+        }
+
+        .tbl-content {
+            height: 300px;
+            overflow-x: scroll;
+            margin-top: 0px;
+            border: 1px solid darkgrey;
+        }
+
+        th {
+            padding: 20px 15px;
+            text-align: center;
+            font-weight: 500;
+            font-size: 12px;
+            color: #e74c3c;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 15px;
+            text-align: center;
+            vertical-align: middle;
+            font-weight: 300;
+            font-size: 12px;
+            color: darkgrey;
+            border-bottom: solid 1px rgba(255, 255, 255, 0.1);
+        }
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        /* demo styles */
+        body {
+            background: white;
+            font-family: "Roboto", sans-serif;
+        }
+
+        #panel-1, #panel-2, #panel-3 {
+            margin: 24px;
+        }
+
+        /* for custom scrollbar for webkit browser*/
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        }
+        
+        .fa-user{
+			margin-right: 50px;
+		}

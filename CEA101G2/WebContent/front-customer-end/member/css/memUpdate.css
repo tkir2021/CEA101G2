@@ -1,0 +1,162 @@
+        .header {
+            margin-bottom: 30px;
+        }
+        
+        footer{
+        top:0px;
+        }
+
+        .main h2 {
+            width: 60%;
+            margin: 0 auto;
+            text-align: center;
+            /*background-color: #E5DCCB;*/
+            color: #f03250;
+            padding: 10px;
+            font-weight: 1000;
+            letter-spacing: 4px;
+            /*border-radius: 10px;*/
+            /*box-shadow: 0px 7px 30px 10px #cccccc47;*/
+
+
+        }
+        .show {
+            /*border: 2px solid #ff4646;*/
+            width: 20%;
+            margin: 0 auto;
+            /*color: white;*/
+            color: red;
+            font-weight: bold;
+            text-align: center;
+            line-height: 1.5;
+            /*background-color: #ff4646;*/
+
+        }
+
+        .show ul {
+            list-style: none;
+            border: 2px solid #ff4646;
+            border-radius: 5px;
+            padding: 10px;
+        }
+        .show li {
+            font-size: 16px;
+            text-align: left;
+        }
+
+        .memUpForm {
+            /*border-bottom: 1px solid gray;*/
+            /*background-color: #E5DCCB;*/
+            background-color: #fff;
+            padding: 30px;
+            margin: 30px auto;
+            width: 70%;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0px 7px 30px 0px #ccccccbd;
+            font-size: 18px;
+        }
+
+        .memUpForm h3 {
+            margin-top: 10px;
+            margin-bottom: 30px;
+            font-weight: 1000;
+            color: #f03250;
+            letter-spacing: 5px;
+        }
+
+        .formDetail {
+            display: flex;
+            justify-content: center;
+        }
+
+        .diyForm {
+            width: 40%;
+            text-align: left;
+            padding-left: 60px;
+            border-left: 3px solid #f03250;
+        }
+
+        .displayImg {
+            width: 40%;
+            overflow: hidden;
+            margin-right: 25px;
+            display: flex;
+            align-self: center;
+        }
+
+        .displayImg img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0.5px 0.5px 0px 0.2px #0d0d0d3d;
+        }
+
+        .memcount {
+            margin-right: 5px;
+            margin-left: 5px;
+        }
+
+        #mem_least,
+        #mem_limit {
+            margin-right: 10px;
+            border-style: none;
+            border-bottom: 1px solid lightgray;
+            border-radius: 3px;
+            color: #757575;
+        }
+
+        #memUpSend, #change {
+            /*margin: 20px 0;*/
+            width: 120px;
+            height: 45px;
+            background-color: #f03250;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 20px;
+            margin: 0 30px;
+            cursor: pointer;
+
+        }
+
+        #public,
+        #private {
+            margin: 0 5px;
+        }
+
+        #group_memo {
+            display: flex;
+            align-items: flex-start;
+        }
+
+        #memUpBtn {
+            display: flex;
+            margin: 30px 0;
+            text-align: center;
+            justify-content: space-around;
+        }
+
+        input[disabled], input:disabled, input.disabled {
+            color: #fff;
+            -webkit-text-fill-color: #333;
+            -webkit-opacity: 1;
+            opacity: 1;
+        }
+
+        input {
+            font-size: 18px;
+            border-style: none;
+        }
+        input.on {
+            border: 1px solid black;
+
+        }
+        .diyForm div {
+            margin-top: 10px;
+            border-bottom: 1px solid #f1ae89;
+        }
+
+        .diyForm div:last-child,
+        .diyForm div:nth-child(9) {
+            border-style: none;
+        }

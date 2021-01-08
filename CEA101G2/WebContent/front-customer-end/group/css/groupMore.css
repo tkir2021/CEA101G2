@@ -1,0 +1,242 @@
+/*#b1a389*/
+
+.togetherGroup {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.groupMore {
+    /*color: #30475E;#E5DCCB*/
+
+}
+
+
+
+.groupMore h3 {
+    /*color: #8b0d0d;*/
+    color: #D3402A;
+    font-weight: 600;
+    /*width: 300px;*/
+    /*background-color: #E5DCCB;*/
+    padding: 5px;
+    /*box-shadow: 0px 7px 30px 0px #ccccccbd;*/
+    text-align: center;
+    letter-spacing: 4px;
+}
+
+
+
+.groupMore,
+.group,
+.joinMem {
+    width: 70%;
+    margin: 0 auto 20px auto;
+}
+
+form div {
+    margin-top: 20px;
+}
+
+form div:first-child {
+    margin: 0;
+}
+
+.fa-users {
+    /*font-size: 40px;*/
+    margin: 20px;
+
+}
+
+.groupList {
+    /*border: 1px solid blue;*/
+    border-radius: 20px;
+    width: 100%;
+    display: flex;
+    padding: 30px;
+    /*background-color: #eee;*/
+    background-color: white;
+    margin: 30px 0;
+    justify-content: space-around;
+    position: relative;
+    /*overflow: hidden;*/
+    box-shadow: 0px 7px 30px 0px #ccccccbd;
+    overflow: hidden;
+}
+
+.groupRestaurant {
+    color: #f03250;
+    font-weight: 600;
+}
+
+.fa-utensils {
+    margin-right: 10px;
+}
+
+.groupPic {
+    /*border: 1px solid red;*/
+    width: 40%;
+    overflow: hidden;
+}
+
+.groupPic img {
+    max-width: 100%;
+    border-radius: 5px;
+}
+
+.groupinfo {
+    /*border: 1px solid orange;*/
+    width: 50%;
+}
+
+.LeaderPic {
+    border-radius: 50%;
+    max-width: 40px;
+    /*border: 1px solid white;*/
+}
+
+
+.TalkTo {
+    /*border: 1px solid #f03250;*/
+    border-radius: 10px;
+    padding: 10px, 10px, 10px, 0px;
+    /*background-color: #f03250;*/
+    /*color: #f03250;*/
+    /*margin-top: 5px;*/
+    display: flex;
+    /*justify-content: flex-start;*/
+    /*box-shadow: 0px 7px 30px 0px #ccccccbd;*/
+    /*box-shadow: 0px 7px 30px 0px #eee;*/
+    width: 400px;
+}
+
+
+.TalkTo h6 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /*color: #fff;*/
+    color: #9f9f9f;
+    font-weight: 1000;
+    border-right: 2px solid #f03250;
+    /*padding-right: 10px;*/
+    width: 70px;
+}
+
+.groupLeader {
+    text-align: center;
+}
+
+.TalkContent {
+    margin-bottom: 0;
+    padding: 10px;
+    /*color: #fff;*/
+    color: #909090;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+}
+
+
+
+.goButton {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.joinGroup {
+    width: 120px;
+    height: 45px;
+    background-color: #f03250;
+    border: none;
+    border-radius: 5px;
+    color: white;
+}
+
+.joinMem {
+    /*border: 1px solid #f03250;*/
+    margin-top: 100px;
+    margin-bottom: 100px;
+    /*border-radius: 5px;*/
+
+}
+
+.joinMem h3 {
+    /*   background-color: #E5DCCB;
+    width: 300px;
+    color: white;*/
+    /*color: rgb(173 128 26);*/
+    color: #D3402A;
+    font-weight: 800;
+    /*width: 300px;*/
+    /*background-color: #E5DCCB;*/
+    padding: 5px;
+    /*box-shadow: 0px 7px 30px 0px #ccccccbd;*/
+    text-align: center;
+    letter-spacing: 4px;
+}
+
+.fa-users {
+    /*font-size: 30px;*/
+    margin: 0px 0px 0px 20px;
+}
+
+.groupMember {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    /*justify-content: space-around;*/
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 10px;
+    margin-top: 30px;
+    /*border: 1px solid #f03250;*/
+    box-shadow: 0px 7px 30px 0px #cccccc47;
+}
+
+.memberInfo {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px 0;
+}
+
+.memberPic {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.memberPic img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    border-radius: 3px;
+}
+
+.level {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    top: -120px;
+    right: -100px;
+    background-color: #f03250;
+    color: white;
+    /*border-radius: 5px;*/
+    /*padding: 5px;*/
+    transform: rotate(45deg);
+}
+
+.level span {
+    position: absolute;
+    bottom: 10px;
+    left: 64px;
+    transform: rotate(-45deg);
+}
+
+.star_total {
+    bottom: 41px !important;
+    left: 93px !important;
+}

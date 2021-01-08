@@ -1,0 +1,151 @@
+        .header {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            z-index: 999;
+        }
+
+        .header__nav {
+            /*text-align: right;*/
+            /*padding: 30px 0;*/
+        }
+
+        .header__menu__right .login-btn {
+            font-size: 20px;
+            color: #ffffff;
+            height: 42px;
+            width: 42px;
+            border: 1px solid #ffffff;
+            border-radius: 50%;
+            line-height: 38px;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .listing {
+
+            width: 100%;
+            /*             height: 100%;
+            max-height: 100vh; */
+            padding: 0 40px;
+            /* padding-top: 120px; */
+            /* overflow-y: hidden; */
+            float: left;
+            /*測試框線*/
+            /*border: 1px solid red;*/
+        }
+
+        /*以下自行新增*/
+
+        /*把下拉顯示的內容先隱藏*/
+        .dropdown_content {
+            display: none;
+            border-radius: .25rem;
+            list-style: none;
+        }
+
+        /*按鈕與邊的距離*/
+
+        .dropdown_area {
+            text-align: center;
+        }
+
+        /*按鈕與按鈕間的距離*/
+        .btn {
+            margin: 18px;
+            font-size: 18px;
+        }
+
+        /*不懂為什麼a連結會連一起 所以改設block*/
+        .dropdown-item {
+            display: block;
+            width: 100%;
+            padding: .25rem 1.5rem;
+            color: #E74C3C;
+        }
+
+        .dropdown-item:hover {
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        .login-btn {
+            margin-right: 20px;
+        }
+
+        /*頁面上層列*/
+        .row {
+            height: 75px;
+            background-color: rgba(34, 39, 54, 1);
+        }
+
+        .banner {
+            max-width: 100%
+        }
+
+        .header__menu__right {
+            margin-top: 15px;
+            text-align: right;
+        }
+
+        /*頁面左區塊*/
+        .filter {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100%;
+            background: #ffffff;
+            padding: 100px 34px 30px 30px;
+            overflow-y: auto;
+            -webkit-box-shadow: 0px 5px 14px rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 5px 14px rgba(0, 0, 0, 0.1);
+            z-index: 99;
+        }
+
+        /*scroll樣式調整*/
+
+        .nice-scroll::-webkit-scrollbar-track {
+            /*-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.6);*/
+            /*background-color: white;*/
+            border-radius: 10px;
+        }
+
+        .nice-scroll::-webkit-scrollbar {
+            width: 10px;
+            background-color: #F5F5F5;
+        }
+
+        .nice-scroll::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            background-color: #FFF;
+            background-image: -webkit-linear-gradient(90deg,
+                rgba(34, 39, 54, 1) 0%,
+                rgba(34, 39, 54, 1) 25%,
+                transparent 100%,
+                rgba(34, 39, 54, 1) 75%,
+                transparent)
+        }
+
+        /*頁面右區塊*/
+        .ov-hid {
+            padding-left: 250px;
+        }
+
+        .btn-secondary {
+            background-color: rgba(34, 39, 54, 1);
+        }
+
+        iframe {
+            width: 100%;
+            height: 100vh;
+            border: none;
+        }
+        section{
+            /* overflow-y: hidden; */
+            height: 100%;
+            max-height: 100vh;
+            margin-top: 70px;
+            padding: 5px;
+        }

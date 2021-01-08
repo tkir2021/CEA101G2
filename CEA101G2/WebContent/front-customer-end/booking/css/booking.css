@@ -1,0 +1,63 @@
+        html, body {
+            background-color: #F6F6F6;
+            height: 100%;
+        }
+        footer {
+            background-color: white;
+            position: static;
+            width: 100%;
+            padding-top: 0px;
+            position: relative;
+            top: -100px;
+        }
+        section {
+            min-height: 100%;
+            padding-top: 10px;
+            padding-bottom: 50px;
+        }
+        .whiteback {
+            background-color: white;
+            width: 50em;
+            height: 30em;
+            text-align: center;
+            top: 50%;
+            left: 50%;
+            margin-left: 180px;
+            margin-bottom: 100px;
+        }
+        /* ---------------------------------------datepicker----------------------------------------*/
+        .bookingPart {
+            height: 330px;
+        }
+        .calendar {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            float: none;
+        }
+        /*日期小格*/
+        .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+            background: white;
+            text-align: center;
+            border: 0px;
+        }
+        /*當天日期、滑過去*/
+        .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight, .ui-state-default.ui-state-hover {
+            background: #f8f9fa;
+            border-radius: 60%;
+        }
+        /*兩邊的日曆表頭*/
+        .ui-datepicker-header.ui-widget-header.ui-helper-clearfix.ui-corner-right, .ui-corner-left {
+            background: rgb(34, 39, 54);
+        }
+        .ui-datepicker-title {
+            color: white;
+        }
+        /*被選擇的日期*/
+        .ui-state-default.ui-state-active {
+            background: #f03250;
+            border-radius: 60%;
+        }
+        .ui-widget {
+            font-family: "number_one";
+        }

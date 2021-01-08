@@ -1,0 +1,136 @@
+.header {
+    margin-bottom: 30px;
+}
+
+.main h2 {
+    width: 60%;
+    margin: 0 auto;
+    text-align: center;
+    /*background-color: #E5DCCB;*/
+    color: #f03250;
+    padding: 10px;
+    font-weight: 1000;
+    letter-spacing: 4px;
+    /*border-radius: 10px;*/
+    /*box-shadow: 0px 7px 30px 10px #cccccc47;*/
+
+
+}
+
+.groupForm {
+    /*border-bottom: 1px solid gray;*/
+    /*background-color: #E5DCCB;*/
+    background-color: #fff;
+    padding: 30px;
+    margin: 30px auto;
+    width: 70%;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0px 7px 30px 0px #ccccccbd;
+    font-size: 18px;
+
+
+}
+
+.groupForm h3 {
+    margin-top: 10px;
+    margin-bottom: 30px;
+    font-weight: 1000;
+    color: #f03250;
+    letter-spacing: 5px;
+}
+
+.formDetail {
+    display: flex;
+    justify-content: center;
+
+}
+
+.diyForm {
+    width: 40%;
+    text-align: left;
+    padding-left: 30px;
+    border-left: 3px solid #f03250;
+
+}
+
+
+.rest_img {
+    width: 40%;
+    overflow: hidden;
+    /*border-right: 1px solid #f03250;*/
+    padding-right: 30px;
+    display: flex;
+    align-self: center;
+}
+
+.rest_img img {
+    max-width: 100%;
+    border-radius: 10px;
+    box-shadow: 0.5px 0.5px 0px 0.2px #0d0d0d3d;
+}
+
+#end_date,
+#dining_date,
+#store_name,
+#gp_info,
+#addr {
+    width: 73%;
+    /*border-style: none;*/
+    border-radius: 3px;
+    /*border: 1px solid lightgray;*/
+    color: #757575;
+    border-style: none;
+    border-bottom: 1px solid lightgray;
+}
+
+#store_name {
+    border: 1px solid lightgray;
+}
+
+#gp_info {
+    resize: none;
+    height: 110px;
+    border: 1px solid lightgray;
+    overflow-y: hidden;
+}
+
+.memcount {
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+#mem_least,
+#mem_limit {
+    margin-right: 10px;
+    border-style: none;
+    border-bottom: 1px solid lightgray;
+    border-radius: 3px;
+    color: #757575;
+}
+
+#groupSend {
+    /*margin: 20px 0;*/
+    width: 120px;
+    height: 45px;
+    background-color: #f03250;
+    border: none;
+    border-radius: 5px;
+    color: white;
+
+}
+
+#public,
+#private {
+    margin: 0 5px;
+}
+
+#group_memo {
+    display: flex;
+    align-items: flex-start;
+}
+
+#gpbtn {
+    margin: 30px 0;
+    text-align: center;
+}

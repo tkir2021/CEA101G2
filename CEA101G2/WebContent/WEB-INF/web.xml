@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+	id="WebApp_ID" version="4.0">
+	<display-name>CEA101G2</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+
+	<servlet>
+		<servlet-name>LoginHandler</servlet-name>
+		<servlet-class>login.LoginHandler</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LoginHandler</servlet-name>
+		<url-pattern>/login/login.do</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>Group_Servlet</servlet-name>
+		<servlet-class>com.group.controller.Group_Servlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Group_Servlet</servlet-name>
+		<url-pattern>/group/group.do</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>Mem_DataServlet</servlet-name>
+		<servlet-class>com.mem.controller.Mem_DataServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Mem_DataServlet</servlet-name>
+		<url-pattern>/member/member.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>FavoriteServlet</servlet-name>
+		<servlet-class>com.favorite.controller.FavoriteServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FavoriteServlet</servlet-name>
+		<url-pattern>/favorite/favorite.do</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>Group_memServlet</servlet-name>
+		<servlet-class>com.group_mem.controller.Group_memServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Group_memServlet</servlet-name>
+		<url-pattern>/group_mem/group_mem.do</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>B_orderServlet</servlet-name>
+		<servlet-class>com.booking.controller.B_orderServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>B_orderServlet</servlet-name>
+		<url-pattern>/booking/booking.do</url-pattern>
+	</servlet-mapping>
+	
+
+	<servlet>
+		<servlet-name>Store_MemServlet</servlet-name>
+		<servlet-class>com.store.controller.Store_MemServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Store_MemServlet</servlet-name>
+		<url-pattern>/store/store.do</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>OrderMaster</servlet-name>
+		<servlet-class>com.ordermaster.controller.OrderMasterServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>OrderMaster</servlet-name>
+		<url-pattern>/ordermaster/ordermaster.do</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>OrderDetail</servlet-name>
+		<servlet-class>com.orderdetail.controller.OrderDetailServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>OrderDetail</servlet-name>
+		<url-pattern>/orderdetail/orderdetail.do</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>Mem_DataLoginForgetServlet</servlet-name>
+		<servlet-class>com.mem.controller.Mem_DataLoginForgetServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Mem_DataLoginForgetServlet</servlet-name>
+		<url-pattern>/member/LoginForget.do</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>EmpLoginCheckServlet</servlet-name>
+		<servlet-class>com.emp.controller.EmpLoginCheckServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>EmpLoginCheckServlet</servlet-name>
+		<url-pattern>/emplogin.do</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>EmpServlet</servlet-name>
+		<servlet-class>com.emp.controller.EmpServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>EmpServlet</servlet-name>
+		<url-pattern>/emp/emp.do</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+    	<servlet-name>ShoppingServlet</servlet-name>
+    	<servlet-class>com.shopping.controller.ShoppingServlet</servlet-class>
+  	</servlet>
+  	<servlet-mapping>
+    	<servlet-name>ShoppingServlet</servlet-name>
+    	<url-pattern>/shopping/shopping.do</url-pattern>
+  	</servlet-mapping>
+	
+
+
+
+	<!-- 以下為SetCharacterEncodingFilter的註冊 -->
+	<!--【以後不用再撰寫 req.setCharacterEncoding("UTF-8"); 這行程式碼於程式中了】 -->
+	<!-- Example filter to set character encoding on each request -->
+	<!-- Example filter mapping to apply the "SetCharacterEncodingFilter" filter 
+		to *all* requests processed by this web application -->
+	<filter>
+		<filter-name>setCharacterEncoding</filter-name>
+		<filter-class>filters.SetCharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>setCharacterEncoding</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>loginFilter</filter-name>
+		<filter-class>filters.LoginFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>loginFilter</filter-name>
+		<!-- <url-pattern>/select_page2_protected.jsp</url-pattern> -->
+		<url-pattern>/front-customer-end/member/memUpdate.jsp</url-pattern>
+		<url-pattern>/front-customer-end/member/memHistory.jsp</url-pattern>
+<!-- 		<url-pattern>/front-customer-end/member/memHistory_2.jsp</url-pattern> -->
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+		<dispatcher>ASYNC</dispatcher>
+	</filter-mapping>
+
+
+</web-app>
