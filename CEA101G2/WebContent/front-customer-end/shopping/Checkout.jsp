@@ -18,7 +18,7 @@
 	</tr></table><table style="margin: auto;">
 
 	<%  @SuppressWarnings("unchecked")
-		Vector<Food> buylist = (Vector<Food>) session.getAttribute("shoppingcart");
+		Vector<Food> buylist = (Vector<Food>) session.getAttribute("shoppingcheckout");
 		String amount =  (String) request.getAttribute("amount");
 	%>	
 	<%	for (int i = 0; i < buylist.size(); i++) {

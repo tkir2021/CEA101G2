@@ -29,7 +29,7 @@
 	
 %>
 
-<img src="<%= request.getContextPath() %>/front-customer-end/shopping/images/tomcat.gif"> <font size="+3">網路書店：（EShop.jsp）</font>
+<img src="<%= request.getContextPath() %>/front-customer-end/shopping/images/logo.png"> <font size="+3">網路書店：（EShop.jsp）</font>
 <hr>
 <table id="table-1">
   <tr> 

@@ -36,7 +36,7 @@
         		<th>儲值金額</th>
         		<th>儲值時間</th>
         	</tr>
-        	<c:forEach var="depositVO" items='${depositSvc.getOneMemDeposit("MM00000001")}' >
+        	<c:forEach var="depositVO" items="${depositSvc.getOneMemDeposit(mem_dataVO.getMem_no())}" >
         	<tr>
         		<td>${depositVO.getDeposit_no()}</td>
         		<td>${depositVO.getMem_no()}</td>

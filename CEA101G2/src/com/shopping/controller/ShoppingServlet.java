@@ -29,8 +29,8 @@ public class ShoppingServlet extends HttpServlet {
 		
 		@SuppressWarnings("unchecked")
 		List<Food> buylist = (Vector<Food>) session.getAttribute("shoppingcart");
-		String store_no = req.getParameter("store_no");
-		System.out.println(store_no);
+		String store_no = (String)session.getAttribute("store_no");
+		
 		String action = req.getParameter("action");
 		
 
@@ -124,12 +124,14 @@ public class ShoppingServlet extends HttpServlet {
 			orderMasterVO.setGive_star(0f);
 			
 			insterData(total, mem_dataVO, orderMasterVO, list);
-							
+			session.setAttribute("shoppingcheckout", session.getAttribute("shoppingcart"));
+			session.removeAttribute("shoppingcart");
 			/*********************購物車：insterData********************/
 			
 			String url = "/front-customer-end/shopping/Checkout.jsp";
 			RequestDispatcher rd = req.getRequestDispatcher(url);
 			rd.forward(req, res);
+
 		}
 	}
 
