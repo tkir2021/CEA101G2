@@ -74,4 +74,7 @@ public class B_orderService {
 	public List<B_orderVO> getAll() {
 		return dao.getAll();
 	}
+	public B_orderVO getPeople(String storeno, Date bookingdate,String timeperiod){
+		return dao.findByPrimaryKey3(storeno, bookingdate, timeperiod);		
+	}
 }

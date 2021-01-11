@@ -25,13 +25,13 @@
 			Food order = buylist.get(i);
 			String name = order.getName();
 			String food_no = order.getFood_no();
-			String store_no = order.getStore_no();
+// 			String store_no = order.getStore_no();
 			Integer price = order.getPrice();
 			Integer quantity = order.getQuantity();
 	%>
 	<tr>
 		<td width="200"><%=name%>     </td>
-		<td width="100"></td>
+		<td width="100"><%=food_no %> </td>
 		<td width="100"><%=price%>    </td>
 		<td width="100"><%=quantity%> </td>
 	</tr>
@@ -48,7 +48,7 @@
 </table>
        
        
-       <p><a href="<%=request.getContextPath()%>/front-customer-end/shopping/EShop.jsp"><font size="+1"> 是 否 繼 續 購 物</font></a>
+       <p><a href="<%=request.getContextPath()%>/index/index.jsp"><font size="+1">返回首頁</font></a>
 
 </body>
 </html>

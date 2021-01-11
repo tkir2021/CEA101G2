@@ -1,13 +1,20 @@
         //訂位的JS
 
         $(document).ready(function() {
-            $(".calendar").datepicker({
+        	//var tomorrow = new Date(today.getTime() + 24 * 60 * 60 * 1000); 
+        	$(".datepicker").datepicker({
                 numberOfMonths: 2,
                 dateFormat: "yy-mm-dd",
-                minDate: -20,
-                maxDate: "+1M +10D",
+               minDate : new Date(),
+                maxDate: "+30d",
+              // startDate: tomorrow,
+                beforeShowDay: noSomedays,
                 onSelect: function(date) {
-                    $(".bookingDate").val(date);
+                	$(".bookingDate").val(date);
                 }
-            });
+             });
         });
+       
+
+
+      

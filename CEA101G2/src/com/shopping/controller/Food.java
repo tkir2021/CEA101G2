@@ -3,25 +3,26 @@ package com.shopping.controller;
 public class Food implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	public Food() {
-		store_no = "";
+//		store_no = "";
 		food_no = "";
 		name = "";
 		price = 0;
 		quantity = 0;
 	}
 
-	private String store_no;
+//	private String store_no;
 	private String food_no;
 	private String name;
 	private Integer price;
 	private Integer quantity;
 	
-	public String getStore_no() {
-		return store_no;
-	}
-	public void setStore_no(String store_no) {
-		this.store_no = store_no;
-	}
+//	public String getStore_no() {
+//		return store_no;
+//	}
+//	public void setStore_no(String store_no) {
+//		this.store_no = store_no;
+//	}
+	
 	public String getFood_no() {
 		return food_no;
 	}
@@ -51,8 +52,7 @@ public class Food implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "BOOK [name=" + name +  ", publisher=" + ", price=" + price
-				+ ", quantity=" + quantity + "]";
+		return "Food [name=" + name +  ", food_no=" + food_no + ", quantity=" + quantity + "]";
 	}
 
 	@Override

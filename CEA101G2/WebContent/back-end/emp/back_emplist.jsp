@@ -14,11 +14,9 @@
 <%@include file="/back-end/leftbar.file"%>
 <head>
 <meta charset="UTF-8">
-<title></title>
+<title>員工列表</title>
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/back-end/emp/css/back_system/emp.css"
-	type=" text/css">
-
+	href="<%=request.getContextPath()%>/back-end/emp/css/back_system/emp.css" type=" text/css">
 </head>
 
 <body class="ov-hid">
@@ -60,16 +58,14 @@
 												<td>${empVO.emp_name}</td>
 												<td>${empVO.emp_date}</td>
 												<td>${empVO.emp_mail}</td>
-												<td class="emp_status"></td><!-- ${empVO.emp_status} -->
+												<td>${empVO.emp_status==1? '在職': '離職'}</td>
 												<td>
-													<form method="post"
-														action="<%=request.getContextPath()%>/emp/emp.do">
+													<form method="post"	action="<%=request.getContextPath()%>/emp/emp.do">
 														<div class="btn-group">
+														<input type="hidden" name="emp_no"  value="${empVO.emp_no}">
 															<button type="button" class="btn btn-primary"
-																id="editbtn" data-toggle="dropdown" aria-haspopup="true"
-																aria-expanded="false" data-toggle="modal"
-																data-target="#modalUpdate" style="margin: 0px">修改
-															</button>
+																data-toggle="modal" data-target="#modalUpdate"
+																style="margin: 0px" name="action" value="getOne_For_Update">Edit</button>
 														</div>
 													</form>
 
@@ -83,7 +79,7 @@
 						</div>
 					</div>
 				</div>
-				<!-- Modal -->
+				<!-- Modal add-->
 				<div class="modal fade" id="modalAdd" tabindex="-1" role="dialog"
 					aria-labelledby="exampleModalLabel" aria-hidden="true">
 					<div class="modal-dialog" role="document">
@@ -130,12 +126,13 @@
 						</div>
 					</div>
 				</div>
+				<!-- Update --> 	
 				<div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog"
 					aria-labelledby="exampleModalLabel" aria-hidden="true">
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h5 class="modal-title" id="exampleModalLabel">Modal update
+								<h5 class="modal-title" id="exampleModalLabel">Update
 									Employee</h5>
 								<button type="button" class="close" data-dismiss="modal"
 									aria-label="Close">
@@ -143,10 +140,10 @@
 								</button>
 							</div>
 							<div class="modal-body">
-								<form>
+								<form METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do">
 									<div class="form-group">
-										<label>Name</label> <input type="text" class="form-control"
-											v-model="updateEmployee.name">
+										<label>員工姓名</label> <input type="text" name="emp_name"
+											value="${empVO.emp_name}" class="form-control">
 									</div>
 									<div class="form-group">
 										<label>Salary</label> <input type="text" class="form-control"
@@ -173,10 +170,7 @@
 	<!-- Sidebar End -->
 	<%@ include file="/back-end/scriptpart.file"%>
 	<!-- 自訂新增 -->
-	<script>
-	
-	
-	</script>
+
 </body>
 
 

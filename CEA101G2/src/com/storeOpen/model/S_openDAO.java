@@ -11,8 +11,8 @@ import java.util.List;
 public class S_openDAO implements S_openDAO_interface {
 	String driver = "oracle.jdbc.driver.OracleDriver";
 	String url = "jdbc:oracle:thin:@localhost:1521:XE";
-	String userid = "BELLA";
-	String passwd = "BELLA";
+	String userid = "CEA101G2";
+	String passwd = "CEA101G2";
 
 	private static final String INSERT_STMT = "INSERT INTO STORE_OPEN(time_period,store_no)values(?,?)";
 //	private static final String UPDATE ="UPDATE STORE_OPEN SET time_period=? where STORE_NO = ?";

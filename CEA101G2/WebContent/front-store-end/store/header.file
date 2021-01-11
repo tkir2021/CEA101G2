@@ -1,0 +1,68 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Directing Template">
+    <meta name="keywords" content="Directing, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <!-- css引用 -->
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/front-store-end/store/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/front-store-end/store/css/Header_Footer.css" type="text/css">
+    <link rel="icon" href="<%=request.getContextPath() %>/front-store-end/store/img/favicon.ico" type="image/x-icon"> 
+     <style type="text/css">
+        .login-logout a:link {
+            color: white;
+        }
+	.login-logout a:visited{
+	    color: white;
+	}
+        .login-logout {
+            position: absolute;
+            right: -26px;
+	    line-height:30px;
+        }
+        .login-logout li:hover {
+            background-color: #ea314f;
+        }
+        .login-logout li {
+            background-color: black;
+            text-decoration: none;
+            text-align: center;
+            width: 100px;
+            height: 35px;
+            list-style-type: none;
+        }
+    </style>
+</head>
+<body>
+   
+    <!-- ===========================================Header====================================== -->
+    <header class="header">
+        <div class="header__logo">
+            <a href="<%=request.getContextPath() %>/index/index.jsp"><img src="<%=request.getContextPath() %>/front-store-end/store/img/logo.png" alt=""></a>
+        </div>
+        </div>
+        <div class="header__nav">
+            <nav class="header__menu mobile-menu">
+                <ul>                                      
+		    <li><a href="<%=request.getContextPath()%>/front-store-end/store/listAllFood_List.jsp" id="to_position">所有餐點</a>
+				<ul class="dropdown">
+                                    <li><a href="<%=request.getContextPath()%>/front-store-end/store/addFood_List.jsp">上架餐點</a></li></li>
+				</ul>
+		    <li><a href="<%=request.getContextPath()%>/front-store-end/store/update_Store_Mem_input.jsp" id="to_position">資料修改</a></li>
+	            <li><a href="<%=request.getContextPath()%>/store/openHour.do?action=getOne_For_Display" id="to_position">營業時段管理</a></li>
+                    <li><a href="<%=request.getContextPath()%>/store/store.do?action=getOne_For_Store&action2=getALL" id="to_position">店家首頁</a></li>
+                </ul>
+            </nav>
+            <div class="header__menu__right">
+                <!-- <a href="#" class="primary-btn" title="註冊會員"><i class="fa fa-plus"></i>加入我們</a> -->
+                <a href='<%=request.getContextPath()%>/store/login.do' class="login-btn"><i class="fa fa-user"></i></a>
+         	<ul class="login-logout" style="display: none;">
+                    <li><a href="<%=request.getContextPath()%>/store/store.do?action=logout">我要登出</a></li>
+                </ul>    
+	   </div>
+        </div>
+        </div>
+    </header>

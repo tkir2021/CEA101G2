@@ -13,6 +13,8 @@ public class Mem_DataVO implements java.io.Serializable{
 	private Integer report_count;
 	private Integer consume_times;
 	private Integer deposit;
+	
+	
 	public String getMem_no() {
 		return mem_no;
 	}

@@ -1,6 +1,6 @@
 package com.orderdetail.model;
 
-import java.sql.Date;
+import java.sql.Connection;
 import java.util.List;
 
 public class OrderDetailService {
@@ -42,6 +42,12 @@ public class OrderDetailService {
 		
 		return orderDetailVO;
 	}
+	
+	 /************************購物車：新增訂餐明細 by Sheng*************************/
+		public void updateByShopping(OrderDetailVO orderDetailVO, Connection con){
+			dao.updateByShopping(orderDetailVO, con);			
+		}
+	/************************購物車：新增訂餐明細  by Sheng*************************/
 	
 	public void deleteOrderNo(String order_no) {
 		dao.delete(order_no);

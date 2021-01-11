@@ -1,0 +1,9 @@
+        /*---------------------
+  Footer
+-----------------------*/
+        .row div {
+            height: 200px;
+        }
+        .footer__logo img {
+            height: 100px;
+        }

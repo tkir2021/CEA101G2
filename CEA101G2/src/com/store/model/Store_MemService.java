@@ -1,6 +1,8 @@
 package com.store.model;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 
@@ -14,7 +16,7 @@ public class Store_MemService {
 	
 	public Store_MemVO addStore_Mem(String store_acct, String store_pwd, String store_name, String addr, String open_dates, String email, String s_category, String store_info, 
 			Integer upload_status, Integer s_permission, Integer sum_grade, Integer blocked, Double star_total, Integer star_times, Integer table_limit,byte[] rest_img) {
-//		�Ϥ���:byte[] rest_img 
+//		圖片用:byte[] rest_img 
 		Store_MemVO store_MemVO = new Store_MemVO();
 		 store_MemVO.setStore_acct(store_acct);
 		 store_MemVO.setStore_pwd(store_pwd);
@@ -62,7 +64,7 @@ public class Store_MemService {
 //		 store_MemVO.setRest_img(rest_img);		
 		 dao.update(store_MemVO);
 		return store_MemVO;
-	}
+		}
 	
 		public void deleteStore_Mem(String store_no) {
 			dao.delete(store_no);
@@ -75,4 +77,24 @@ public class Store_MemService {
 		public List<Store_MemVO> getAll(){
 			return dao.getAll();
 		}
+		
+		/************************20200104By 伊婷**************************************************/		
+		public List<Store_MemVO> getAllindex(){
+		List<Store_MemVO> list = new ArrayList<>();
+		list=dao.getAll().stream()
+				.filter(d -> d.getStar_total()>=4)
+				.collect(Collectors.toList());
+		return list;
+		}
+		
+		// ========================更新店家審核上架狀態 by Mike========================
+		public void updateStatus(String store_no, Integer upload_status) {
+			dao.updateStatus(store_no, upload_status);
+		}
+
+		// ========================更新店家平台權限狀態 by Mike========================
+		public void updateStatusPermission(String store_no, Integer s_permission) {
+			dao.updateStatusPermission(store_no, s_permission);
+		}
+			
 }

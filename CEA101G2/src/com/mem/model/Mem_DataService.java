@@ -2,6 +2,9 @@ package com.mem.model;
 
 import java.util.List;
 
+import com.orderdetail.model.OrderDetailVO;
+import com.ordermaster.model.OrderMasterVO;
+
 public class Mem_DataService {
 
 	private Mem_DataDAO_interface dao;
@@ -60,7 +63,27 @@ public class Mem_DataService {
 	  dao.updateAuth(mem_dataVO);
 	  return mem_dataVO;
 	 }
+	 
+	 /************************購物車：更新會員儲值金 by Sheng*************************/
+	 public void updateDeposit_ByShopping(Mem_DataVO mem_dataVO, OrderMasterVO orderMasterVO, List<OrderDetailVO> list) {
+		 dao.updateDeposit_ByShopping(mem_dataVO, orderMasterVO, list);
+	 }
+	 /************************購物車：更新會員儲值金 by Sheng*************************/
+	 
+	 
+	 /************************儲值金 by 宏哥*************************/
+	 public Mem_DataVO updateDeposit(String mem_no, Integer deposit) {
 
+			Mem_DataVO mem_dataVO = new Mem_DataVO();
+
+			mem_dataVO.setMem_no(mem_no);
+			mem_dataVO.setDeposit(deposit);
+			dao.updateDeposit(mem_dataVO);
+			return mem_dataVO;
+		}
+	 /************************儲值金 by 宏哥*************************/
+	 
+	 
 	public void deleteMem(String mem_no) {
 		dao.delete(mem_no);
 	}

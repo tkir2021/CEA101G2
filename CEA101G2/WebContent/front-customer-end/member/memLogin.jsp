@@ -65,7 +65,7 @@
                             <input id="acc" type="text" name="mem_acct" value="" class="form8__inpt" maxlength='20' placeholder="會員帳號" />
                             <input id="psw" type="password" name="mem_pwd" value="" class="form8__inpt" maxlength='8' placeholder="密碼(英文或數字4~8碼)" />
                             <input id="conPsw" type="password" name="conmem_pwd" value="" class="form8__inpt" maxlength='8' placeholder="確認密碼" />
-                            <input id="name" type="text" name="mem_name" value="" class="form8__inpt" maxlength='6' placeholder="會員姓名" />
+                            <input id="name" type="text" name="mem_name" value="" class="form8__inpt" maxlength='6' placeholder="會員姓名(2~6碼)" />
                             <input id="email" type="email" name="mem_mail" value="" class="form8__inpt" maxlength='50' placeholder="電子信箱" />
                             <input id="phone" type="text" name="men_phone" value="" class="form8__inpt" maxlength='10' placeholder="手機號碼" />
                             <input id="newaction" type="hidden" name="action" value="insert">
@@ -100,7 +100,7 @@
     
     //確認每欄都有資料，才能送出
     function check(){
-    	 let inputs = $("#signUpForm input")
+    	 let inputs = $("#signUpForm input");
     	 for (let i = 0; i < inputs.length; i++){
     		 if(inputs.eq(i).val() === ""){
     			 inputs.eq(i).focus();
@@ -133,6 +133,7 @@
 			form_data.append("account", account);
 			form_data.append("password", password);
 			form_data.append("action", action);
+			form_data.append("ajax", "true");
 			$.ajax({
 	            url: path,
 //	             cache: false,

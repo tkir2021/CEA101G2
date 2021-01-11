@@ -1,9 +1,10 @@
-
 package com.store.controller;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.io.InputStream;
 
 import javax.servlet.RequestDispatcher;
@@ -14,33 +15,42 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.store.model.Store_MemVO;
+import com.booking.model.B_orderService;
+import com.booking.model.B_orderVO;
+import com.orderdetail.model.OrderDetailService;
+import com.orderdetail.model.OrderDetailVO;
+import com.ordermaster.model.OrderMasterService;
+import com.ordermaster.model.OrderMasterVO;
 import com.store.model.Store_MemService;
 import com.store.model.Store_MemVO;
+
 @MultipartConfig
-/**@WebServlet(name="Food_ListServlet" , urlPatterns = {"/CEA101G2/front-store-end/foodlist/select_page.jsp"})
- * Servlet implementation class Food_ListServlet
+/**
+ * @WebServlet(name="Food_ListServlet" , urlPatterns =
+ * {"/CEA101G2/front-store-end/foodlist/select_page.jsp"}) Servlet
+ * implementation class Food_ListServlet
  */
 //@WebServlet("/Food_ListServlet")
 public class Store_MemServlet extends HttpServlet {
-	
-       
-   
+
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
+		// String action = (String)req.getAttribute("action");
 		String action = req.getParameter("action");
-		
-		if ("getOne_For_Display".equals(action)) { // ¨Ó¦Ûselect_page.jspªº½Ğ¨D
+		HttpSession session = req.getSession();
+
+		if ("getOne_For_Display".equals(action)) { // ä¾†è‡ªselect_page.jspçš„è«‹æ±‚
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -48,208 +58,193 @@ public class Store_MemServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
-				/***************************1.±µ¦¬½Ğ¨D°Ñ¼Æ - ¿é¤J®æ¦¡ªº¿ù»~³B²z**********************/
+				/*************************** 1.æ¥æ”¶è«‹æ±‚åƒæ•¸ - è¼¸å…¥æ ¼å¼çš„éŒ¯èª¤è™•ç† **********************/
 				String store_no = req.getParameter("store_no");
 				if (store_no == null || (store_no.trim()).length() == 0) {
-					errorMsgs.add("½Ğ¿é¤J©±®a½s¸¹");
+					errorMsgs.add("è«‹è¼¸å…¥åº—å®¶ç·¨è™Ÿ");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front-store-end/store/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-store-end/store/select_page.jsp");
 					failureView.forward(req, res);
-					return;//µ{¦¡¤¤Â_
+					return;// ç¨‹å¼ä¸­æ–·
 				}
-				
-		
+
 				// Send the use back to the form, if there were errors
 //				if (!errorMsgs.isEmpty()) {
 //					RequestDispatcher failureView = req
 //							.getRequestDispatcher("/front-store-end/foodlist/select_page.jsp");
 //					failureView.forward(req, res);
-//					return;//µ{¦¡¤¤Â_
+//					return;//ç¨‹å¼ä¸­æ–·
 //				}
-				
-			
-				/***************************2.¶}©l¬d¸ß¸ê®Æ*****************************************/
+
+				/*************************** 2.é–‹å§‹æŸ¥è©¢è³‡æ–™ *****************************************/
 				Store_MemService store_MemSvc = new Store_MemService();
 				Store_MemVO store_MemVO = store_MemSvc.getOneStore_Mem(store_no);
 				if (store_MemVO == null) {
-					errorMsgs.add("¬dµL¸ê®Æ");
+					errorMsgs.add("æŸ¥ç„¡è³‡æ–™");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front-store-end/store/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-store-end/store/select_page.jsp");
 					failureView.forward(req, res);
-					return;//µ{¦¡¤¤Â_
+					return;// ç¨‹å¼ä¸­æ–·
 				}
-				
-				/***************************3.¬d¸ß§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view)*************/
-				req.setAttribute("store_MemVO", store_MemVO); // ¸ê®Æ®w¨ú¥XªºempVOª«¥ó,¦s¤Jreq
+
+				/*************************** 3.æŸ¥è©¢å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view) *************/
+				req.setAttribute("store_MemVO", store_MemVO); // è³‡æ–™åº«å–å‡ºçš„empVOç‰©ä»¶,å­˜å…¥req
 				String url = "/front-store-end/store/listOneStore_Mem.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // ¦¨¥\Âà¥æ listOneEmp.jsp
+				RequestDispatcher successView = req.getRequestDispatcher(url); // æˆåŠŸè½‰äº¤ listOneEmp.jsp
 				successView.forward(req, res);
 
-				/***************************¨ä¥L¥i¯àªº¿ù»~³B²z*************************************/
+				/*************************** å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç† *************************************/
 			} catch (Exception e) {
-				errorMsgs.add("µLªk¨ú±o¸ê®Æ:" + e.getMessage());
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("/front-store-end/store/select_page.jsp");
+				errorMsgs.add("ç„¡æ³•å–å¾—è³‡æ–™:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-store-end/store/select_page.jsp");
 				failureView.forward(req, res);
 			}
-		}	
-			
-		if ("getOne_For_Update".equals(action)) { // ¨Ó¦ÛlistAllEmp.jspªº½Ğ¨D
+		}
+
+		if ("getOne_For_Update".equals(action)) { // ä¾†è‡ªlistAllEmp.jspçš„è«‹æ±‚
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
-			
+
 			try {
-				/***************************1.±µ¦¬½Ğ¨D°Ñ¼Æ****************************************/
-				String store_no = req.getParameter("store_no");
-				
-				/***************************2.¶}©l¬d¸ß¸ê®Æ****************************************/
+				/*************************** 1.æ¥æ”¶è«‹æ±‚åƒæ•¸ ****************************************/
+				// String store_no = req.getParameter("store_no");
+				String store_no = (String) session.getAttribute("store_no");
+				/*************************** 2.é–‹å§‹æŸ¥è©¢è³‡æ–™ ****************************************/
 //				EmpService empSvc = new EmpService();
 //				EmpVO empVO = empSvc.getOneEmp(empno);
 				Store_MemService store_MemSvc = new Store_MemService();
 				Store_MemVO store_MemVO = store_MemSvc.getOneStore_Mem(store_no);
-								
-				/***************************3.¬d¸ß§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view)************/
-				req.setAttribute("store_MemVO", store_MemVO);         // ¸ê®Æ®w¨ú¥XªºempVOª«¥ó,¦s¤Jreq
+
+				/*************************** 3.æŸ¥è©¢å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view) ************/
+				req.setAttribute("store_MemVO", store_MemVO); // è³‡æ–™åº«å–å‡ºçš„empVOç‰©ä»¶,å­˜å…¥req
 				String url = "/front-store-end/store/update_Store_Mem_input.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);// ¦¨¥\Âà¥æ update_emp_input.jsp
+				RequestDispatcher successView = req.getRequestDispatcher(url);// æˆåŠŸè½‰äº¤ update_emp_input.jsp
 				successView.forward(req, res);
 
-				/***************************¨ä¥L¥i¯àªº¿ù»~³B²z**********************************/
+				/*************************** å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç† **********************************/
 			} catch (Exception e) {
-				errorMsgs.add("µLªk¨ú±o­n­×§ïªº¸ê®Æ:" + e.getMessage());
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("/front-store-end/store/listAllStore_Mem.jsp");
+				errorMsgs.add("ç„¡æ³•å–å¾—è¦ä¿®æ”¹çš„è³‡æ–™:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-store-end/store/listAllStore_Mem.jsp");
 				failureView.forward(req, res);
 			}
 		}
-		
-		
-		if ("update".equals(action)) { // ¨Ó¦Ûupdate_emp_input.jspªº½Ğ¨D
-			
+
+		if ("update".equals(action)) { // ä¾†è‡ªupdate_emp_input.jspçš„è«‹æ±‚
+
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
-		
+
 			try {
-				/***************************1.±µ¦¬½Ğ¨D°Ñ¼Æ - ¿é¤J®æ¦¡ªº¿ù»~³B²z**********************/
+				/*************************** 1.æ¥æ”¶è«‹æ±‚åƒæ•¸ - è¼¸å…¥æ ¼å¼çš„éŒ¯èª¤è™•ç† **********************/
 				String store_no = req.getParameter("store_no");
 				String store_acct = req.getParameter("store_acct");
 				String store_acctReg = "^[(a-zA-Z0-9_)]{2,10}$";
 				if (store_acct == null || store_acct.trim().length() == 0) {
-					errorMsgs.add("©±®a±b¸¹: ½Ğ¤ÅªÅ¥Õ");
-				} else if(!store_acct.trim().matches(store_acctReg)) { //¥H¤U½m²ß¥¿«h(³W)ªí¥Ü¦¡(regular-expression)
-					errorMsgs.add("©±®a±b¸¹: ¥u¯à¬O­^¤å¦r¥À¡B¼Æ¦r©M_ , ¥Bªø«×¥²»İ¦b2¨ì10¤§¶¡");
-	            }
-				
+					errorMsgs.add("åº—å®¶å¸³è™Ÿ: è«‹å‹¿ç©ºç™½");
+				} else if (!store_acct.trim().matches(store_acctReg)) { // ä»¥ä¸‹ç·´ç¿’æ­£å‰‡(è¦)è¡¨ç¤ºå¼(regular-expression)
+					errorMsgs.add("åº—å®¶å¸³è™Ÿ: åªèƒ½æ˜¯è‹±æ–‡å­—æ¯ã€æ•¸å­—å’Œ_ , ä¸”é•·åº¦å¿…éœ€åœ¨2åˆ°10ä¹‹é–“");
+				}
+
 				String store_pwd = req.getParameter("store_pwd").trim();
 				if (store_pwd == null || store_pwd.trim().length() == 0) {
-					errorMsgs.add("©±®a±K½X½Ğ¤ÅªÅ¥Õ");
+					errorMsgs.add("åº—å®¶å¯†ç¢¼è«‹å‹¿ç©ºç™½");
 				}
-				
+
 				String store_name = req.getParameter("store_name").trim();
 				if (store_name == null || store_name.trim().length() == 0) {
-					errorMsgs.add("©±®a¦WºÙ½Ğ¤ÅªÅ¥Õ");
+					errorMsgs.add("åº—å®¶åç¨±è«‹å‹¿ç©ºç™½");
 				}
-				
-				
-				
+
 				String addr = req.getParameter("addr").trim();
 				if (addr == null || addr.trim().length() == 0) {
-					errorMsgs.add("¦a§}¦WºÙ½Ğ¤ÅªÅ¥Õ");
+					errorMsgs.add("åœ°å€åç¨±è«‹å‹¿ç©ºç™½");
 				}
-				
+
 				String open_dates = req.getParameter("open_dates").trim();
 				if (open_dates == null || open_dates.trim().length() == 0) {
-					errorMsgs.add("Àç·~®É¶¡½Ğ¤ÅªÅ¥Õ");
+					errorMsgs.add("ç‡Ÿæ¥­æ™‚é–“è«‹å‹¿ç©ºç™½");
 				}
-				
+
 				String email = req.getParameter("email").trim();
 				if (email == null || email.trim().length() == 0) {
-					errorMsgs.add("Email½Ğ¤ÅªÅ¥Õ");
+					errorMsgs.add("Emailè«‹å‹¿ç©ºç™½");
 				}
-				
-				
+
 				String s_category = req.getParameter("s_category").trim();
 				if (s_category == null || s_category.trim().length() == 0) {
-					errorMsgs.add("¤ÀÃş½Ğ¤ÅªÅ¥Õ");
+					errorMsgs.add("åˆ†é¡è«‹å‹¿ç©ºç™½");
 				}
-				
-				
+
 				String store_info = req.getParameter("store_info").trim();
 				if (store_info == null || store_info.trim().length() == 0) {
-					errorMsgs.add("©±®aÂ²¤¶½Ğ¤ÅªÅ¥Õ");
+					errorMsgs.add("åº—å®¶ç°¡ä»‹è«‹å‹¿ç©ºç™½");
 				}
-				
-				
-				
-
 
 				Integer upload_status = null;
 				try {
 					upload_status = new Integer(req.getParameter("upload_status").trim());
 				} catch (NumberFormatException e) {
 					upload_status = 0;
-					errorMsgs.add("¤W¬[ª¬ºA½Ğ¶ñ¼Æ¦r.");
+					errorMsgs.add("ä¸Šæ¶ç‹€æ…‹è«‹å¡«æ•¸å­—.");
 				}
-				
+
 				Integer s_permission = null;
 				try {
 					s_permission = new Integer(req.getParameter("s_permission").trim());
 				} catch (NumberFormatException e) {
 					s_permission = 0;
-					errorMsgs.add("Åv­­ª¬ºA½Ğ¶ñ¼Æ¦r.");
+					errorMsgs.add("æ¬Šé™ç‹€æ…‹è«‹å¡«æ•¸å­—.");
 				}
-				
+
 				Integer sum_grade = null;
 				try {
 					sum_grade = new Integer(req.getParameter("sum_grade").trim());
 				} catch (NumberFormatException e) {
 					sum_grade = 0;
-					errorMsgs.add("²Ö¿nÀËÁ|µû¤À¶ñ¼Æ¦r.");
+					errorMsgs.add("ç´¯ç©æª¢èˆ‰è©•åˆ†å¡«æ•¸å­—.");
 				}
-				
+
 				Integer blocked = null;
 				try {
 					blocked = new Integer(req.getParameter("blocked").trim());
 				} catch (NumberFormatException e) {
 					blocked = 0;
-					errorMsgs.add("³QÀËÁ|¦¸¼Æ½Ğ¶ñ¼Æ¦r.");
+					errorMsgs.add("è¢«æª¢èˆ‰æ¬¡æ•¸è«‹å¡«æ•¸å­—.");
 				}
-				
+
 				Double star_total = null;
 				try {
 					star_total = new Double(req.getParameter("star_total").trim());
 				} catch (NumberFormatException e) {
 					star_total = 0.0;
-					errorMsgs.add("²Ö¿nÀËÁ|µû¤À¶ñ¼Æ¦r.");
+					errorMsgs.add("ç´¯ç©æª¢èˆ‰è©•åˆ†å¡«æ•¸å­—.");
 				}
-				
+
 				Integer star_times = null;
 				try {
 					star_times = new Integer(req.getParameter("star_times").trim());
 				} catch (NumberFormatException e) {
 					star_times = 0;
-					errorMsgs.add("²Ö¿nÁ`µû»ù¦¸¼Æ½Ğ¶ñ¼Æ¦r.");
+					errorMsgs.add("ç´¯ç©ç¸½è©•åƒ¹æ¬¡æ•¸è«‹å¡«æ•¸å­—.");
 				}
-				
+
 				Integer table_limit = null;
 				try {
 					table_limit = new Integer(req.getParameter("table_limit").trim());
 				} catch (NumberFormatException e) {
 					table_limit = 0;
-					errorMsgs.add("®à¦ì¤W­­½Ğ¶ñ¼Æ¦r.");
+					errorMsgs.add("æ¡Œä½ä¸Šé™è«‹å¡«æ•¸å­—.");
 				}
-				
+
 				Store_MemVO store_MemVO = new Store_MemVO();
 				store_MemVO.setStore_no(store_no);
 				store_MemVO.setStore_acct(store_acct);
@@ -268,171 +263,163 @@ public class Store_MemServlet extends HttpServlet {
 				store_MemVO.setStar_times(star_times);
 				store_MemVO.setTable_limit(table_limit);
 //				store_MemVO.setRest_img(rest_img);	
-				
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("store_MemVO", store_MemVO); // §t¦³¿é¤J®æ¦¡¿ù»~ªºempVOª«¥ó,¤]¦s¤Jreq
+					req.setAttribute("store_MemVO", store_MemVO); // å«æœ‰è¼¸å…¥æ ¼å¼éŒ¯èª¤çš„empVOç‰©ä»¶,ä¹Ÿå­˜å…¥req
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/front-store-end/store/update_Store_Mem_input.jsp");
 					failureView.forward(req, res);
-					return; //µ{¦¡¤¤Â_
+					return; // ç¨‹å¼ä¸­æ–·
 				}
-				
-//				/***************************2.¶}©l­×§ï¸ê®Æ*****************************************/
+
+//				/***************************2.é–‹å§‹ä¿®æ”¹è³‡æ–™*****************************************/
 
 				Store_MemService store_MemSvc = new Store_MemService();
-				store_MemVO = store_MemSvc.update_Store_Mem_input(store_no,store_acct,store_pwd, store_name,addr, open_dates, email, s_category,store_info,upload_status,s_permission,sum_grade,blocked,star_total,star_times,table_limit);
-				              
-				/***************************3.­×§ï§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view)*************/
-				req.setAttribute("store_MemVO", store_MemVO); // ¸ê®Æ®wupdate¦¨¥\«á,¥¿½TªºªºempVOª«¥ó,¦s¤Jreq
+				store_MemVO = store_MemSvc.update_Store_Mem_input(store_no, store_acct, store_pwd, store_name, addr,
+						open_dates, email, s_category, store_info, upload_status, s_permission, sum_grade, blocked,
+						star_total, star_times, table_limit);
+
+				/*************************** 3.ä¿®æ”¹å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view) *************/
+				req.setAttribute("store_MemVO", store_MemVO); // è³‡æ–™åº«updateæˆåŠŸå¾Œ,æ­£ç¢ºçš„çš„empVOç‰©ä»¶,å­˜å…¥req
 				String url = "/front-store-end/store/listOneStore_Mem.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // ­×§ï¦¨¥\«á,Âà¥ælistOneEmp.jsp
+				RequestDispatcher successView = req.getRequestDispatcher(url); // ä¿®æ”¹æˆåŠŸå¾Œ,è½‰äº¤listOneEmp.jsp
 				successView.forward(req, res);
 
-				/***************************¨ä¥L¥i¯àªº¿ù»~³B²z*************************************/
+				/*************************** å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç† *************************************/
 			} catch (Exception e) {
-				errorMsgs.add("­×§ï¸ê®Æ¥¢±Ñ:"+e.getMessage());
+				errorMsgs.add("ä¿®æ”¹è³‡æ–™å¤±æ•—:" + e.getMessage());
 				RequestDispatcher failureView = req
 						.getRequestDispatcher("/front-store-end/store/update_Store_Mem_input.jsp");
 				failureView.forward(req, res);
 			}
 		}
 
-        if ("insert".equals(action)) { // ¨Ó¦ÛaddEmp.jspªº½Ğ¨D  
+		if ("insert".equals(action)) { // ä¾†è‡ªaddEmp.jspçš„è«‹æ±‚
 //        	System.out.println(req.getParameter("store_no"));
-     
+
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 
-			//(\u4e00-\u9fa5)¥u¯à¤¤¤å
-			
+			// (\u4e00-\u9fa5)åªèƒ½ä¸­æ–‡
+
 			try {
-				/***********************1.±µ¦¬½Ğ¨D°Ñ¼Æ - ¿é¤J®æ¦¡ªº¿ù»~³B²z*************************/
+				/*********************** 1.æ¥æ”¶è«‹æ±‚åƒæ•¸ - è¼¸å…¥æ ¼å¼çš„éŒ¯èª¤è™•ç† *************************/
 				String store_acct = req.getParameter("store_acct");
 				String store_noReg = "^[(a-zA-Z0-9_)]{2,10}$";
 				if (store_acct == null || store_acct.trim().length() == 0) {
-					errorMsgs.add("©±®a±b¸¹: ½Ğ¤ÅªÅ¥Õ");
-				} else if(!store_acct.trim().matches(store_noReg)) { //¥H¤U½m²ß¥¿«h(³W)ªí¥Ü¦¡(regular-expression)
-					errorMsgs.add("©±®a±b¸¹: ¥u¯à¬O­^¤å¦r¥À¡B¼Æ¦r©M_ , ¥Bªø«×¥²»İ¦b2¨ì10¤§¶¡");
-	            }
-				
+					errorMsgs.add("åº—å®¶å¸³è™Ÿ: è«‹å‹¿ç©ºç™½");
+				} else if (!store_acct.trim().matches(store_noReg)) { // ä»¥ä¸‹ç·´ç¿’æ­£å‰‡(è¦)è¡¨ç¤ºå¼(regular-expression)
+					errorMsgs.add("åº—å®¶å¸³è™Ÿ: åªèƒ½æ˜¯è‹±æ–‡å­—æ¯ã€æ•¸å­—å’Œ_ , ä¸”é•·åº¦å¿…éœ€åœ¨2åˆ°10ä¹‹é–“");
+				}
+
 				String store_pwd = req.getParameter("store_pwd").trim();
 				if (store_pwd == null || store_pwd.trim().length() == 0) {
-					errorMsgs.add("©±®a±K½X½Ğ¤ÅªÅ¥Õ");
+					errorMsgs.add("åº—å®¶å¯†ç¢¼è«‹å‹¿ç©ºç™½");
 				}
-				
+
 				String store_name = req.getParameter("store_name").trim();
 				if (store_name == null || store_name.trim().length() == 0) {
-					errorMsgs.add("©±®a¦WºÙ½Ğ¤ÅªÅ¥Õ");
+					errorMsgs.add("åº—å®¶åç¨±è«‹å‹¿ç©ºç™½");
 				}
-				
-				
-				
+
 				String addr = req.getParameter("addr").trim();
 				if (addr == null || addr.trim().length() == 0) {
-					errorMsgs.add("¦a§}¦WºÙ½Ğ¤ÅªÅ¥Õ");
+					errorMsgs.add("åœ°å€åç¨±è«‹å‹¿ç©ºç™½");
 				}
-				
+
 				String open_dates = req.getParameter("open_dates").trim();
 				if (open_dates == null || open_dates.trim().length() == 0) {
-					errorMsgs.add("Àç·~®É¶¡½Ğ¤ÅªÅ¥Õ");
+					errorMsgs.add("ç‡Ÿæ¥­æ™‚é–“è«‹å‹¿ç©ºç™½");
 				}
-				
+
 				String email = req.getParameter("email").trim();
 				if (email == null || email.trim().length() == 0) {
-					errorMsgs.add("Email½Ğ¤ÅªÅ¥Õ");
+					errorMsgs.add("Emailè«‹å‹¿ç©ºç™½");
 				}
-				
-				
+
 				String s_category = req.getParameter("s_category").trim();
 				if (s_category == null || s_category.trim().length() == 0) {
-					errorMsgs.add("¤ÀÃş½Ğ¤ÅªÅ¥Õ");
+					errorMsgs.add("åˆ†é¡è«‹å‹¿ç©ºç™½");
 				}
-				
-				
+
 				String store_info = req.getParameter("store_info").trim();
 				if (store_info == null || store_info.trim().length() == 0) {
-					errorMsgs.add("©±®aÂ²¤¶½Ğ¤ÅªÅ¥Õ");
+					errorMsgs.add("åº—å®¶ç°¡ä»‹è«‹å‹¿ç©ºç™½");
 				}
-				
-				
+
 				Integer upload_status = null;
 				try {
 					upload_status = new Integer(req.getParameter("upload_status").trim());
 				} catch (NumberFormatException e) {
 					upload_status = 0;
-					errorMsgs.add("¤W¬[ª¬ºA½Ğ¶ñ¼Æ¦r.");
+					errorMsgs.add("ä¸Šæ¶ç‹€æ…‹è«‹å¡«æ•¸å­—.");
 				}
-				
+
 				Integer s_permission = null;
 				try {
 					s_permission = new Integer(req.getParameter("s_permission").trim());
 				} catch (NumberFormatException e) {
 					s_permission = 0;
-					errorMsgs.add("Åv­­ª¬ºA½Ğ¶ñ¼Æ¦r.");
+					errorMsgs.add("æ¬Šé™ç‹€æ…‹è«‹å¡«æ•¸å­—.");
 				}
-				
+
 				Integer sum_grade = null;
 				try {
 					sum_grade = new Integer(req.getParameter("sum_grade").trim());
 				} catch (NumberFormatException e) {
 					sum_grade = 0;
-					errorMsgs.add("²Ö¿nÀËÁ|µû¤À¶ñ¼Æ¦r.");
+					errorMsgs.add("ç´¯ç©æª¢èˆ‰è©•åˆ†å¡«æ•¸å­—.");
 				}
-				
+
 				Integer blocked = null;
 				try {
 					blocked = new Integer(req.getParameter("blocked").trim());
 				} catch (NumberFormatException e) {
 					blocked = 0;
-					errorMsgs.add("³QÀËÁ|¦¸¼Æ½Ğ¶ñ¼Æ¦r.");
+					errorMsgs.add("è¢«æª¢èˆ‰æ¬¡æ•¸è«‹å¡«æ•¸å­—.");
 				}
-				
+
 				Double star_total = null;
 				try {
 					star_total = new Double(req.getParameter("star_total").trim());
 				} catch (NumberFormatException e) {
 					star_total = 0.0;
-					errorMsgs.add("²Ö¿nÀËÁ|µû¤À¶ñ¼Æ¦r.");
+					errorMsgs.add("ç´¯ç©æª¢èˆ‰è©•åˆ†å¡«æ•¸å­—.");
 				}
-				
+
 				Integer star_times = null;
 				try {
 					star_times = new Integer(req.getParameter("star_times").trim());
 				} catch (NumberFormatException e) {
 					star_times = 0;
-					errorMsgs.add("²Ö¿nÁ`µû»ù¦¸¼Æ½Ğ¶ñ¼Æ¦r.");
+					errorMsgs.add("ç´¯ç©ç¸½è©•åƒ¹æ¬¡æ•¸è«‹å¡«æ•¸å­—.");
 				}
-				
+
 				Integer table_limit = null;
 				try {
 					table_limit = new Integer(req.getParameter("table_limit").trim());
 				} catch (NumberFormatException e) {
 					table_limit = 0;
-					errorMsgs.add("®à¦ì¤W­­½Ğ¶ñ¼Æ¦r.");
+					errorMsgs.add("æ¡Œä½ä¸Šé™è«‹å¡«æ•¸å­—.");
 				}
-								
-				
+
 				byte rest_img2[] = null;
-				try {					
-					InputStream in =req.getPart("rest_img").getInputStream();
-					rest_img2= new byte[in.available()];
+				try {
+					InputStream in = req.getPart("rest_img").getInputStream();
+					rest_img2 = new byte[in.available()];
 					in.read(rest_img2);
-					in.close();					
-				}catch(Exception e) {
+					in.close();
+				} catch (Exception e) {
 					e.printStackTrace();
-					System.out.println("¤W¶Ç¹Ï¤ù¥¢±Ñ");
-					errorMsgs.add("¨S¦³¹Ï¤ù");
+					System.out.println("ä¸Šå‚³åœ–ç‰‡å¤±æ•—");
+					errorMsgs.add("æ²’æœ‰åœ–ç‰‡");
 				}
-				
-				
-				 
-				
-				Store_MemVO  store_MemVO  = new Store_MemVO();
-				
+
+				Store_MemVO store_MemVO = new Store_MemVO();
+
 				store_MemVO.setStore_acct(store_acct);
 				store_MemVO.setStore_pwd(store_pwd);
 				store_MemVO.setStore_name(store_name);
@@ -451,93 +438,261 @@ public class Store_MemServlet extends HttpServlet {
 				store_MemVO.setRest_img(rest_img2);
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("store_MemVO", store_MemVO); // §t¦³¿é¤J®æ¦¡¿ù»~ªºempVOª«¥ó,¤]¦s¤Jreq
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front-store-end/store/addStore_Mem.jsp");
+					req.setAttribute("store_MemVO", store_MemVO); // å«æœ‰è¼¸å…¥æ ¼å¼éŒ¯èª¤çš„empVOç‰©ä»¶,ä¹Ÿå­˜å…¥req
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-store-end/store/addStore_Mem.jsp");
 					failureView.forward(req, res);
 					return;
 				}
-				
-				/***************************2.¶}©l·s¼W¸ê®Æ***************************************/
-				
+
+				/*************************** 2.é–‹å§‹æ–°å¢è³‡æ–™ ***************************************/
+
 				Store_MemService store_MemSvc = new Store_MemService();
-				store_MemVO = store_MemSvc.addStore_Mem(store_acct,store_pwd, store_name,addr, open_dates, email, s_category,store_info,upload_status,s_permission,sum_grade,blocked,star_total,star_times,table_limit,rest_img2);
-				
-				/***************************3.·s¼W§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view)***********/
+				store_MemVO = store_MemSvc.addStore_Mem(store_acct, store_pwd, store_name, addr, open_dates, email,
+						s_category, store_info, upload_status, s_permission, sum_grade, blocked, star_total, star_times,
+						table_limit, rest_img2);
+
+				/*************************** 3.æ–°å¢å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view) ***********/
 				String url = "/front-store-end/store/listAllStore_Mem.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // ·s¼W¦¨¥\«áÂà¥ælistAllEmp.jsp
-				successView.forward(req, res);				
-				
-				/***************************¨ä¥L¥i¯àªº¿ù»~³B²z**********************************/
+				RequestDispatcher successView = req.getRequestDispatcher(url); // æ–°å¢æˆåŠŸå¾Œè½‰äº¤listAllEmp.jsp
+				successView.forward(req, res);
+
+				/*************************** å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç† **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("/front-store-end/store/addStore_Mem.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-store-end/store/addStore_Mem.jsp");
 				failureView.forward(req, res);
 			}
 		}
-		
-		
-		if ("delete".equals(action)) { // ¨Ó¦ÛlistAllEmp.jsp
+
+		if ("delete".equals(action)) { // ä¾†è‡ªlistAllEmp.jsp
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
-	
+
 			try {
-				/***************************1.±µ¦¬½Ğ¨D°Ñ¼Æ***************************************/
-				
+				/*************************** 1.æ¥æ”¶è«‹æ±‚åƒæ•¸ ***************************************/
+
 				String store_no = req.getParameter("store_no");
-				
-				/***************************2.¶}©l§R°£¸ê®Æ***************************************/
+
+				/*************************** 2.é–‹å§‹åˆªé™¤è³‡æ–™ ***************************************/
 				Store_MemService store_MemSvc = new Store_MemService();
 				store_MemSvc.deleteStore_Mem(store_no);
-				
-				/***************************3.§R°£§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view)***********/								
+
+				/*************************** 3.åˆªé™¤å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view) ***********/
 				String url = "/front-store-end/store/listAllStore_Mem.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);// §R°£¦¨¥\«á,Âà¥æ¦^°e¥X§R°£ªº¨Ó·½ºô­¶
+				RequestDispatcher successView = req.getRequestDispatcher(url);// åˆªé™¤æˆåŠŸå¾Œ,è½‰äº¤å›é€å‡ºåˆªé™¤çš„ä¾†æºç¶²é 
 				successView.forward(req, res);
-				
-				/***************************¨ä¥L¥i¯àªº¿ù»~³B²z**********************************/
+
+				/*************************** å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç† **********************************/
 			} catch (Exception e) {
-				errorMsgs.add("§R°£¸ê®Æ¥¢±Ñ:"+e.getMessage());
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("/front-store-end/store/listAllStore_Mem.jsp");
+				errorMsgs.add("åˆªé™¤è³‡æ–™å¤±æ•—:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-store-end/store/listAllStore_Mem.jsp");
 				failureView.forward(req, res);
-				}
+			}
 		}
-			if("getOneImage".equals(action)) {
-				res.setContentType("image/gif");
-				ServletOutputStream out = res.getOutputStream();
-			
+		/*********************************
+		 * å–åœ–ç‰‡
+		 ***************************************************/
+		if ("getOneImage".equals(action)) {
+			res.setContentType("image/gif");
+			ServletOutputStream out = res.getOutputStream();
 			try {
-			String store_no = req.getParameter("store_no");
-			Store_MemService store_MemService = new Store_MemService();
-			Store_MemVO store_MemVO = new Store_MemVO();
-			store_MemVO = store_MemService.getOneStore_Mem(store_no);
-			byte[] pic = store_MemVO.getRest_img();
-
-			out.write(pic);
-
-			
-		}			
-		
-		catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			out.close();
-		
-		
-		
-		
-		
-		
-		
+				String store_no = req.getParameter("store_no");
+				Store_MemService store_MemService = new Store_MemService();
+				Store_MemVO store_MemVO = new Store_MemVO();
+				store_MemVO = store_MemService.getOneStore_Mem(store_no);
+				byte[] pic = store_MemVO.getRest_img();
+				out.write(pic);
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				out.close();
 			}
 		}
 
-	}
-	
-  }
+		/*******************************
+		 * æŸ¥è©¢è©²åº—å®¶ä¹‹è¨‚ä½è³‡æ–™ 20200104by BELLA
+		 **********************************************/
+		String action1 = (String) req.getAttribute("action1");
+		if ("getOne_For_Store".equals(action1) || "getOne_For_Store".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			String storeno = (String) session.getAttribute("store_no");
+			String memno = req.getParameter("memno");
+			System.out.println("æƒ³å“­äº†å–”");
 
+			B_orderService orderSvc = new B_orderService();
+
+			if (storeno != null) {
+				try {
+					// æ¨¡æ“¬åº—å®¶å·²ç¶“ç™»å…¥ç‹€æ…‹
+					// session.setAttribute("storeno", storeno);
+					List<B_orderVO> SorderList = orderSvc.getOrderByNo(storeno);
+					req.setAttribute("SorderList", SorderList);
+					// RequestDispatcher success = req
+					// .getRequestDispatcher("/front-store-end/store/store_detail.jsp");
+					// success.forward(req, res);
+				} catch (Exception e) {
+					e.printStackTrace();
+					errorMsgs.add("åº—å®¶è¼¸å…¥å¤±æ•—:" + e.getMessage());
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-store-end/store/store_detail.jsp");
+					failureView.forward(req, res);
+				}
+			} else if (memno != null) {
+				try {
+					// æ¨¡æ“¬æœƒå“¡å·²ç¶“ç™»å…¥ç‹€æ…‹
+					session.setAttribute("memno", memno);
+					List<B_orderVO> MorderList = orderSvc.getOrderByNo(memno);
+					req.setAttribute("MorderList", MorderList);
+					RequestDispatcher success = req
+							.getRequestDispatcher("/front-customer-end/booking/M_listAllBooking.jsp");
+					success.forward(req, res);
+				} catch (Exception e) {
+					e.printStackTrace();
+					errorMsgs.add("æœƒå“¡è¼¸å…¥å¤±æ•—:" + e.getMessage());
+					RequestDispatcher failureView = req.getRequestDispatcher("/select_page.jsp");
+					failureView.forward(req, res);
+				}
+			}
+		}
+		/*************************************
+		 * æŸ¥è©¢è¨‚é¤è³‡æ–™20200104by BELLA
+		 ****************************************************/
+		String action2 = req.getParameter("action2");
+		String action3 = (String) req.getAttribute("action3");
+
+		if ("getALL".equals(action2) || "getALL".equals(action3)) {
+			String storeno = (String) session.getAttribute("store_no");
+			System.out.println("æˆ‘QQ" + storeno);
+			OrderMasterService orderSvc = new OrderMasterService();
+			List<OrderMasterVO> list = new ArrayList<OrderMasterVO>();
+			try {
+				list = orderSvc.getAll().stream().filter(o -> o.getStore_no().equals(storeno))
+						.collect(Collectors.toList());
+
+				req.setAttribute("orderMaster", list);
+				String url = "/front-store-end/store/store_detail.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-store-end/store/store_detail.jsp");
+				failureView.forward(req, res);
+			}
+
+		}
+		/**************************************
+		 * AjaxæŸ¥è©¢è¨‚é¤æ˜ç´°20200104by BELLA
+		 ****************************************************/
+
+		if ("getOrderDetail".equals(action)) {
+
+			String orderno = req.getParameter("orderno");
+			System.out.println("æˆ‘QQ" + orderno);
+
+			OrderDetailService orderSvc = new OrderDetailService();
+			List<OrderDetailVO> list = new ArrayList<OrderDetailVO>();
+
+			try {
+				list = orderSvc.getAll().stream().filter(o -> o.getOrder_no().equals(orderno))
+						.collect(Collectors.toList());
+
+				JSONArray jsa = new JSONArray(list);
+				res.setContentType("text/plain");
+				res.setCharacterEncoding("UTF-8");
+				PrintWriter out = res.getWriter();
+				out.write(jsa.toString());
+				System.out.println(jsa.getJSONObject(0).getString("food_no"));
+				out.flush();
+				out.close();
+
+			} catch (JSONException j) {
+				j.printStackTrace();
+			}
+
+		}
+		;
+		/******************************************
+		 * AjaxæŸ¥è©²åº—å®¶20200104by BELLA
+		 ****************************************************/
+		if ("getThisStore".equals(action)) {
+
+			String storeno = req.getParameter("storeno");
+			System.out.println(storeno);
+			String addr = req.getParameter("addr");
+			System.out.println(addr);
+			Store_MemService storeSvc = new Store_MemService();
+			List<Store_MemVO> thisStore = new ArrayList<>();
+
+			try {
+				session.setAttribute("store_no", storeno);
+				String url = "/front-customer-end/shopping/EShop.jsp";
+				if (storeno != null) {
+					thisStore = storeSvc.getAll().stream().filter(s -> s.getStore_no().equals(storeno))
+							.collect(Collectors.toList());						
+						RequestDispatcher successView = req.getRequestDispatcher(url);
+						successView.forward(req, res);
+
+				} else {
+					thisStore = storeSvc.getAll().stream().filter(s -> s.getAddr().contains(addr))
+							.collect(Collectors.toList());
+						RequestDispatcher successView = req.getRequestDispatcher(url);
+						successView.forward(req, res);
+				}
+
+				JSONArray jsa = new JSONArray(thisStore);
+				res.setContentType("text/plain");
+				res.setCharacterEncoding("UTF-8");
+				PrintWriter out = res.getWriter();
+				out.write(jsa.toString());
+				System.out.println(jsa.getJSONObject(0).getString("store_name"));
+				out.flush();
+				out.close();
+
+			} catch (JSONException j) {
+				j.printStackTrace();
+			}
+
+		}
+		/************************************
+		 * logout20210111by BELLA
+		 ****************************************************/
+		if ("logout".equals(action)) {
+			session.invalidate();
+			res.sendRedirect(req.getContextPath() + "/index/index.jsp");
+		}
+
+		// ========================æ›´æ–°åº—å®¶å¯©æ ¸ä¸Šæ¶ç‹€æ…‹ by Mike========================
+		if ("update_upload_status".equals(action)) {
+			String store_no = req.getParameter("store_no");
+			System.out.println(store_no);
+			Integer upload_status = new Integer((1));
+			Store_MemService store_memSvc = new Store_MemService();
+			store_memSvc.updateStatus(store_no, upload_status);
+
+			/*************************** 3.ä¿®æ”¹å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view) *************/
+			req.setAttribute("store_no", store_no); // è³‡æ–™åº«updateæˆåŠŸå¾Œ,æ­£ç¢ºçš„çš„empVOç‰©ä»¶,å­˜å…¥req
+			String url = "/back-end/store/store_check_my.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url); // ä¿®æ”¹æˆåŠŸå¾Œ,è½‰äº¤listOneEmp.jsp
+			successView.forward(req, res);
+		}
+
+		// ========================æ›´æ–°åº—å®¶å¹³å°æ¬Šé™ç‹€æ…‹ by Mike========================
+		if ("update_s_permission".equals(action)) {
+			String store_no = req.getParameter("store_no");
+			System.out.println(store_no);
+			Integer s_permission = new Integer((1));
+			Store_MemService store_memSvc = new Store_MemService();
+			store_memSvc.updateStatusPermission(store_no, s_permission);
+
+			/*************************** 3.ä¿®æ”¹å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view) *************/
+			req.setAttribute("store_no", store_no); // è³‡æ–™åº«updateæˆåŠŸå¾Œ,æ­£ç¢ºçš„çš„empVOç‰©ä»¶,å­˜å…¥req
+			String url = "/back-end/store/store_arr_my.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url); // ä¿®æ”¹æˆåŠŸå¾Œ,è½‰äº¤listOneEmp.jsp
+			successView.forward(req, res);
+		}
+	}
+}

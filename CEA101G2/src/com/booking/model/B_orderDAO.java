@@ -25,14 +25,14 @@ public class B_orderDAO implements B_orderDAO_interface {
 	private static final String GET_ONE_STORE = "SELECT booking_no, mem_no,store_no,group_no,To_char(booking_date, 'yyyy-mm-dd')BOOKING_DATE,time_period, people,booking_status,attend_status,give_star,ORDER_COMMIT FROM booking_order WHERE store_no = ?";
 	// 用memno查單筆
 	private static final String GET_ONE_MEMBER = "SELECT booking_no, mem_no,store_no,group_no,To_char(booking_date, 'yyyy-mm-dd')BOOKING_DATE,time_period, people,booking_status,attend_status,give_star,ORDER_COMMIT FROM booking_order WHERE mem_no = ?";
-
 	// 修改
 	private static final String UPDATE = "UPDATE BOOKING_ORDER set BOOKING_STATUS=? ,ATTEND_STATUS=? ,GIVE_STAR=? where booking_no = ?";
-
-	/***更新評分 by Sheng***/
+	/*** 更新評分 by Sheng ***/
 	private static final String UP_GIVE_STAR = "UPDATE BOOKING_ORDER SET GIVE_STAR=? WHERE BOOKING_NO = ?";
-	/***更新評分 by Sheng***/
-	
+	/*** 更新評分 by Sheng ***/
+	//用storeno,date,timeperiod查people總和
+	 private static final String GET_ONE_PEOPLE = "SELECT SUM(people) AS people_SUM FROM booking_order WHERE store_no = ? and BOOKING_DATE=? and time_period=?";
+
 	@Override
 	public void insert(B_orderVO b_orderVO) {
 		Connection con = null;
@@ -119,8 +119,7 @@ public class B_orderDAO implements B_orderDAO_interface {
 
 	}
 
-	
-	/************************更新評分 by Sheng**************************/
+	/************************ 更新評分 by Sheng **************************/
 	@Override
 	public void upGivestar(String bookingno, double givestar) {
 		Connection con = null;
@@ -131,7 +130,7 @@ public class B_orderDAO implements B_orderDAO_interface {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(UP_GIVE_STAR);
-			
+
 			pstmt.setDouble(1, givestar);
 			pstmt.setString(2, bookingno);
 
@@ -160,12 +159,11 @@ public class B_orderDAO implements B_orderDAO_interface {
 				}
 			}
 		}
-		
+
 	}
-	
-	/************************更新評分 by Sheng**************************/
-	
-	
+
+	/************************ 更新評分 by Sheng **************************/
+
 	@Override
 	public B_orderVO findByPrimaryKey(String bookingno) {
 		B_orderVO orderVO = null;
@@ -229,6 +227,73 @@ public class B_orderDAO implements B_orderDAO_interface {
 				}
 			}
 		}
+		return orderVO;
+	}
+
+	@Override
+	public B_orderVO findByPrimaryKey3(String storeno, Date bookingdate, String timeperiod) {
+		B_orderVO orderVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ONE_PEOPLE);
+			pstmt.setString(1, storeno);
+			pstmt.setDate(2, bookingdate);
+			pstmt.setString(3, timeperiod);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				orderVO = new B_orderVO();
+				orderVO.setPeople(rs.getInt("people_sum"));
+//	    orderVO.setBookingno(rs.getString("booking_no"));
+//	    orderVO.setMemno(rs.getString("mem_no"));
+//	    orderVO.setStoreno(rs.getString("store_no"));
+//	    orderVO.setGroupno(rs.getString("group_no"));
+//	    orderVO.setBookingdate(rs.getDate("booking_date"));
+//	    orderVO.setTimeperiod(rs.getString("time_period"));
+//	    orderVO.setPeople(rs.getInt("people"));
+//	    orderVO.setBookingstatus(rs.getInt("booking_status"));
+//	    orderVO.setAttendstatus(rs.getInt("attend_status"));
+//	    orderVO.setGivestar(rs.getDouble("give_star"));
+//	    orderVO.setOrdercommit(rs.getTimestamp("order_commit"));
+			}
+
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
 		return orderVO;
 	}
 
@@ -300,11 +365,11 @@ public class B_orderDAO implements B_orderDAO_interface {
 	public List<B_orderVO> findByPrimaryKey2(String number) {
 		B_orderVO orderVO = null;
 		List<B_orderVO> list = new ArrayList<B_orderVO>();
-		
+
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+
 		try {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
@@ -314,10 +379,10 @@ public class B_orderDAO implements B_orderDAO_interface {
 //			String theFirst = Character.toString(firstWord);
 
 			// 如果以店家查找的訂位
-			if (number.charAt(0)=='S') {
+			if (number.charAt(0) == 'S') {
 				pstmt = con.prepareStatement(GET_ONE_STORE);
 				// 如果以會員查找的訂位
-			} else if (number.charAt(0)=='M') {
+			} else if (number.charAt(0) == 'M') {
 				pstmt = con.prepareStatement(GET_ONE_MEMBER);
 			}
 			pstmt.setString(1, number);
@@ -337,14 +402,14 @@ public class B_orderDAO implements B_orderDAO_interface {
 				orderVO.setBookingstatus(rs.getInt("booking_status"));
 				orderVO.setAttendstatus(rs.getInt("attend_status"));
 				orderVO.setGivestar(rs.getDouble("give_star"));
-				
+
 				java.text.DateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 				String str = df.format(rs.getTimestamp("order_commit"));
 //				System.out.println(str);
 				orderVO.setOrdercommit(java.sql.Timestamp.valueOf(str));
-				
+
 //				orderVO.setOrdercommit(rs.getTimestamp("order_commit"));
-				
+
 				list.add(orderVO);
 			}
 
@@ -425,7 +490,7 @@ public class B_orderDAO implements B_orderDAO_interface {
 //		System.out.println("---------------------");
 //
 //		
-		//getALL 查詢全部
+		// getALL 查詢全部
 //		List<B_orderVO> list = dao.getAll();
 //		for(B_orderVO order4 :list) {
 //		System.out.println(order4.getBookingno() + ",");
@@ -441,24 +506,22 @@ public class B_orderDAO implements B_orderDAO_interface {
 //		System.out.println(order4.getOrdercommit());
 //		System.out.println("--------------------------------------------");
 //		}
-		
+
 		List<B_orderVO> list = dao.findByPrimaryKey2("SM00000001");
-		for(B_orderVO order4 :list) {
-		System.out.println(order4.getBookingno() + ",");
-		System.out.println(order4.getMemno() + ",");
-		System.out.println(order4.getStoreno() + ",");
-		System.out.println(order4.getGroupno() + ",");
-		System.out.println(order4.getBookingdate() + ",");
-		System.out.println(order4.getTimeperiod() + ",");
-		System.out.println(order4.getPeople() + ",");
-		System.out.println(order4.getBookingstatus() + ",");
-		System.out.println(order4.getAttendstatus() + ",");
-		System.out.println(order4.getGivestar());
-		System.out.println(order4.getOrdercommit());
-		System.out.println("-----------------------------------------");
+		for (B_orderVO order4 : list) {
+			System.out.println(order4.getBookingno() + ",");
+			System.out.println(order4.getMemno() + ",");
+			System.out.println(order4.getStoreno() + ",");
+			System.out.println(order4.getGroupno() + ",");
+			System.out.println(order4.getBookingdate() + ",");
+			System.out.println(order4.getTimeperiod() + ",");
+			System.out.println(order4.getPeople() + ",");
+			System.out.println(order4.getBookingstatus() + ",");
+			System.out.println(order4.getAttendstatus() + ",");
+			System.out.println(order4.getGivestar());
+			System.out.println(order4.getOrdercommit());
+			System.out.println("-----------------------------------------");
 		}
 	}
-
-	
 
 }

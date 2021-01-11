@@ -2,26 +2,38 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.store.model.*"%>
+<%@ page import="com.food_list.model.*"%>
 <html>
 <head>
  
- <title>Mode II 範例程式 - Eshop.jsp</title>
+ <title>購物車 - Eshop.jsp</title>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/front-customer-end/shopping/css/ShoppingCart.css">
 </head>
 <body>
-<%= request.getParameter("store_no") %><br>
+
+
+
 <% 
-	String store_no = request.getParameter("store_no");
+	String store_no="";
+	if(session.getAttribute("store_no")==null){
+		 store_no = request.getParameter("store_no");
+	}else{
+		 store_no =(String) session.getAttribute("store_no");
+	}
+	System.out.println(store_no);
+	String stroe_Name = new Store_MemService().getOneStore_Mem(store_no).getStore_name();
+	
 	Food_ListService food_listSvc = new Food_ListService();
 	List<Food_ListVO> list = food_listSvc.getAllFood(store_no);
 	pageContext.setAttribute("list", list);
 	
 %>
+
 <img src="<%= request.getContextPath() %>/front-customer-end/shopping/images/tomcat.gif"> <font size="+3">網路書店：（EShop.jsp）</font>
 <hr>
 <table id="table-1">
   <tr> 
-    <th width="200">餐點名稱</th><th width="100">餐點圖片</th><th width="100">售價</th><th width="100">餐點簡介</th>
+    <th width="150">餐點名稱</th><th width="100">餐點圖片</th><th width="100">售價</th><th width="150">餐點簡介</th>
     <th width="120">數量</th><th width="120"><img src="<%= request.getContextPath() %>/front-customer-end/shopping/images/shopping-cart.png" width="45px" height="35px"></th>
   </tr></table>
  
@@ -38,16 +50,17 @@
 
 	<c:forEach var="food_listVO" items="${list}">
 	<form name="shoppingForm" action="<%=request.getContextPath()%>/shopping/shopping.do" method="POST">
+	<input type="hidden" name="store_no" value="<%=request.getParameter("store_no")%>">
 		<table><tr>
-		<td width="200"><div align="center">${food_listVO.getFood_name()}</div></td>
-		<td width="100"><div align="center"></div></td>
+		<td width="150"><div align="center">${food_listVO.getFood_name()}</div></td>
+		<td width="100"><div align="center">${food_listVO.getFood_no()}</div></td>
     	<td width="100"><div align="center">${food_listVO.getFood_price()}</div></td>
-    	<td width="100"><div align="center">${food_listVO.getFood_info()}</div></td>
+    	<td width="150"><div align="center">${food_listVO.getFood_info()}</div></td>
     	<td width="120"><div align="center">數量：<input type="text" name="quantity" size="3" value=1></div></td>
     	<td width="120"><div align="center">     <input type="submit" class="button" value="放入購物車"> </div></td>
 	</tr></table>
 		<input type="hidden" name="food_no" value="${food_listVO.getFood_no()}">
-		<input type="hidden" name="store_no" value="${food_listVO.getStore_no()}">
+<%-- 		<input type="hidden" name="store_no" value="${food_listVO.getStore_no()}"> --%>
 		<input type="hidden" name="name" value="${food_listVO.getFood_name()}">
       	<input type="hidden" name="price" value="${food_listVO.getFood_price()}">
       	<input type="hidden" name="action" value="ADD">

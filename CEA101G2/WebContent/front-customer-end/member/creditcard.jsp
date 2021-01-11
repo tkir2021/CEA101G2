@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <title>credit card</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-    <link rel="stylesheet" href="css/credit card.css">
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/front-customer-end/member/css/credit card.css">
 </head>
 
 <body>
@@ -136,14 +136,14 @@
                         </div>
                     </div>
                 </div>
-                <button class="card-form__button">
+                <button class="card-form__button" onclick="window.open('<%=request.getContextPath() %>/front-customer-end/member/memcharge.jsp')">
                     Submit
                 </button>
             </div>
             <!-- partial -->
             <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js'></script>
             <script src='https://unpkg.com/vue-the-mask@0.11.1/dist/vue-the-mask.js'></script>
-            <script src="js/credit card.js"></script>
+            <script src="<%=request.getContextPath() %>/front-customer-end/member/js/credit card.js"></script>
 </body>
 
 </html>

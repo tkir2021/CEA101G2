@@ -152,3 +152,7 @@
         .tabs .tab-2:last-child [type="radio"]:checked+div {
             margin-left: -100%;
         }
+        
+        .footer{
+        	top:0!important;
+        }

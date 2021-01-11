@@ -24,12 +24,13 @@
 	%>
 	<tr>
 		<td width="200"><%=order.getName()%>     </td>
-		<td width="100"></td>
+		<td width="100"><%=order.getFood_no()%>	 </td>
 		<td width="100"><%=order.getPrice()%>    </td>
 		<td width="120"><%=order.getQuantity()%> </td>
 		
         <td width="120">
           <form name="deleteForm" action="<%=request.getContextPath()%>/shopping/shopping.do" method="POST">
+          <input type="hidden" name="store_no" value="<%=request.getParameter("store_no")%>">
               <input type="hidden" name="action"  value="DELETE">
               <input type="hidden" name="del" value="<%= index %>">
               <input type="submit" value="刪 除" class="button">
@@ -39,6 +40,7 @@
 </table>
 <p>
           <form name="checkoutForm" action="<%=request.getContextPath()%>/shopping/shopping.do" method="POST">
+          	  <input type="hidden" name="store_no" value="<%=request.getParameter("store_no")%>">
               <input type="hidden" name="action"  value="CHECKOUT"> 
               <input type="submit" value="付款結帳" class="button">
           </form>

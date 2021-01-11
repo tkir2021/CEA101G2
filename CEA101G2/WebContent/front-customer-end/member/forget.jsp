@@ -2,8 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.mem.model.*"%>
+
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="zh-tw">
+<%@ include file="/front-customer-end/member/header.file" %>
 
 <head>
     <meta charset="UTF-8">
@@ -12,10 +14,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>forget</title>
-    <!-- ↑↑↑↑請記得修改title為自己製作頁面的名稱↑↑↑ -->
     <!-- css引用 -->
     <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
-    <!-- <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"> -->
     <link rel="stylesheet" href="css/Header_Footer.css" type="text/css">
     <link rel="icon" href="img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="css/forget.css">
@@ -23,50 +23,8 @@
 </head>
 
 <body>
-    <!-- Page Preloder -->
-    <div id="preloder">
-        <div class="loader"></div>
-        <img class="loaderpic" src="img/logo-07.png" alt="">
-    </div>
-    <!-- ===========================================Header====================================== -->
-    <header class="header">
-        <div class="header__logo">
-            <a href="./index.html"><img src="img/logo.png" alt=""></a>
-        </div>
-        </div>
-        <div class="header__nav">
-            <nav class="header__menu mobile-menu">
-                <ul>
-                    <li><a href="./blog.html">會員專區</a>
-                        <ul class="dropdown">
-                            <li><a href="./blog-details.html">我的行事曆</a></li>
-                            <li><a href="./blog-details.html">我要加值</a></li>
-                            <li><a href="./blog-details.html">我最愛的餐廳</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">我要揪團</a>
-                        <ul class="dropdown">
-                            <li><a href="./about.html">瀏覽揪團</a></li>
-                            <li><a href="./blog-details.html">我的揪團</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">店家專區</a>
-                        <ul class="dropdown">
-                            <li><a href="./about.html">店家資料管理</a></li>
-                            <li><a href="./blog-details.html">我的行事曆</a></li>
-                            <li><a href="./blog-details.html">商店管理</a></li>
-                            <li><a href="./blog-details.html">我的帳務</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
-            <div class="header__menu__right">
-                <!-- <a href="#" class="primary-btn" title="註冊會員"><i class="fa fa-plus"></i>加入我們</a> -->
-                <a href="#" class="login-btn" title="我要登入"><i class="fa fa-user"></i></a>
-            </div>
-        </div>
-        </div>
-    </header>
+    
+    
     <!-- =======================================Content========================================== -->
     <section>
         <!-- 以下三行div為bootstrap的格線語法，請不要新增屬性、id，請參考格線語法自行更改 ((RWD課程應該會上))-->
@@ -136,18 +94,10 @@
         </div>
         </div>
     </footer>
-    <!-- footer end 以上內容待置換-->
     <!-- JS引用 -->
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/Preloader.js"></script>
-    <!-- 神的指示，感謝輯神 -->
-    <!-- <script>
-        window.addEventListener("scroll", function() {
-            let opac = "rgba(34, 39, 54," + ((window.scrollY + 62.5) / 125).toString() + ")";
-            $(".header").css("background-color", opac);
-        });
-</script> -->
-    <!-- 神的指示，感謝輯神 -->
+    <script src="<%=request.getContextPath() %>/front-customer-end/member/js/jquery-3.3.1.min.js"></script>
+    <script src="<%=request.getContextPath() %>/front-customer-end/member/js/Preloader.js"></script>
+    
 </body>
 
 </html>

@@ -18,8 +18,7 @@ public class OrderDetailJDBCDAO implements OrderDetailDAO_interface {
 	private static final String UPDATE = "UPDATE ORDER_DETAIL set food_no=?, food_scale=?, quantity=?, food_price=?, total=? where order_no=?";
 	private static final String DELETE = "DELETE FROM ORDER_DETAIL where order_no = ?";
 	private static final String GET_ONE_STMT = "SELECT order_no, food_no, food_scale, quantity, food_price, total FROM ORDER_DETAIL where order_no = ?";
-	private static final String GET_ALL_STMT = 
-			"SELECT order_no, food_no, food_scale, quantity, food_price, total FROM ORDER_DETAIL order by order_no";
+	private static final String GET_ALL_STMT = "SELECT order_no, food_no, food_scale, quantity, food_price, total FROM ORDER_DETAIL order by order_no";
 	
 	@Override
 	public void insert(OrderDetailVO orderDetailVO) {
@@ -110,7 +109,53 @@ public class OrderDetailJDBCDAO implements OrderDetailDAO_interface {
 		}
 
 	}
+	
+	 /************************購物車：新增訂餐明細 by Sheng*************************/
+	@Override
+	public void updateByShopping(OrderDetailVO orderDetailVO, Connection con) {
+		PreparedStatement pstmt = null;
 
+		try {
+
+			pstmt = con.prepareStatement(INSERT_STMT);
+
+			pstmt.setString(1, orderDetailVO.getOrder_no());
+			pstmt.setString(2, orderDetailVO.getFood_no());
+			pstmt.setString(3, orderDetailVO.getFood_scale());
+			pstmt.setInt(4, orderDetailVO.getQuantity());
+			pstmt.setInt(5, orderDetailVO.getFood_price());
+			pstmt.setInt(6, orderDetailVO.getTotal());
+			pstmt.executeUpdate();
+
+		} catch (SQLException se) {
+			if (con != null) {
+				try {
+					// 3●設定於當有exception發生時之catch區塊內
+					System.err.print("Transaction is being ");
+					System.err.println("rolled back from OrderDetail");
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. " + excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. "	+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			
+		}
+		
+		
+	}
+	 /************************購物車：新增訂餐明細 by Sheng*************************/
+	
+	
 	@Override
 	public void delete(String order_no) {
 		Connection con = null;
@@ -330,4 +375,6 @@ public class OrderDetailJDBCDAO implements OrderDetailDAO_interface {
 //			System.out.println("---------------------");
 //		}
 	}
+
+	
 }

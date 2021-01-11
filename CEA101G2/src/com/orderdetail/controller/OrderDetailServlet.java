@@ -2,9 +2,9 @@ package com.orderdetail.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Base64;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Base64;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,12 +16,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.food_list.model.Food_ListService;
 import com.orderdetail.model.OrderDetailService;
 import com.orderdetail.model.OrderDetailVO;
-import com.ordermaster.model.OrderMasterService;
-import com.ordermaster.model.OrderMasterVO;
-import com.store.model.Food_ListService;
-import com.store.model.Store_MemService;
 
 public class OrderDetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

@@ -1,6 +1,11 @@
 package com.mem.model;
 
 import java.util.*;
+
+import com.orderdetail.model.OrderDetailVO;
+import com.ordermaster.model.OrderMasterService;
+import com.ordermaster.model.OrderMasterVO;
+
 import java.sql.*;
 
 public class Mem_DataJDBCDAO implements Mem_DataDAO_interface {
@@ -18,6 +23,15 @@ public class Mem_DataJDBCDAO implements Mem_DataDAO_interface {
 	private static final String UPDATE = "UPDATE MEM_DATA SET MEM_PWD=?, MEM_NAME=?, MEN_PHONE=?, MEM_MAIL=?,MEM_IMG=? WHERE MEM_NO = ?";
 	private static final String UP_STATUS = "UPDATE MEM_DATA SET MEM_AUTH=? WHERE MEM_ACCT= ?";
 	private static final String UPDATE_AUTH = "UPDATE MEM_DATA set MEM_AUTH=? where MEM_NO = ?";
+	/************************購物車：更新會員儲值金 by Sheng*************************/
+	private static final String UPDATE_Deposit_Shopping = "UPDATE MEM_DATA SET DEPOSIT=?, CONSUME_TIMES=? WHERE MEM_NO = ?";
+	/************************購物車：更新會員儲值金 by Sheng*************************/
+	
+	/************************儲值金 by 宏哥*************************/
+	private static final String UPDATE_DEPOSIT = "UPDATE MEM_DATA set DEPOSIT=? where MEM_NO = ?";
+	/************************儲值金 by 宏哥*************************/
+	
+	
 
 	@Override
 	public void insert(Mem_DataVO mem_dataVO) {
@@ -80,19 +94,6 @@ public class Mem_DataJDBCDAO implements Mem_DataDAO_interface {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(UPDATE);
-
-//			System.out.println(mem_dataVO.getMem_no());
-//			System.out.println(mem_dataVO.getMem_grade());
-//			System.out.println(mem_dataVO.getMem_acct());
-//			System.out.println(mem_dataVO.getMem_pwd());
-//			System.out.println(mem_dataVO.getMem_name());
-//			System.out.println(mem_dataVO.getMen_phone());
-//			System.out.println(mem_dataVO.getMem_mail());
-//			System.out.println(mem_dataVO.getMem_img());
-//			System.out.println(mem_dataVO.getMem_auth());
-//			System.out.println(mem_dataVO.getReport_count());
-//			System.out.println(mem_dataVO.getConsume_times());
-//			System.out.println(mem_dataVO.getDeposit());	
 
 			pstmt.setString(1, mem_dataVO.getMem_pwd());
 			pstmt.setString(2, mem_dataVO.getMem_name());
@@ -170,6 +171,8 @@ public class Mem_DataJDBCDAO implements Mem_DataDAO_interface {
 		}
 	}
 
+	
+	
 	@Override
 	public void updateAuth(Mem_DataVO mem_dataVO) {
 
@@ -212,6 +215,121 @@ public class Mem_DataJDBCDAO implements Mem_DataDAO_interface {
 		}
 	}
 
+	/************************購物車：更新會員儲值金 by Sheng*************************/
+	@Override
+	public void updateDeposit_ByShopping(Mem_DataVO mem_dataVO, OrderMasterVO orderMasterVO, List<OrderDetailVO> list) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			
+			// 1●設定於 pstm.executeUpdate()之前
+    		con.setAutoCommit(false);
+    		
+			//更新會員儲值扣款
+			pstmt = con.prepareStatement(UPDATE_Deposit_Shopping);
+			pstmt.setInt(1, mem_dataVO.getDeposit());
+			pstmt.setInt(2, mem_dataVO.getConsume_times());
+			pstmt.setString(3, mem_dataVO.getMem_no());
+			pstmt.executeUpdate();
+
+			//新增訂餐主檔
+			OrderMasterService orderMasterSvc = new OrderMasterService();
+			orderMasterSvc.updateByShopping(orderMasterVO, list, con);
+			
+			
+			con.commit();
+			con.setAutoCommit(true);
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			if (con != null) {
+				try {
+					// 3●設定於當有exception發生時之catch區塊內
+					System.err.print("Transaction is being ");
+					System.err.println("rolled back from Mem_Data");
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. "
+							+ excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+	}
+	/************************購物車：更新會員儲值金 by Sheng*************************/
+	
+	
+	/************************儲值金 by 宏哥*************************/
+	@Override
+	public void updateDeposit(Mem_DataVO mem_dataVO) {
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(UPDATE_DEPOSIT);						
+			pstmt.setInt(1, mem_dataVO.getDeposit());
+			pstmt.setString(2, mem_dataVO.getMem_no());
+			
+			pstmt.executeUpdate();
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
+	/************************儲值金 by 宏哥*************************/
+	
+	
 	@Override
 	public void delete(String MEM_NO) {
 
@@ -552,20 +670,20 @@ public class Mem_DataJDBCDAO implements Mem_DataDAO_interface {
 //		dao.insert(mem_dataVO1); 
 
 		// 修改
-		Mem_DataVO Mem_DataVO2 = new Mem_DataVO();
-		Mem_DataVO2.setMem_no("MM00000019");
-		Mem_DataVO2.setMem_grade(2);
-		Mem_DataVO2.setMem_acct("吳永志");
-		Mem_DataVO2.setMem_pwd("8888");
-		Mem_DataVO2.setMem_name("java之神");
-		Mem_DataVO2.setMen_phone("0988888888");
-		Mem_DataVO2.setMem_mail("8888888@yahoo.com.tw");
-		Mem_DataVO2.setMem_img(null);
-		Mem_DataVO2.setMem_auth(2);
-		Mem_DataVO2.setReport_count(0);
-		Mem_DataVO2.setConsume_times(100);
-		Mem_DataVO2.setDeposit(1000);
-		dao.update(Mem_DataVO2);
+//		Mem_DataVO Mem_DataVO2 = new Mem_DataVO();
+//		Mem_DataVO2.setMem_no("MM00000019");
+//		Mem_DataVO2.setMem_grade(2);
+//		Mem_DataVO2.setMem_acct("吳永志");
+//		Mem_DataVO2.setMem_pwd("8888");
+//		Mem_DataVO2.setMem_name("java之神");
+//		Mem_DataVO2.setMen_phone("0988888888");
+//		Mem_DataVO2.setMem_mail("8888888@yahoo.com.tw");
+//		Mem_DataVO2.setMem_img(null);
+//		Mem_DataVO2.setMem_auth(2);
+//		Mem_DataVO2.setReport_count(0);
+//		Mem_DataVO2.setConsume_times(100);
+//		Mem_DataVO2.setDeposit(1000);
+//		dao.update(Mem_DataVO2);
 
 		// 刪除
 //		dao.delete("MM00000041");
@@ -592,24 +710,24 @@ public class Mem_DataJDBCDAO implements Mem_DataDAO_interface {
 //		System.out.println("---------------------");
 
 		// 查詢NoImg
-		Mem_DataVO Mem_DataVO3 = dao.findByAccNoImg("CEA101C2");
-
-		if (Mem_DataVO3 == null) {
-			System.out.println("No Data");
-			return;
-		}
-		System.out.print(Mem_DataVO3.getMem_no() + ",");
-		System.out.print(Mem_DataVO3.getMem_grade() + ",");
-		System.out.print(Mem_DataVO3.getMem_acct() + ",");
-		System.out.print(Mem_DataVO3.getMem_pwd() + ",");
-		System.out.print(Mem_DataVO3.getMem_name() + ",");
-		System.out.print(Mem_DataVO3.getMen_phone() + ",");
-		System.out.print(Mem_DataVO3.getMem_mail() + ",");
-		System.out.print(Mem_DataVO3.getMem_auth() + ",");
-		System.out.print(Mem_DataVO3.getReport_count() + ",");
-		System.out.print(Mem_DataVO3.getConsume_times() + ",");
-		System.out.println(Mem_DataVO3.getDeposit());
-		System.out.println("---------------------");
+//		Mem_DataVO Mem_DataVO3 = dao.findByAccNoImg("CEA101C2");
+//
+//		if (Mem_DataVO3 == null) {
+//			System.out.println("No Data");
+//			return;
+//		}
+//		System.out.print(Mem_DataVO3.getMem_no() + ",");
+//		System.out.print(Mem_DataVO3.getMem_grade() + ",");
+//		System.out.print(Mem_DataVO3.getMem_acct() + ",");
+//		System.out.print(Mem_DataVO3.getMem_pwd() + ",");
+//		System.out.print(Mem_DataVO3.getMem_name() + ",");
+//		System.out.print(Mem_DataVO3.getMen_phone() + ",");
+//		System.out.print(Mem_DataVO3.getMem_mail() + ",");
+//		System.out.print(Mem_DataVO3.getMem_auth() + ",");
+//		System.out.print(Mem_DataVO3.getReport_count() + ",");
+//		System.out.print(Mem_DataVO3.getConsume_times() + ",");
+//		System.out.println(Mem_DataVO3.getDeposit());
+//		System.out.println("---------------------");
 
 //		// 查詢
 //		List<Mem_DataVO> list = dao.getAll();
@@ -629,5 +747,7 @@ public class Mem_DataJDBCDAO implements Mem_DataDAO_interface {
 //			System.out.println();
 //      }
 	}
+
+	
 
 }

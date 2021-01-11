@@ -1,9 +1,11 @@
 package com.ordermaster.model;
 
+import java.sql.Connection;
 import java.sql.Date;
 import java.util.List;
 
 import com.booking.model.B_orderVO;
+import com.orderdetail.model.OrderDetailVO;
 
 public class OrderMasterService {
 
@@ -59,6 +61,11 @@ public class OrderMasterService {
 		return orderMasterVO;
 	}
 	
+	/************************購物車：新增訂餐主檔 by Sheng*************************/
+	public void updateByShopping(OrderMasterVO orderMasterVO, List<OrderDetailVO> list, Connection con) {
+		dao.updateByShopping(orderMasterVO, list, con);		
+	}
+	
 	/************************更新評分 by Sheng*************************/
 	public B_orderVO upGivestar(String order_no, double om_givestar) {
 		B_orderVO b_orderVO = new B_orderVO();
@@ -68,8 +75,6 @@ public class OrderMasterService {
 		
 		return b_orderVO;
 	}
-	/************************更新評分 by Sheng*************************/
-	
 	
 	public void deleteOrderNo(String order_no) {
 		dao.delete(order_no);
@@ -79,12 +84,10 @@ public class OrderMasterService {
 		return dao.findByPrimaryKey(order_no);
 	}
 	
-	
 	/************************取得訂餐資料 by Sheng*************************/
 	public List<OrderMasterVO> findByNumber(String number){
 		return dao.findByNumber(number);
 	}
-	/************************取得訂餐資料 by Sheng*************************/
 	
 	public List<OrderMasterVO> getAll(){
 		return dao.getAll();

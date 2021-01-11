@@ -54,7 +54,7 @@ public class EmpLoginCheckServlet extends HttpServlet {
 			}
 						
 			httpSession.setAttribute("emp_no", emp_no); 
-			String url = "/back-end/emp/back_main.jsp";
+			String url = "/back-end/emp/back_emplist.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); 
 			successView.forward(req, res);
 //			System.out.println();

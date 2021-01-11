@@ -65,56 +65,43 @@
     <!-- Sidebar Begin -->
     <div class="filter nice-scroll">
         <div class="dropdown_area">
-            <button class="btn btn-secondary" type="button">
-                員工管理
-            </button>
+            <button class="btn btn-secondary" type="button">員工管理</button>
             <div class="dropdown_content">
                 <a id="test" class="dropdown-item" href="<%=request.getContextPath()%>/back-end/emp/back_emplist.jsp">員工列表</a>
-                <a class="dropdown-item" href="#">員工權限管理</a>
+<!--            <a class="dropdown-item" href="#">員工權限管理</a> -->
             </div>
         </div>
         <div class="dropdown_area">
-            <button class="btn btn-secondary" type="button">
-                會員管理
-            </button>
+            <button class="btn btn-secondary" type="button">會員管理 </button>
             <div class="dropdown_content">
                 <a class="dropdown-item" href="<%=request.getContextPath() %>/back-end/member/mem_back.jsp">一般會員管理</a>
             </div>
         </div>
         <div class="dropdown_area">
-            <button class="btn btn-secondary" type="button">
-                審核管理
-            </button>
+            <button class="btn btn-secondary" type="button">店家管理 </button>
             <div class="dropdown_content">
-                <a class="dropdown-item" href="#">店家管理</a>
-                <a class="dropdown-item" href="#">店家審核</a>
-                <a class="dropdown-item" href="#">商品上架審核</a>
+                 <a class="dropdown-item" href="<%=request.getContextPath() %>/back-end/store/store_arr_my.jsp">店家管理</a>
+                 <a class="dropdown-item" href="<%=request.getContextPath() %>/back-end/store/store_check_my.jsp">店家審核</a>
+                 <a class="dropdown-item" href="<%=request.getContextPath() %>/back-end/store/food_check_my.jsp">商品上架審核</a>
             </div>
         </div>
+<!--         <div class="dropdown_area"> -->
+<!--             <button class="btn btn-secondary" type="button">檢舉管理</button> -->
+<!--             <div class="dropdown_content"> -->
+<!--                 <a class="dropdown-item" href="#">待審核</a> -->
+<%--                 <a class="dropdown-item" href="<%=request.getContextPath()%>/back-end/emp/report/back_reportlist.jsp">檢舉紀錄</a> --%>
+<!--             </div> -->
+<!--         </div> -->
         <div class="dropdown_area">
-            <button class="btn btn-secondary" type="button">
-                檢舉管理
-            </button>
-            <div class="dropdown_content">
-                <a class="dropdown-item" href="#">待審核</a>
-                <a class="dropdown-item" href="<%=request.getContextPath()%>/back-end/emp/report/back_reportlist.jsp">檢舉紀錄</a>
-            </div>
-        </div>
-        <div class="dropdown_area">
-            <button class="btn btn-secondary" type="button">
-                商品管理
-            </button>
+            <button class="btn btn-secondary" type="button">商品管理 </button>
             <div class="dropdown_content">
                 <a class="dropdown-item" href="#">商品規格管理</a>
             </div>
         </div>
         <div class="dropdown_area">
-            <button class="btn btn-secondary" type="button">
-                帳務管理
-            </button>
+            <button class="btn btn-secondary" type="button">帳務管理 </button>
             <div class="dropdown_content">
-                <a class="dropdown-item" href="#">帳務歷史記錄查詢</a>
-                <a class="dropdown-item" href="#">帳務歷史記錄查詢</a>
+                <a class="dropdown-item" href="<%=request.getContextPath() %>/back-end/store/bill_check.jsp">帳務歷史記錄查詢</a>
             </div>
         </div>
     </div>

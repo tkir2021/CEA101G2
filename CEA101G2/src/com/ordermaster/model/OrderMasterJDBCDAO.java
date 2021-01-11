@@ -8,6 +8,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.orderdetail.model.OrderDetailService;
+import com.orderdetail.model.OrderDetailVO;
+
 public class OrderMasterJDBCDAO implements OrderMasterDAO_interface {
 	String driver = "oracle.jdbc.driver.OracleDriver";
 	String url = "jdbc:oracle:thin:@localhost:1521:XE";
@@ -19,6 +22,7 @@ public class OrderMasterJDBCDAO implements OrderMasterDAO_interface {
 	private static final String DELETE = "DELETE FROM ORDER_MASTER where order_no = ?";
 	private static final String GET_ONE_STMT = "SELECT order_no, mem_no, store_no, sale_no, order_date, pay_type, order_total, sale_percent, discount, order_status, take_status, give_star FROM ORDER_MASTER where order_no = ?";
 	private static final String GET_ALL_STMT = "SELECT order_no, mem_no, store_no, sale_no, order_date, pay_type, order_total, sale_percent, discount, order_status, take_status, give_star FROM ORDER_MASTER order by order_no";
+	
 	/************************取得訂餐資料 by Sheng*************************/
 	private static final String GET_STORE_OM = "SELECT order_no, mem_no, store_no, sale_no, order_date, pay_type, order_total, sale_percent, discount, order_status, take_status, give_star FROM ORDER_MASTER WHERE store_no = ?";
 	private static final String GET_MEM_OM = "SELECT order_no, mem_no, store_no, sale_no, order_date, pay_type, order_total, sale_percent, discount, order_status, take_status, give_star FROM ORDER_MASTER WHERE mem_no = ?";
@@ -27,7 +31,9 @@ public class OrderMasterJDBCDAO implements OrderMasterDAO_interface {
 	/************************更新評分 by Sheng*************************/
 	private static final String UP_OM_GIVE_STAR = "UPDATE ORDER_MASTER SET give_star=? WHERE order_no = ?";
 	/************************更新評分 by Sheng*************************/
-
+	
+	
+	
 	@Override
 	public void insert(OrderMasterVO orderMasterVO) {
 		Connection con = null;
@@ -128,6 +134,82 @@ public class OrderMasterJDBCDAO implements OrderMasterDAO_interface {
 		}
 	}
 
+	
+	
+	/************************購物車：新增訂餐主檔 by Sheng*************************/
+	@Override
+	public void updateByShopping(OrderMasterVO orderMasterVO, List<OrderDetailVO> list, Connection con) {
+		
+		PreparedStatement pstmt = null;
+
+		try {
+
+			con = DriverManager.getConnection(url, userid, passwd);
+			
+			// 先新訂餐主檔
+			String cols[] = {"ORDER_NO"};			
+			pstmt = con.prepareStatement(INSERT_STMT, cols);
+			pstmt.setString(1, orderMasterVO.getMem_no());
+			pstmt.setString(2, orderMasterVO.getStore_no());
+			pstmt.setString(3, orderMasterVO.getSale_no());
+			pstmt.setDate(4, orderMasterVO.getOrder_date());
+			pstmt.setInt(5, orderMasterVO.getPay_type());
+			pstmt.setInt(6, orderMasterVO.getOrder_total());
+			pstmt.setFloat(7, orderMasterVO.getSale_percent());
+			pstmt.setFloat(8, orderMasterVO.getDiscount());
+			pstmt.setString(9, orderMasterVO.getOrder_status());
+			pstmt.setString(10, orderMasterVO.getTake_status());
+			pstmt.setFloat(11, orderMasterVO.getGive_star());
+			
+			pstmt.executeUpdate();
+
+			
+			String next_order_no = null;
+			ResultSet rs = pstmt.getGeneratedKeys(); //取出綁定資料庫自增主鍵值	
+			if (rs.next()) {
+				next_order_no = rs.getString(1);
+				System.out.println("自增主鍵值= " + next_order_no +"(剛新增成功的部門編號)");
+			} else {
+				System.out.println("未取得自增主鍵值");
+			}
+			rs.close();
+			
+			
+			//再同時新增訂餐明細
+			OrderDetailService orderDetailSvc = new OrderDetailService();
+			for (OrderDetailVO aODVO : list) {
+				aODVO.setOrder_no(next_order_no) ;
+				orderDetailSvc.updateByShopping(aODVO,con);
+			}
+			
+			// Handle any driver errors
+		} catch (SQLException se) {
+			if (con != null) {
+				try {
+					// 3●設定於當有exception發生時之catch區塊內
+					System.err.print("Transaction is being ");
+					System.err.println("rolled back from OrderMaster");
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. " + excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			
+		}
+	}
+
+	/************************購物車：新增訂餐主檔 by Sheng*************************/
+	
 	
 	
 	/************************更新評分 by Sheng**************************/

@@ -1,0 +1,265 @@
+        /*---------------------
+  Listing
+-----------------------*/
+        /*餐廳區塊*/
+        .listRestaurant {
+            width: 972px;
+            height: 1000px !important;
+            text-align: center;
+            margin: 10px auto;
+            height: fit-content;
+        }
+
+        /*粉紅色小圖*/
+        .small {
+            position: relative;
+            top: -36px;
+            float: left;
+            width: 50px;
+        }
+
+        .nice-scroll {
+            height: 100%;
+            overflow-y: hidden;
+        }
+
+        .listing__text__top {
+            overflow: hidden;
+            margin-bottom: 25px;
+        }
+
+        .listing__text__top__left {
+            float: left;
+        }
+
+        .listing__text__top__left h5 {
+            font-size: 20px;
+            color: #323232;
+            font-weight: 600;
+            display: inline-block;
+            margin-right: 15px;
+        }
+
+        .listing__text__top__left span {
+            font-size: 15px;
+            color: #707070;
+            display: inline-block;
+        }
+
+        .listing__text__top__right {
+            font-size: 15px;
+            color: #323232;
+            float: right;
+        }
+
+        .listing__text__top__right i {
+            font-size: 16px;
+            margin-left: 6px;
+        }
+
+        .listing {
+            width: 55%;
+            height: 100%;
+            padding: 0 40px;
+            padding-top: 140px;
+            overflow-y: auto;
+            float: left;
+        }
+
+        .listing .listing__list {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            margin-right: -30px;
+        }
+
+        .listing .listing__list .listing__item {
+            max-width: calc(50% - 30px);
+            float: left;
+            margin-right: 30px;
+            -webkit-box-flex: 0;
+            -ms-flex: 0 0 50%;
+            flex: 0 0 50%;
+            width: 100%;
+            height: 100%;
+        }
+
+        .listing__item {
+            -webkit-box-shadow: 0px 5px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 5px 30px rgba(0, 0, 0, 0.1);
+            margin: 0 10px 30px 10px;
+            width: 304px;
+            display: inline-block;
+            float: left;
+        }
+
+        .listing__item__pic {
+            height: 195px;
+            position: relative;
+            padding-left: 10px;
+        }
+
+        .listing__item__pic img {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            left: 30px;
+            bottom: -30px;
+            border-radius: 50%;
+        }
+
+        .listing__item__pic__tag {
+            font-size: 12px;
+            color: #ffffff;
+            background: #f03250;
+            font-weight: 600;
+            display: inline-block;
+            padding: 5px 15px 5px 10px;
+            border-radius: 2px;
+            position: absolute;
+            left: 20px;
+            top: 20px;
+        }
+
+        .listing__item__pic__tag.top_rate {
+            background: #00a7ea;
+        }
+
+        .listing__item__pic__tag.hot_deal {
+            background: #D9D137;
+        }
+
+        .listing__item__pic__btns {
+            position: absolute;
+            right: 20px;
+            bottom: 20px;
+        }
+
+        .listing__item__pic__btns a {
+            font-size: 13px;
+            color: #ffffff;
+            height: 34px;
+            width: 34px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            line-height: 34px;
+            text-align: center;
+            display: inline-block;
+            margin-right: 6px;
+        }
+
+        .listing__item__pic__btns a:last-child {
+            margin-right: 0;
+        }
+
+        .listing__item__text {
+            padding-left: 10px;
+            padding-right: 10px;
+            /*padding-top: 40px;*/
+        }
+
+        .listing__item__text__inside h5 {
+            font-size: 20px;
+            color: #323232;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .listing__item__text__inside ul {
+            margin-bottom: 20px;
+        }
+
+        .listing__item__text__inside ul li {
+            font-size: 15px;
+            color: #323232;
+            list-style: none;
+            line-height: 25px;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .listing__item__text__inside ul li span {
+            color: #A8A8A8;
+            position: absolute;
+            left: 0;
+            top: 5px;
+        }
+
+        .listing__item__text__rating {
+            overflow: hidden;
+            /*margin-bottom: 15px;*/
+        }
+
+        .listing__item__text__rating .listing__item__rating__star {
+            float: left;
+            width: 76px;
+        }
+
+        .listing__item__text__rating .listing__item__rating__star span {
+            font-size: 14px;
+            color: #F09D17;
+            margin-right: -3px;
+        }
+
+        .listing__item__text__rating .listing__item__rating__star span:last-child {
+            margin-right: 0;
+        }
+
+        .listing__item__text__rating h6 {
+            font-size: 15px;
+            color: #f03250;
+            font-weight: 600;
+            float: right;
+        }
+
+        .listing__item__text__info {
+            padding: 10px 30px;
+            border-top: 1px solid #e1e1e1;
+            overflow: hidden;
+            margin-left: -30px;
+            margin-right: -30px;
+        }
+
+        .listing__item__text__info__left {
+            float: left;
+        }
+
+        .listing__item__text__info__left img {
+            display: inline-block;
+            margin-right: 10px;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+        }
+
+        .listing__item__text__info__left span {
+            font-size: 14px;
+            color: #323232;
+            font-weight: 600;
+        }
+
+        .listing__item__text__info__right {
+            float: right;
+            font-size: 14px;
+            color: #50D437;
+            font-weight: 700;
+            padding-top: 4px;
+        }
+
+        .listing__item__text__info__right.closed {
+            color: #f03250;
+        }
+
+        .listing__map {
+            height: 100%;
+            width: 45%;
+            margin-top: 105px;
+            float: left;
+        }
+
+        .listing__map iframe {
+            width: 100%;
+            height: 100%;
+        }

@@ -59,6 +59,7 @@ public class Mem_DataLoginForgetServlet extends HttpServlet {
 		// 【取得使用者 帳號(mem_acct) 信箱(mem_mail)】
 					String mem_acct = req.getParameter("mem_acct");
 					String mem_mail = req.getParameter("mem_mail");
+					System.out.println(mem_mail);
 
 		// 【檢查該帳號 , 信箱是否有效】
 		for (Mem_DataVO a : mem_dataVO) {
