@@ -60,7 +60,8 @@ public class ShoppingServlet extends HttpServlet {
 				}
 			}
 			
-//			req.setAttribute("store_no", store_no);
+//			session.setAttribute("store_no", store_no);
+			
 			session.setAttribute("shoppingcart", buylist);
 			String url = "/front-customer-end/shopping/EShop.jsp";
 			RequestDispatcher rd = req.getRequestDispatcher(url);
@@ -89,12 +90,6 @@ public class ShoppingServlet extends HttpServlet {
 				
 				list.add(orderDetailVO);
 								
-//				System.out.println(order.getFood_no());
-//				System.out.println(order.getName());
-//				System.out.println(order.getPrice());
-//				System.out.println(order.getQuantity());
-//				System.out.println(total);
-//				System.out.println("===================");
 			}
 
 			String amount = String.valueOf(total);
@@ -123,7 +118,7 @@ public class ShoppingServlet extends HttpServlet {
 			orderMasterVO.setTake_status("1");
 			orderMasterVO.setGive_star(0f);
 			
-			insterData(total, mem_dataVO, orderMasterVO, list);
+			insterData(total, mem_dataVO, orderMasterVO, list, req);
 			session.setAttribute("shoppingcheckout", session.getAttribute("shoppingcart"));
 			session.removeAttribute("shoppingcart");
 			/*********************購物車：insterData********************/
@@ -155,14 +150,15 @@ public class ShoppingServlet extends HttpServlet {
 	
 	
 	
-	private String insterData(Integer total, Mem_DataVO mem_dataVO, OrderMasterVO orderMasterVO, List<OrderDetailVO> list) {
+	private void insterData(Integer total, Mem_DataVO mem_dataVO, OrderMasterVO orderMasterVO, List<OrderDetailVO> list, HttpServletRequest req) {
 		
 		Integer cost = mem_dataVO.getDeposit() - total;
 		Integer consume = mem_dataVO.getConsume_times() + total;
 		
 		//餘額不足
 		if(cost < 0 ) {
-			return "insufficient";
+//			return "insufficient";
+			req.setAttribute("check", "fail");
 		}
 		else {
 			//更新：會員儲值金、訂餐主檔、訂餐明細
@@ -171,7 +167,8 @@ public class ShoppingServlet extends HttpServlet {
 			Mem_DataService mem_dataSvc = new Mem_DataService();
 			mem_dataSvc.updateDeposit_ByShopping(mem_dataVO, orderMasterVO, list);
 			
-			return "OK";
+//			return "OK";
+			req.setAttribute("check", "success");
 		}
 		
 			

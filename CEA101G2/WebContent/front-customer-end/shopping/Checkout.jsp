@@ -1,11 +1,22 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.* , com.shopping.controller.Food"%>
+
 <html>
 <head>
  <title>Mode II 範例程式 - Checkout.jsp</title>
  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/front-customer-end/shopping/css/ShoppingCart.css">
  </head>
 <body>
+
+<%
+	String store_no="";
+	if(session.getAttribute("store_no")==null){
+	 	store_no = request.getParameter("store_no");
+	}else{
+	 	store_no =(String) session.getAttribute("store_no");
+	}
+	
+%>
 <img src="<%=request.getContextPath()%>/front-customer-end/shopping/images/tomcat.gif"> <font size="+3">網路書店 - 結帳：（Checkout.jsp）</font>
 <hr><p>
 
@@ -50,5 +61,20 @@
        
        <p><a href="<%=request.getContextPath()%>/index/index.jsp"><font size="+1">返回首頁</font></a>
 
+
+	<script src="<%=request.getContextPath() %>/front-customer-end/shopping/js/jquery-3.3.1.min.js"></script>
+	<script src="<%=request.getContextPath() %>/front-customer-end/shopping/js/sweetalert.min.js"></script>
+	
+	<script>
+	console.log("${check}");
+	
+	if("${check}" == "fail"){
+    	swal("扣款失敗餘額不足，請進行儲值！", "", "error");
+    }
+    else if("${check}" == "success"){
+    	swal("購買成功！", "", "success");
+    }	
+	
+	</script>
 </body>
 </html>
