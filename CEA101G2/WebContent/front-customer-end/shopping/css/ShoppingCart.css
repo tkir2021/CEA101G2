@@ -69,3 +69,11 @@ a:hover, a:active {
 .button:hover {
     background: orange;
 }
+
+#logo {
+	width: 5%;
+}
+
+#displayImg{
+	width: 50%;
+}

@@ -6,12 +6,12 @@
 <html>
 <head>
  
- <title>購物車 - Eshop.jsp</title>
+ <title>Let's Eat 購物車</title>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/front-customer-end/shopping/css/ShoppingCart.css">
 </head>
 <body>
 
-
+<%= request.getParameter("store_no") %><br>
 
 <% 
 	String store_no="";
@@ -20,7 +20,6 @@
 	}else{
 		 store_no =(String) session.getAttribute("store_no");
 	}
-	System.out.println(store_no);
 	String stroe_Name = new Store_MemService().getOneStore_Mem(store_no).getStore_name();
 	
 	Food_ListService food_listSvc = new Food_ListService();
@@ -29,7 +28,7 @@
 	
 %>
 
-<img src="<%= request.getContextPath() %>/front-customer-end/shopping/images/logo.png"> <font size="+3">網路書店：（EShop.jsp）</font>
+<img id="logo" src="<%= request.getContextPath() %>/front-customer-end/shopping/images/logo.png"> <font size="+3">店家：<%=stroe_Name %></font>
 <hr>
 <table id="table-1">
   <tr> 
@@ -47,18 +46,19 @@
        在更複雜的MVC架構中, 上面第三種寫法, 先以request.getContextPath()方法, 先取得環境(Servlet Context)目錄路徑的寫法,
        將是最佳解決方案
  -->
-
 	<c:forEach var="food_listVO" items="${list}">
 	<form name="shoppingForm" action="<%=request.getContextPath()%>/shopping/shopping.do" method="POST">
 	<input type="hidden" name="store_no" value="<%=request.getParameter("store_no")%>">
-		<table><tr>
-		<td width="150"><div align="center">${food_listVO.getFood_name()}</div></td>
-		<td width="100"><div align="center">${food_listVO.getFood_no()}</div></td>
-    	<td width="100"><div align="center">${food_listVO.getFood_price()}</div></td>
-    	<td width="150"><div align="center">${food_listVO.getFood_info()}</div></td>
-    	<td width="120"><div align="center">數量：<input type="text" name="quantity" size="3" value=1></div></td>
-    	<td width="120"><div align="center">     <input type="submit" class="button" value="放入購物車"> </div></td>
-	</tr></table>
+		<table>
+			<tr>
+			<td width="150"><div align="center">${food_listVO.getFood_name()}</div></td>
+			<td width="100"><div align="center"><img id="displayImg" src="<%=request.getContextPath() %>/food/food.do?food_no=${food_listVO.getFood_no()}&action=getOneImage"></div></td>
+    		<td width="100"><div align="center">${food_listVO.getFood_price()}</div></td>
+    		<td width="150"><div align="center">${food_listVO.getFood_info()}</div></td>
+    		<td width="120"><div align="center">數量：<input type="text" name="quantity" size="3" value=1 pattern="^[1-9]{1}[\d]*$" title="數量不能為0"></div></td>
+    		<td width="120"><div align="center">     <input type="submit" class="button" value="放入購物車"> </div></td>
+		</tr>
+	</table>
 		<input type="hidden" name="food_no" value="${food_listVO.getFood_no()}">
 <%-- 		<input type="hidden" name="store_no" value="${food_listVO.getStore_no()}"> --%>
 		<input type="hidden" name="name" value="${food_listVO.getFood_name()}">
@@ -66,8 +66,8 @@
       	<input type="hidden" name="action" value="ADD">
 	</form>
 	</c:forEach>
-   
-<p> 
+	
+
   <jsp:include page="/front-customer-end/shopping/Cart.jsp" flush="true" />
 </body>
 </html>

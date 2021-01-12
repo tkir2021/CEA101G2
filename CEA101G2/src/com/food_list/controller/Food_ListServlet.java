@@ -355,15 +355,15 @@ public class Food_ListServlet extends HttpServlet {
 				Food_ListService food_ListService = new Food_ListService();
 				Food_ListVO food_ListVO = new Food_ListVO();
 				food_ListVO = food_ListService.getOneFood_List(food_no);
-				byte[] pic = food_ListVO.getFood_img();
+//				byte[] pic = food_ListVO.getFood_img();
+				byte[] pic = null;
 
-//				out.write(pic);
 
 				if (!(food_ListVO.getFood_img() == null)) {
 					pic = food_ListVO.getFood_img();
 					out.write(pic);
 				} else {
-					InputStream in = getServletContext().getResourceAsStream("/front-customer-end/member/images/logo_top.png");
+					InputStream in = getServletContext().getResourceAsStream("/front-store-end/store/img/logo_top.png");
 					byte[] letsEat = new byte[in.available()];
 					in.read(letsEat);
 					out.write(letsEat);
