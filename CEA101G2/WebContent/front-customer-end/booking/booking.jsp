@@ -5,7 +5,7 @@
 <%@ page import="com.store.model.*"%>
 <%@ page import="com.mem.model.*" %>
 <% 
-    String storeno =request.getParameter("store_no");
+    String storeno =(String)session.getAttribute("store_no");
     String account = (String)session.getAttribute("account");
     System.out.println(account);
     

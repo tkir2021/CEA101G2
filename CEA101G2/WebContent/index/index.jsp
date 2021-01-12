@@ -86,29 +86,30 @@
                             <ul>
                                 <li><a href="#position" id="to_position">平台緣起</a>
                                 </li>
-                                <li><a href="./blog.html">會員專區</a>
+                                <li><a href="<%=request.getContextPath() %>/front-customer-end/member/memUpdate.jsp">會員專區</a>
                                     <ul class="dropdown">
-                                        <li><a href="./blog-details.html">我要登入</a></li>
-                                        <li><a href="./blog-details.html">我要加值</a></li>
-                                        <li><a href="./blog-details.html">資料管理</a></li>
-                                        <li><a href="./blog-details.html">訂單查詢及我要評分</a></li>
+                                        <li><a href="<%=request.getContextPath() %>/front-customer-end/member/creditcard.jsp">我要儲值</a></li>
+                                        <li><a href="<%=request.getContextPath() %>/front-customer-end/member/memUpdate.jsp">資料管理</a></li>
+                                        <li><a href="<%=request.getContextPath() %>/front-customer-end/member/memHistory.jsp">訂單查詢及我要評分</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="#">店家專區</a>
+                                <li><a href="<%=request.getContextPath()%>/store/store.do?action=getOne_For_Store&action2=getALL">店家專區</a>
                                     <ul class="dropdown">
-                                        <li><a href="./about.html">店家資料管理</a></li>
-                                        <li><a href="./blog-details.html">我的歷史紀錄</a></li>
-                                        <li><a href="./blog-details.html">商店管理</a></li>
-                                        <li><a href="./blog-details.html">我的帳務</a></li>
+                                    <li><a href="<%=request.getContextPath()%>/front-store-end/store/store_Login.jsp">店家登入</a></li>
+                                        <li><a href="<%=request.getContextPath()%>/front-store-end/store/update_Store_Mem_input.jsp">店家資料管理</a></li>
+                                        <li><a href="<%=request.getContextPath()%>/store/store.do?action=getOne_For_Store&action2=getALL">我的歷史紀錄</a></li>
+                                        <li><a href="<%=request.getContextPath()%>/front-store-end/store/listAllFood_List.jsp" id="to_position">我的餐點</a></li>
+                                        <li><a href="<%=request.getContextPath()%>/front-store-end/store/addFood_List.jsp">餐點上架</a></li>
+                                        <li><a href="<%=request.getContextPath()%>/front-store-end/store/listOneOpenHour.jsp">營業時段管理</a></li>
                                     </ul>
                                 </li>
                             </ul>
                         </nav>
                         <div class="header__menu__right">
-                            <a href="#" class="primary-btn" title="註冊會員"><i class="fa fa-plus"></i>加入我們</a>
-                            <a href="#" class="login-btn" title="我要登入"><i class="fa fa-user"></i></a>
+                            <a href="<%=request.getContextPath() %>/front-customer-end/member/memLogin.jsp" class="primary-btn" title="註冊會員"><i class="fa fa-plus"></i>加入我們</a>
+                            <a href="<%=request.getContextPath() %>/front-customer-end/member/memLogin.jsp" class="login-btn" title="我要登入"><i class="fa fa-user"></i></a>
                             <ul class="login-logout" style="display: none;">
-                   				 <li><a href="./about.html">我要登出</a></li>
+                   				 <li><a href="<%=request.getContextPath() %>/member/member.do?action=logout">我要登出</a></li>
                 			</ul>
                         </div>
                     </div>
@@ -265,7 +266,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-6">
-                    <a href="<%=request.getContextPath() %>/store/store.do?addr=台北&action=getThisStore" class="feature__location__item large-item set-bg" data-setbg="<%=request.getContextPath() %>/index/img/feature-location/taipei.jpg">
+                    <a href="<%=request.getContextPath() %>/mem/search.do?keyword=台北&action=search" class="feature__location__item large-item set-bg" data-setbg="<%=request.getContextPath() %>/index/img/feature-location/taipei.jpg">
                         <div class="feature__location__item__text" data-aos="fade-down">
                             <h5>Taipei</h5>
                             <ul>
@@ -278,21 +279,21 @@
                 <div class="col-lg-6">
                     <div class="row">
                         <div class="col-lg-6 col-md-6">
-                            <a href="<%=request.getContextPath() %>/store/store.do?addr=台中&action=getThisStore" class="feature__location__item set-bg" data-setbg="<%=request.getContextPath() %>/index/img/feature-location/taichung.jpg">
+                            <a href="<%=request.getContextPath() %>/mem/search.do?keyword=台中&action=search" class="feature__location__item set-bg" data-setbg="<%=request.getContextPath() %>/index/img/feature-location/taichung.jpg">
                                 <div class="feature__location__item__text" data-aos="fade-down">
                                     <h5>Taichung</h5>
                                 </div>
                             </a>
                         </div>
                         <div class="col-lg-6 col-md-6">
-                            <a href="<%=request.getContextPath() %>/store/store.do?addr=高雄&action=getThisStore" class="feature__location__item set-bg" data-setbg="<%=request.getContextPath() %>/index/img/feature-location/kaohsiung-2728058__480.jpg">
+                            <a href="<%=request.getContextPath() %>/mem/search.do?keyword=高雄&action=search" class="feature__location__item set-bg" data-setbg="<%=request.getContextPath() %>/index/img/feature-location/kaohsiung-2728058__480.jpg">
                                 <div class="feature__location__item__text" data-aos="fade-down">
                                     <h5>Kaohsiung</h5>
                                 </div>
                             </a>
                         </div>
                     </div>
-                    <a href="<%=request.getContextPath() %>/store/store.do?addr=台南&action=getThisStore" class="feature__location__item set-bg" data-setbg="<%=request.getContextPath() %>/index/img/feature-location/thainan.JPG">
+                    <a href="<%=request.getContextPath() %>/mem/search.do?keyword=台南&action=search" class="feature__location__item set-bg" data-setbg="<%=request.getContextPath() %>/index/img/feature-location/thainan.JPG">
                         <div class="feature__location__item__text" id="position" data-aos="fade-down">
                             <h5>Tainan</h5>
                         </div>
