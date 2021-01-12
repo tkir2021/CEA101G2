@@ -55,7 +55,7 @@
 			<td width="100"><div align="center"><img id="displayImg" src="<%=request.getContextPath() %>/food/food.do?food_no=${food_listVO.getFood_no()}&action=getOneImage"></div></td>
     		<td width="100"><div align="center">${food_listVO.getFood_price()}</div></td>
     		<td width="150"><div align="center">${food_listVO.getFood_info()}</div></td>
-    		<td width="120"><div align="center">數量：<input type="text" name="quantity" size="3" value=1 pattern="^[1-9]{1}[\d]*$" title="數量不能為0"></div></td>
+    		<td width="120"><div align="center">數量：<input type="text" name="quantity" size="3" value=1 pattern="^[1-9]{1}[\d]*$" title="數量不能為0" min=1 max=100></div></td>
     		<td width="120"><div align="center">     <input type="submit" class="button" value="放入購物車"> </div></td>
 		</tr>
 	</table>
