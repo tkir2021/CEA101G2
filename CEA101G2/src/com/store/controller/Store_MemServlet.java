@@ -622,26 +622,27 @@ public class Store_MemServlet extends HttpServlet {
 
 			String storeno = req.getParameter("storeno");
 			System.out.println(storeno);
-			String addr = req.getParameter("addr");
-			System.out.println(addr);
+//			String addr = req.getParameter("addr");
+//			System.out.println(addr);
 			Store_MemService storeSvc = new Store_MemService();
 			List<Store_MemVO> thisStore = new ArrayList<>();
 
 			try {
-				session.setAttribute("store_no", storeno);
 				String url = "/front-customer-end/shopping/EShop.jsp";
-				if (storeno != null) {
+//				if (storeno != null) {
 					thisStore = storeSvc.getAll().stream().filter(s -> s.getStore_no().equals(storeno))
 							.collect(Collectors.toList());						
+					session.setAttribute("store_no", storeno);
 						RequestDispatcher successView = req.getRequestDispatcher(url);
 						successView.forward(req, res);
 
-				} else {
-					thisStore = storeSvc.getAll().stream().filter(s -> s.getAddr().contains(addr))
-							.collect(Collectors.toList());
-						RequestDispatcher successView = req.getRequestDispatcher(url);
-						successView.forward(req, res);
-				}
+//				} else {
+//					thisStore = storeSvc.getAll().stream().filter(s -> s.getAddr().contains(addr))
+//							.collect(Collectors.toList());
+//					session.setAttribute("store_no",thisStore.get(0).getStore_no());
+//						RequestDispatcher successView = req.getRequestDispatcher("/front-customer-end/SearchResult/allRestaurant.jsp");
+//						successView.forward(req, res);
+//				}
 
 				JSONArray jsa = new JSONArray(thisStore);
 				res.setContentType("text/plain");

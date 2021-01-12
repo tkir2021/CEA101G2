@@ -23,7 +23,7 @@
     <!-- ===========================================Header====================================== -->
     <header class="header">
         <div class="header__logo">
-            <a href="./index.html"><img src="<%=request.getContextPath() %>/front-customer-end/member/img/logo.png" alt=""></a>
+            <a href="<%=request.getContextPath() %>/index/index.jsp"><img src="<%=request.getContextPath() %>/front-customer-end/member/img/logo.png" alt=""></a>
         </div>
         </div>
         <div class="header__nav">
