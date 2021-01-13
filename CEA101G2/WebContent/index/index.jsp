@@ -191,8 +191,6 @@
                              <c:forEach var="storeVO" items="${storeSvc.getAllindex()}">
                                 <div class="col-lg-4 col-md-6">
                                 <a href="<%=request.getContextPath() %>/store/store.do?store_no=${storeVO.store_no}&action=getThisStore&location=/front-customer-end/shopping/EShop.jsp">
-<%--                            <a href="<%=request.getContextPath() %>/front-customer-end/shopping/EShop.jsp?store_no=${storeVO.store_no}"> --%>
-<%--            				<input class="storeno" type="hidden" name="storeno" value="${storeVO.store_no}"> --%>
                                 <div class="listing__item">
 										<!-- 店家圖片 -->
                                         <div class="listing__item__pic set-bg" data-setbg="<%=request.getContextPath() %>/store/store.do?store_no=${storeVO.store_no}&action=getOneImage">
