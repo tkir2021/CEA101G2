@@ -616,20 +616,16 @@ public class Store_MemServlet extends HttpServlet {
 		}
 		;
 		/******************************************
-		 * Ajax查該店家20200104by BELLA
+		 * 查該店家20200104by BELLA
 		 ****************************************************/
 		if ("getThisStore".equals(action)) {
-
-			String storeno = req.getParameter("store_no");
-			System.out.println(storeno);
-//			String addr = req.getParameter("addr");
-//			System.out.println(addr);
-			Store_MemService storeSvc = new Store_MemService();
+			String store_no = req.getParameter("store_no");
+			System.out.println(store_no);
 			List<Store_MemVO> thisStore = new ArrayList<>();
 
 			try {
 				String location = req.getParameter("location");						
-					session.setAttribute("store_no", storeno);
+					session.setAttribute("store_no", store_no);
 						RequestDispatcher successView = req.getRequestDispatcher(location);
 						successView.forward(req, res);
 

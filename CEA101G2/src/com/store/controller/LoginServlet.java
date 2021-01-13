@@ -69,7 +69,6 @@ public class LoginServlet extends HttpServlet {
 			response.sendRedirect(request.getContextPath()+"/front-store-end/store/error.jsp");
 		}
 		
-		
 		LoginBean loginBean = new LoginBean();
 		loginBean.setUsername(username);
 		loginBean.setPassword(password);

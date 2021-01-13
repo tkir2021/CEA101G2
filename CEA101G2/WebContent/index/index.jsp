@@ -29,10 +29,8 @@
     <!-- 自定義的CSS -->
     <link rel="stylesheet" href="<%=request.getContextPath() %>/index/css/style_Bella.css" type="text/css">
     <!-- owl -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.0.0-beta.2.4/assets/owl.carousel.min.css">
-    </link>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.0.0-beta.2.4/assets/owl.theme.default.min.css">
-    </link>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.0.0-beta.2.4/assets/owl.carousel.min.css"></link>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.0.0-beta.2.4/assets/owl.theme.default.min.css"></link>
     <!-- AOS 緣起浮動動畫 -->
     <link href="<%=request.getContextPath() %>/index/css/aos.css" rel="stylesheet">
     <!-- 標題圖-->
@@ -192,10 +190,10 @@
                         <jsp:useBean id="storeSvc" scope="page" class="com.store.model.Store_MemService" />
                              <c:forEach var="storeVO" items="${storeSvc.getAllindex()}">
                                 <div class="col-lg-4 col-md-6">
-<%--                            <a href="<%=request.getContextPath() %>/front-customer-end/shopping/EShop.jsp?store_no=${storeVO.store_no}"></a> --%>
-                                <a href="<%=request.getContextPath() %>/store/store.do?store_no=${storeVO.store_no}&action=getThisStore&location=/front-customer-end/shopping/EShop.jsp" ></a>
-           					 	<input class="storeno" type="hidden" name="storeno" value="${storeVO.store_no}">
-                                    <div class="listing__item">
+                                <a href="<%=request.getContextPath() %>/store/store.do?store_no=${storeVO.store_no}&action=getThisStore&location=/front-customer-end/shopping/EShop.jsp">
+<%--                            <a href="<%=request.getContextPath() %>/front-customer-end/shopping/EShop.jsp?store_no=${storeVO.store_no}"> --%>
+<%--            				<input class="storeno" type="hidden" name="storeno" value="${storeVO.store_no}"> --%>
+                                <div class="listing__item">
 										<!-- 店家圖片 -->
                                         <div class="listing__item__pic set-bg" data-setbg="<%=request.getContextPath() %>/store/store.do?store_no=${storeVO.store_no}&action=getOneImage">
                                             <img src="<%=request.getContextPath() %>/index/img/listing/list_icon-4.png" alt="">
@@ -441,7 +439,8 @@
     <!-- 神的指示，感謝輯神 -->
     <script src="<%=request.getContextPath() %>/index/js/aos.js"></script>
     <script>
-        AOS.init(); //套版動畫
+  //套版動畫
+        AOS.init(); 
     </script>
 </body>
 
