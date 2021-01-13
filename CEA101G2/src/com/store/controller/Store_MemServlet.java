@@ -282,7 +282,7 @@ public class Store_MemServlet extends HttpServlet {
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("store_MemVO", store_MemVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				String url = "/front-store-end/store/listOneStore_Mem.jsp";
+				String url = "/front-store-end/store/update_Store_Mem_input.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 

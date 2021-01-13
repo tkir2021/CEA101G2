@@ -32,9 +32,9 @@ public class LoginFilter implements Filter{
 			res.sendRedirect(req.getContextPath() + "/front-customer-end/member/memLogin.jsp");
 			return;
 		} else {
-			System.out.println("======================");
-			System.out.println(req.getRequestURI());
-			System.out.println("======================");
+//			System.out.println("======================");
+//			System.out.println(req.getRequestURI());
+//			System.out.println("======================");
 			chain.doFilter(request, response);
 		}
 	}

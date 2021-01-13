@@ -33,10 +33,27 @@ Store_MemVO store_MemVO = storeSvc.getOneStore_Mem(store_no);
   left:50%;
   margin-left:-100px;
   }
+  
+  footer{
+  top:0px!important;
+  }
+  
+  #send{
+  	margin-left: 650px;
+  }
+  
+  .red{
+   color:red;
+  }
 </style>
 
 </head>
 <body bgcolor='white'>
+<!-- Page Preloder -->
+    <div id="preloder">
+        <img class="loaderpic" src="<%=request.getContextPath() %>/index/img/logo-07.png" alt="">
+        <div class="loader"></div>
+    </div>
 <h3>店家資料修改:</h3>
 <section>
 <%-- 錯誤表列 --%>
@@ -54,77 +71,77 @@ Store_MemVO store_MemVO = storeSvc.getOneStore_Mem(store_no);
 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/store/store.do" name="form1">
 <table>
 	<tr>
-		<td>店家編號:<font color=red><b>*</b></font></td>
+		<td>店家編號:<font color=red></font></td>
 		<td>${storeSvc2.getOneStore_Mem(store_no).store_no}</td>
 	</tr>
 	<tr>
 		<td>登入帳號:</td>
-		<td><input type="TEXT" name="store_acct" size="45" value="<%=store_MemVO.getStore_acct()%>" /></td>
+		<td><input type="TEXT" name="store_acct" size="45" value="<%=store_MemVO.getStore_acct()%>" readonly="true" /></td>
 	</tr>
 	<tr>
-		<td>登入密碼:</td>
+		<td><b class="red">*</b>登入密碼:</td>
 		<td><input type="TEXT" name="store_pwd" size="45"	value="<%=store_MemVO.getStore_pwd()%>" /></td>
 	</tr>
 	<tr>
-		<td>店名:</td>
+		<td><b class="red">*</b>店名:</td>
 		<td><input type="TEXT" name="store_name" size="45" type="text" value="<%=store_MemVO.getStore_name()%>" /></td>
 	</tr>
 	<tr>
-		<td>地址:</td>
+		<td><b class="red">*</b>地址:</td>
 		<td><input type="TEXT" name="addr" size="45"	value="<%=store_MemVO.getAddr()%>" /></td>
 	</tr>
 	<tr>
-		<td>一周營業日:</td>
-		<td><input type="TEXT" name="open_dates" size="45" value="<%=store_MemVO.getOpen_dates()%>" /></td>
+		<td><b class="red">*</b>一周營業日:</td>
+		<td><input type="TEXT" name="open_dates" size="45" placeholder="營業日請設定1，非營業日請設定0。EX：1111111" pattern="^[0-1]{7}[\d]*$" title="只能數字1或0" value="<%=store_MemVO.getOpen_dates()%>" maxlength=7/></td>
 	</tr>
 	
 	<tr>
-		<td>E-mail:</td>
+		<td><b class="red">*</b>E-mail:</td>
 		<td><input type="TEXT" name="email" size="45" value="<%=store_MemVO.getEmail()%>" /></td>
 	</tr>
 	
 	<tr>
-		<td>店家分類:</td>
+		<td><b class="red">*</b>店家分類:</td>
 		<td><input type="TEXT" name="s_category" size="45" value="<%=store_MemVO.getS_category()%>" /></td>
 	</tr>
 	
 	<tr>
-		<td>店家簡介:</td>
+		<td><b class="red">*</b>店家簡介:</td>
 		<td><input type="TEXT" name="store_info" size="45" value="<%=store_MemVO.getStore_info()%>" /></td>
 	</tr>
 	
 	<tr>
 		<td>上架狀態:</td>
-		<td><input type="TEXT" name="upload_status" size="45" value="<%=store_MemVO.getUpload_status()%>" /></td>
+		<td><input type="TEXT" name="upload_status" size="45" value="<%=store_MemVO.getUpload_status()%>" readonly="true" /></td>
 	</tr>
 	
 	<tr>
 		<td>平台權限狀態:</td>
-		<td><input type="TEXT" name="s_permission" size="45" value="<%=store_MemVO.getS_permission()%>" /></td>
+		<td><input type="TEXT" name="s_permission" size="45" value="<%=store_MemVO.getS_permission()%>" readonly="true" /></td>
 	</tr>
 	
 	<tr>
 		<td>累計檢舉評分:</td>
-		<td><input type="TEXT" name="sum_grade" size="45" value="<%=store_MemVO.getSum_grade()%>" /></td>
+		<td><input type="TEXT" name="sum_grade" size="45" value="<%=store_MemVO.getSum_grade()%>" readonly="true" /></td>
 	</tr>
 	
 	<tr>
 		<td>被檢舉次數:</td>
-		<td><input type="TEXT" name="blocked" size="45" value="<%=store_MemVO.getBlocked()%>" /></td>
+		<td><input type="TEXT" name="blocked" size="45" value="<%=store_MemVO.getBlocked()%>" readonly="true" /></td>
 	</tr>
 	
 	<tr>
 		<td>評價總分:</td>
-		<td><input type="TEXT" name="star_total" size="45" value="<%=store_MemVO.getStar_total()%>" /></td>
+		<td><input type="TEXT" name="star_total" size="45" value="<%=store_MemVO.getStar_total()%>" readonly="true" /></td>
 	</tr>
 	
 	<tr>
 		<td>總評價次數:</td>
-		<td><input type="TEXT" name="star_times" size="45" value="<%=store_MemVO.getStar_times()%>" /></td>
+		<td><input type="TEXT" name="star_times" size="45" value="<%=store_MemVO.getStar_times()%>" readonly="true" /></td>
 	</tr>
 	
 	<tr>
-		<td>桌位上限:</td>
+		<td><b class="red">*</b>桌位上限:</td>
 		<td><input type="TEXT" name="table_limit" size="45" value="<%=store_MemVO.getTable_limit()%>" /></td>
 	</tr>
 		
@@ -149,7 +166,7 @@ Store_MemVO store_MemVO = storeSvc.getOneStore_Mem(store_no);
 <br>
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="store_no" value="<%=store_MemVO.getStore_no()%>">
-<input type="submit" value="送出修改"></FORM>
+<input id="send" type="submit" value="送出修改"></FORM>
 </section>
 <%@ include file="footer.file" %>
 </body>

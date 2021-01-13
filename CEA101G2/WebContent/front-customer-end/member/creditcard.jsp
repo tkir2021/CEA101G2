@@ -2,7 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-tw">
+<%@ include file="/front-customer-end/member/header.file" %>
 
 <head>
     <meta charset="UTF-8">
@@ -139,8 +140,10 @@
                 <button class="card-form__button" onclick="window.open('<%=request.getContextPath() %>/front-customer-end/member/memcharge.jsp')">
                     Submit
                 </button>
+            </div></div>
             </div>
             <!-- partial -->
+            <%@ include file="footer.file" %>
             <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js'></script>
             <script src='https://unpkg.com/vue-the-mask@0.11.1/dist/vue-the-mask.js'></script>
             <script src="<%=request.getContextPath() %>/front-customer-end/member/js/credit card.js"></script>

@@ -3,7 +3,11 @@
             background: #f03250;
             font-family: "Source Sans Pro", sans-serif;
             font-size: 16px;
+            height:auto;
         }
+        
+        footer{
+        top:0px!important}
 
         * {
             box-sizing: border-box;
@@ -13,8 +17,8 @@
         }
 
         .wrapper {
-            min-height: 100vh;
-            display: flex;
+/*             min-height: 100vh; */
+/*             display: flex; */
             padding: 50px 15px;
         }
         @media screen and (max-width: 700px), (max-height: 500px) {
