@@ -48,12 +48,27 @@ public class LoginServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		System.out.println(username);
 		
-		Store_MemService storemem = new Store_MemService();
-		   List<Store_MemVO> storeVO = new ArrayList<>();
-		   storeVO=storemem.getAll().stream()
-		     .filter(d -> d.getStore_acct().equals(username))
-		     .collect(Collectors.toList());
-		   String store_no = storeVO.get(0).getStore_no();
+//		Store_MemService storemem = new Store_MemService();
+//		   List<Store_MemVO> storeVO = new ArrayList<>();
+//		   storeVO=storemem.getAll().stream()
+//		     .filter(d -> d.getStore_acct().equals(username))
+//		     .collect(Collectors.toList());
+//		   String store_no = storeVO.get(0).getStore_no();
+		
+		
+		String store_no = null;
+		try {
+			Store_MemService storemem = new Store_MemService();
+			   List<Store_MemVO> storeVO = new ArrayList<>();
+			   storeVO=storemem.getAll().stream()
+			     .filter(d -> d.getStore_acct().equals(username))
+			     .collect(Collectors.toList());
+			   store_no = storeVO.get(0).getStore_no();
+		} catch (IndexOutOfBoundsException e) {
+			// TODO Auto-generated catch block
+			response.sendRedirect(request.getContextPath()+"/front-store-end/store/error.jsp");
+		}
+		
 		
 		LoginBean loginBean = new LoginBean();
 		loginBean.setUsername(username);

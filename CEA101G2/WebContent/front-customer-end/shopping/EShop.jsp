@@ -3,15 +3,16 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.store.model.*"%>
 <%@ page import="com.food_list.model.*"%>
-<html>
+
+<!DOCTYPE html>
+<html lang="zh-tw">
+<%@ include file="/front-customer-end/member/header.file" %>
+
 <head>
- 
- <title>Let's Eat 購物車</title>
+<title>Let's Eat 購物車</title>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/front-customer-end/shopping/css/ShoppingCart.css">
 </head>
 <body>
-
-<%= request.getParameter("store_no") %><br>
 
 <% 
 	String store_no="";
@@ -27,13 +28,16 @@
 	pageContext.setAttribute("list", list);
 	
 %>
-
-<img id="logo" src="<%= request.getContextPath() %>/front-customer-end/shopping/images/logo.png"> <font size="+3">店家：<%=stroe_Name %></font>
-<hr>
+<div class=main>
+<div class="shopname">
+<font size="+3"><%=stroe_Name %></font></div>
+<!-- <hr> -->
+<div>
 <table id="table-1">
   <tr> 
     <th width="150">餐點名稱</th><th width="100">餐點圖片</th><th width="100">售價</th><th width="150">餐點簡介</th>
     <th width="120">數量</th><th width="120"><img src="<%= request.getContextPath() %>/front-customer-end/shopping/images/shopping-cart.png" width="45px" height="35px"></th>
+  
   </tr></table>
  
  <!--  
@@ -52,12 +56,13 @@
 		<table>
 			<tr>
 			<td width="150"><div align="center">${food_listVO.getFood_name()}</div></td>
-			<td width="100"><div align="center"><img id="displayImg" src="<%=request.getContextPath() %>/food/food.do?food_no=${food_listVO.getFood_no()}&action=getOneImage"></div></td>
+			<td width="100"><div align="center"><img class="displayImg" src="<%=request.getContextPath() %>/food/food.do?food_no=${food_listVO.getFood_no()}&action=getOneImage"></div></td>
     		<td width="100"><div align="center">${food_listVO.getFood_price()}</div></td>
     		<td width="150"><div align="center">${food_listVO.getFood_info()}</div></td>
     		<td width="120"><div align="center">數量：<input type="text" name="quantity" size="3" value=1 pattern="^[1-9]{1}[\d]*$" title="數量不能為0" min=1 max=100></div></td>
     		<td width="120"><div align="center">     <input type="submit" class="button" value="放入購物車"> </div></td>
 		</tr>
+		
 	</table>
 		<input type="hidden" name="food_no" value="${food_listVO.getFood_no()}">
 <%-- 		<input type="hidden" name="store_no" value="${food_listVO.getStore_no()}"> --%>
@@ -66,7 +71,8 @@
       	<input type="hidden" name="action" value="ADD">
 	</form>
 	</c:forEach>
-	
+	</div>
+	</div>
 
   <jsp:include page="/front-customer-end/shopping/Cart.jsp" flush="true" />
 </body>
