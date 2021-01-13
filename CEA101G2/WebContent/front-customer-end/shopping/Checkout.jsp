@@ -1,9 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.* , com.shopping.controller.Food"%>
+<%@ page import="com.food_list.model.*"%>
 
 <html>
 <head>
- <title>Mode II 範例程式 - Checkout.jsp</title>
+ <title>餐點結帳</title>
  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/front-customer-end/shopping/css/ShoppingCart.css">
  </head>
 <body>
@@ -39,17 +40,17 @@
 // 			String store_no = order.getStore_no();
 			Integer price = order.getPrice();
 			Integer quantity = order.getQuantity();
+			
 	%>
 	<tr>
 		<td width="200"><%=name%>     </td>
-		<td width="100"><%=food_no %> </td>
+		<td width="100"><img class="displayImg" style="width:40%" src="<%=request.getContextPath() %>/food/food.do?food_no=<%=food_no %>&action=getOneImage"> </td>
 		<td width="100"><%=price%>    </td>
 		<td width="100"><%=quantity%> </td>
 	</tr>
 	<%
 		}
 	%>
-	 
 	
 	<tr>
 		<td colspan="6" style="text-align:right;"> 
@@ -58,20 +59,17 @@
 	</tr>
 </table>
        
-       
        <p><a href="<%=request.getContextPath()%>/index/index.jsp"><font size="+1">返回首頁</font></a>
-
 
 	<script src="<%=request.getContextPath() %>/front-customer-end/shopping/js/jquery-3.3.1.min.js"></script>
 	<script src="<%=request.getContextPath() %>/front-customer-end/shopping/js/sweetalert.min.js"></script>
 	
 	<script>
-	console.log("${check}");
-	
-	if("${check}" == "fail"){
-    	swal("扣款失敗餘額不足，請進行儲值！", "", "error");
+		
+	if("${check}" === "fail"){
+    	swal("扣款失敗！餘額不足，請進行儲值。", "", "error");
     }
-    else if("${check}" == "success"){
+    else if("${check}" === "success"){
     	swal("購買成功！", "", "success");
     }	
 	

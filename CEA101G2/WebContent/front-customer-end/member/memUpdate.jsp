@@ -16,7 +16,6 @@
 
 <!DOCTYPE html>
 <html lang="zh-tw">
-<%-- <%@ include file="/front-customer-end/member/header.file" %> --%>
 <%@ include file="/front-customer-end/member/header.file" %>
 
 <head>

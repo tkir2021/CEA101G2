@@ -8,9 +8,9 @@
 <body><br>
    <% @SuppressWarnings("unchecked")
    Vector<Food> buylist = (Vector<Food>) session.getAttribute("shoppingcart");%>
-<%if (buylist != null && (buylist.size() > 0)) {%>
+   <%if (buylist != null && (buylist.size() > 0)) {%>
 
-<img src="<%=request.getContextPath()%>/front-customer-end/shopping/images/tomcat.gif"> <font size="+3">目前購物車的內容如下：（Cart.jsp）</font>
+<font size="+3">目前購物車的內容如下：</font>
 
 <table id="table-1">
     <tr> 
@@ -24,7 +24,7 @@
 	%>
 	<tr>
 		<td width="200"><%=order.getName()%>     </td>
-		<td width="100"><%=order.getFood_no()%>	 </td>
+		<td width="100"><img class="displayImg" src="<%=request.getContextPath() %>/food/food.do?food_no=<%=order.getFood_no()%>&action=getOneImage">	 </td>
 		<td width="100"><%=order.getPrice()%>    </td>
 		<td width="120"><%=order.getQuantity()%> </td>
 		
@@ -45,5 +45,7 @@
               <input type="submit" value="付款結帳" class="button">
           </form>
 <%}%>
+
+<%@ include file="footer.file" %>
 </body>
 </html>
