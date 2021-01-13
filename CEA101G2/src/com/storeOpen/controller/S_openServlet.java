@@ -46,7 +46,7 @@ public class S_openServlet extends HttpServlet {
      errorMsgs.add("查無資料");
     }
     if (!errorMsgs.isEmpty()) {
-     RequestDispatcher failureView = req.getRequestDispatcher("/select_page.jsp");
+     RequestDispatcher failureView = req.getRequestDispatcher(url);
      failureView.forward(req, res);
      return;
     }
@@ -59,7 +59,7 @@ public class S_openServlet extends HttpServlet {
    } catch (Exception e) {
     e.printStackTrace();
     errorMsgs.add("輸入失敗:" + e.getMessage());
-    RequestDispatcher failureView = req.getRequestDispatcher("/select_page.jsp");
+    RequestDispatcher failureView = req.getRequestDispatcher(url);
     failureView.forward(req, res);
    }
 

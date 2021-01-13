@@ -110,7 +110,7 @@
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <script src="<%=request.getContextPath() %>/front-customer-end/booking/js/Preloader.js"></script>
     <script type="text/javascript">
-    
+//datepicker--------------------------------------------    
     $(document).ready(function() {
     	$(".datepicker").datepicker({
             numberOfMonths: 2,
@@ -123,8 +123,6 @@
             }
          });
     });
-    
-    
     function noSomedays(a) {
         a = a.getDay();
         let c = "${storeVO.open_dates}";
@@ -140,22 +138,20 @@
             }
         }
         return [a !== b[0] && a !== b[1] && a !== b[2] && a !== b[3] && a !== b[4] && a !== b[5] && a !== b[6] && a !== b[7], ""];
-    }
-            
+    }            
 //---------------------------------------------------------------------       
-    $(".submit").click(function() {
-            $(".orderSend,.showOrder").css({
-                display: 'initial'
-            });
-        });
-        $(".ok").click(function() {
-            $(".orderSend,.showOrder").css({
-                display: 'none'
-            });
-        })
+//     $(".submit").click(function() {
+//             $(".orderSend,.showOrder").css({
+//                 display: 'initial'
+//             });
+//         });
+//         $(".ok").click(function() {
+//             $(".orderSend,.showOrder").css({
+//                 display: 'none'
+//             });
+//         })
         
-//  -----------------------------------------------------------       
-                
+//  -----------------------------------------------------------                      
         $(".opentime").click(function() {
             if ($(this).hasClass("greyBottom")) {
                 $(this).removeClass("greyBottom");
@@ -179,7 +175,6 @@
 					clearSelection();
 					let restpeople = ${storeVO.table_limit} - data.peopleSum;
 // 					$(".sel__box__options.sel__box__options--black-panther").text(1 + "&nbsp" +"guest");
-											
 					if (restpeople > 10) {
 						for (let i = 1; i <= 10; i++) {
 							switch (i) {
@@ -238,42 +233,49 @@
 							$(".people").append(
 									"<option value='-1' disabled>Choose:</option>");
 						}
-						//-------------------------------------------------------------------------------------						
-						$(".submit").click(function(){
-							$.ajax({
-								type:"POST",
-								url:"/CEA101G2/booking/order.do",
-								data: createQueryString2(
-										$(".bookingDate").val(),$(".greyBottom").text(),$(".people").val()
-										),
-								dataType:"json",
-								success:function(data){				
-									console.log(data.orderVO);
-									console.log($(".bookingDate").val());
-									$(".orderContent").append("<P class='name'>Dear "+data.memVO+",</P>"+
-									"<p class='reserve'>Your Reservation was sent-out as following:</p>"+
-									"<p class='detail'>Date:"+ $(".bookingDate").val()+
-									",<br>Dining Time:"+ $(".greyBottom").text().substring(0,8)+
-									",<br>Number of Guests:"+$(".people").val()+
-									"<br></p><p class='endquto'>We’re looking forward to welcoming you!</p>");
-								},
-								error:function(){
-									alert("AJAX-class發生錯誤囉!");
-								}
-							});
-						});
-						
-						function createQueryString2(bookingDate,openHour,people){
-							let queryString2 = {
-								"action":"insertByAjax",
-								"bookingdate":bookingDate,
-								"openHour":openHour,
-								"people":people
-							};
-							return queryString2;
-						};
+//-------------------------------------------------------------------------------------						
+	$(".submit").click(function(){
+		$.ajax({
+			type:"POST",
+			url:"/CEA101G2/booking/order.do",
+			data: createQueryString2(
+				$(".bookingDate").val(),$(".greyBottom").text(),$(".people").val()
+			),
+			dataType:"json",
+			success:function(data){
+				console.log(data.orderVO);
+				console.log($(".bookingDate").val());
+				$(".orderContent").append("<P class='name'>Dear "+data.memVO+",</P>"+
+				"<p class='reserve'>Your Reservation was sent-out as following:</p>"+
+				"<p class='detail'>Date:"+ $(".bookingDate").val()+
+				",<br>Dining Time:"+ $(".greyBottom").text().substring(0,8)+
+				",<br>Number of Guests:"+$(".people").val()+
+				"<br></p><p class='endquto'>We’re looking forward to welcoming you!</p>");
+				//-------------------------------------------------------
+				$(".orderSend,.showOrder").css({
+		                display: 'initial'
+		            });
+		        $(".ok").click(function() {
+		            $(".orderSend,.showOrder").css({
+		                display: 'none'
+		            });
+		        });
+			},
+			error:function(){
+			alert("請選擇日期及時間！");
+			}
 		});
-        
+	});
+			function createQueryString2(bookingDate,openHour,people){
+				let queryString2 = {
+					"action":"insertByAjax",
+					"bookingdate":bookingDate,
+					"openHour":openHour,
+					"people":people
+				};
+				return queryString2;
+			};
+	});
     </script>
 </body>
 

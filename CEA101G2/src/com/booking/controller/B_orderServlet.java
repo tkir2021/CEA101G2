@@ -107,7 +107,7 @@ public class B_orderServlet extends HttpServlet {
 		}
 		
 		
-		/*********************** 新增資料 *************************/
+		/***********************Servlet 新增資料 *************************/
 		if ("insert".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);

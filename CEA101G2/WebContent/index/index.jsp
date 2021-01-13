@@ -146,19 +146,11 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="hero__text">
-                        <!-- <div class="section-title">
-                            <h2>Discover The Best Services Near You</h2>
-                        </div> -->
                         <div class="hero__search__form">
                             <form method="post" action="<%=request.getContextPath()%>/mem/search.do">
                                 <div class="thebar" style="width: 1162px">
                                     <input type="text" name="keyword" placeholder="Search...">
                                     <input type="hidden" name="action" value="search">
-                                    <!-- <div class="select__option">
-                                        <select>
-                                            <option value="">選擇分類</option>
-                                        </select>
-                                    </div> -->
                                     <div class="select__option">
                                         <select>
                                             <option value="">搜尋地點</option>
@@ -179,10 +171,6 @@
     <!-- 瓶中信遊戲 -->
 <!--     <div class="playGame"></div> -->
 <!--     <img class="gamebottle" src="img/icon/螢幕擷取畫面 2020-12-02 184704.png"> -->
-    <!-- Hero Section End -->
-    <!-- Categories Section Begin -->
-    <!-- Categories Section End -->
-    <!-- Most Search Section Begin -->
     <section class="most-search spad">
         <div class="container">
             <div class="row">
@@ -204,7 +192,8 @@
                         <jsp:useBean id="storeSvc" scope="page" class="com.store.model.Store_MemService" />
                              <c:forEach var="storeVO" items="${storeSvc.getAllindex()}">
                                 <div class="col-lg-4 col-md-6">
-                                <a href="<%=request.getContextPath() %>/store/store.do?storeno=${storeVO.store_no}&action=getThisStore" >
+<%--                            <a href="<%=request.getContextPath() %>/front-customer-end/shopping/EShop.jsp?store_no=${storeVO.store_no}"></a> --%>
+                                <a href="<%=request.getContextPath() %>/store/store.do?store_no=${storeVO.store_no}&action=getThisStore&location=/front-customer-end/shopping/EShop.jsp" ></a>
            					 	<input class="storeno" type="hidden" name="storeno" value="${storeVO.store_no}">
                                     <div class="listing__item">
 										<!-- 店家圖片 -->
@@ -440,14 +429,14 @@
   		登入/登出
 	-------------------*/
 	console.log(${(sessionScope.account) !=null});
-if(${(sessionScope.account) !=null}){
-    $(".login-btn").mouseenter(function() {
-        $(".login-logout").slideDown();
-    });
-    $(".login-logout").mouseleave(function() {
-        $(".login-logout").slideUp();
-    });
-}
+	if(${(sessionScope.account) !=null}){
+    	$(".login-btn").mouseenter(function() {
+        	$(".login-logout").slideDown();
+    	});
+    	$(".login-logout").mouseleave(function() {
+        	$(".login-logout").slideUp();
+    	});
+	}
     </script>
     <!-- 神的指示，感謝輯神 -->
     <script src="<%=request.getContextPath() %>/index/js/aos.js"></script>

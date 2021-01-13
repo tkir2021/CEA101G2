@@ -46,6 +46,30 @@
             vertical-align: middle;
             display: inline-block;
         }
+     /*---------------------
+  			Login/Logout CSS
+		-----------------------*/
+ 		.login-logout a:link {
+            color: white;
+        }
+        .login-logout a:visited{
+	    color: white;
+		}
+        .login-logout {
+            position: absolute;
+            right: 60px;
+        }
+        .login-logout li:hover {
+            background-color: #ea314f;
+        }
+        .login-logout li {
+            background-color: black;
+            text-decoration: none;
+            text-align: center;
+            width: 100px;
+            height: 30px;
+            list-style-type: none;
+        }
    </style>
 </head>
 
@@ -60,49 +84,49 @@
 	<!-- ===========================================Header====================================== -->
 	<header class="header">
 		<div class="header__logo">
-			<a href="./index.html"><img
-				src="<%=request.getContextPath()%>/front-customer-end/SearchResult/img/logo.png"
+			<a href="<%=request.getContextPath() %>/index/index.jsp<%=request.getContextPath() %>/index/index.jsp">
+			<img src="<%=request.getContextPath()%>/front-customer-end/SearchResult/img/logo.png"
 				alt=""></a>
-		</div>
 		</div>
 		<div class="header__nav">
 			<nav class="header__menu mobile-menu">
 				<ul>
-					<li><a href="./blog.html">會員專區</a>
-						<ul class="dropdown">
-							<li><a href="./blog-details.html">我的行事曆</a></li>
-							<li><a href="./blog-details.html">我要加值</a></li>
-							<li><a href="./blog-details.html">我最愛的餐廳</a></li>
-						</ul></li>
-					<li><a href="#">我要揪團</a>
-						<ul class="dropdown">
-							<li><a href="./about.html">瀏覽揪團</a></li>
-							<li><a href="./blog-details.html">我的揪團</a></li>
-						</ul></li>
-					<li><a href="#">店家專區</a>
-						<ul class="dropdown">
-							<li><a href="./about.html">店家資料管理</a></li>
-							<li><a href="./blog-details.html">我的行事曆</a></li>
-							<li><a href="./blog-details.html">商店管理</a></li>
-							<li><a href="./blog-details.html">我的帳務</a></li>
-						</ul></li>
+					<li><a href="<%=request.getContextPath() %>/front-customer-end/member/memUpdate.jsp">會員專區</a>
+                                    <ul class="dropdown">
+                                        <li><a href="<%=request.getContextPath() %>/front-customer-end/member/creditcard.jsp">我要儲值</a></li>
+                                        <li><a href="<%=request.getContextPath() %>/front-customer-end/member/memUpdate.jsp">資料管理</a></li>
+                                        <li><a href="<%=request.getContextPath() %>/front-customer-end/member/memHistory.jsp">訂單查詢及我要評分</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="<%=request.getContextPath()%>/store/store.do?action=getOne_For_Store&action2=getALL">店家專區</a>
+                                    <ul class="dropdown">
+                                    <li><a href="<%=request.getContextPath()%>/front-store-end/store/store_Login.jsp">店家登入</a></li>
+                                        <li><a href="<%=request.getContextPath()%>/front-store-end/store/update_Store_Mem_input.jsp">店家資料管理</a></li>
+                                        <li><a href="<%=request.getContextPath()%>/store/store.do?action=getOne_For_Store&action2=getALL">我的歷史紀錄</a></li>
+                                        <li><a href="<%=request.getContextPath()%>/front-store-end/store/listAllFood_List.jsp" id="to_position">我的餐點</a></li>
+                                        <li><a href="<%=request.getContextPath()%>/front-store-end/store/addFood_List.jsp">餐點上架</a></li>
+                                        <li><a href="<%=request.getContextPath()%>/front-store-end/store/listOneOpenHour.jsp">營業時段管理</a></li>
+                                    </ul>
+                                </li>
 				</ul>
 			</nav>
 			<div class="header__menu__right">
 				<!-- <a href="#" class="primary-btn" title="註冊會員"><i class="fa fa-plus"></i>加入我們</a> -->
-				<a href="#" class="login-btn" title="我要登入"><i class="fa fa-user"></i></a>
+				<a href="<%=request.getContextPath() %>/front-customer-end/member/memLogin.jsp" class="login-btn" title="我要登入"><i class="fa fa-user"></i></a>
+				<ul class="login-logout" style="display: none;">
+                   	<li><a href="<%=request.getContextPath() %>/member/member.do?action=logout">我要登出</a></li>
+                </ul>
 			</div>
 		</div>
 		</div>
 	</header>
 	<!-- =======================================Content========================================== -->
 	<section>
-		<!-- 以下三行div為bootstrap的格線語法，請不要新增屬性、id，請參考格線語法自行更改 ((RWD課程應該會上))-->
 		<!-- 1美食圖----------------------------------------------------------Start-->
-		<!-- <div class="col-lg-4 col-md-6"> -->
 		<div class="listRestaurant">
 			<c:forEach var="fdVO" items="${fdVO}">
 				<div class="listing__item">
+				<a href="<%=request.getContextPath() %>/store/store.do?store_no=${fdVO.store_no}&action=getThisStore&location=/front-customer-end/shopping/EShop.jsp" >
 					<img class="listing__item__pic set-bg"
 						src="<%=request.getContextPath() %>/store/store.do?store_no=${fdVO.store_no}&action=getOneImage">
 					<img
@@ -119,7 +143,7 @@
 									<span class="icon_star"></span> <span class="icon_star"></span>
 									<span class="ic on_star-half_alt"></span>
 								</div>
-								<h6>$40 - $70</h6>
+<!-- 								<h6>$40 - $70</h6> -->
 							</div>
 							<ul>
 								<li><span class="icon_pin_alt"></span>${storeSvc.getOneStore_Mem(fdVO.store_no).addr}</li>
@@ -132,7 +156,7 @@
 									src="<%=request.getContextPath()%>/front-customer-end/SearchResult/img/listing/list_small_icon-1.png"
 									alt=""> <span>Restaurant</span>
 							</div>
-							 <a href="<%=request.getContextPath()%>/front-customer-end/booking/booking.jsp?store_no=${storeSvc.getOneStore_Mem(fdVO.store_no).store_no}" class="bookingHref">
+							 <a href="<%=request.getContextPath()%>/store/store.do?store_no=${fdVO.store_no}&action=getThisStore&location=/front-customer-end/booking/booking.jsp" class="bookingHref">
                             <button class="bookingButtom">我要訂位</button>
                        		 </a>
 						</div>
@@ -199,17 +223,24 @@
 	</footer>
 	<!-- footer end 以上內容待置換-->
 	<!-- JS引用 -->
-	<script
-		src="<%=request.getContextPath()%>/front-customer-end/SearchResult/js/jquery-3.3.1.min.js"></script>
-	<script
-		src="<%=request.getContextPath()%>/front-customer-end/SearchResult/js/Preloader.js"></script>
-	<!-- 神的指示，感謝輯神 -->
-	<!-- <script>
-        window.addEventListener("scroll", function() {
-            let opac = "rgba(34, 39, 54," + ((window.scrollY + 62.5) / 125).toString() + ")";
-            $(".header").css("background-color", opac);
-        });
-</script> -->
-	<!-- 神的指示，感謝輯神 -->
+	 
+	<script src="<%=request.getContextPath()%>/front-customer-end/SearchResult/js/jquery-3.3.1.min.js"></script>
+	<script src="<%=request.getContextPath()%>/front-customer-end/SearchResult/js/Preloader.js"></script>
+
+	<script>
+	 /*------------------
+		登入/登出
+	-------------------*/
+	console.log(${(sessionScope.account) !=null});
+	if(${(sessionScope.account) !=null}){
+		$(".login-btn").mouseenter(function() {
+			$(".login-logout").slideDown();
+		});
+		$(".login-logout").mouseleave(function() {
+			$(".login-logout").slideUp();
+		});
+	}
+</script>
+
 </body>
 </html>

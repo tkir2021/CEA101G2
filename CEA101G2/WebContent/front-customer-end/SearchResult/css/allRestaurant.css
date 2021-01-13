@@ -94,6 +94,12 @@
             display: inline-block;
             float: left;
         }
+         .listing__item:hover {
+            overflow: hidden!important;
+            cursor: pointer!important;
+            transform: box-shadow 500ms!important;
+            box-shadow: 0px 5px 30px rgba(0, 0, 0, 0.8)!important;
+        }
 
         .listing__item__pic {
             height: 195px;
