@@ -1,17 +1,23 @@
 package com.food_list.model;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.TreeSet;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
+
+import com.store.model.Store_MemJDBCDAO;
+import com.store.model.Store_MemVO;
+import com.store.model.Store_Mem_interface;
 
 
 public class Food_ListService {
 	private Food_List_interface dao;
+	private Store_Mem_interface sdao;
 
 	public Food_ListService() {
 		dao = new Food_ListJDBCDAO();
+		sdao = new Store_MemJDBCDAO();
 	}
 
 	public Food_ListVO addFood_List(String store_no, String food_name, Integer food_price, Integer limit_,
@@ -69,17 +75,32 @@ public class Food_ListService {
 		dao.updateStatus(food_no, food_status);
 	}
 	
-	/**********待處理**********/
-	 public List<Food_ListVO> searchKeyword(String keyword){
-	    List<Food_ListVO> fdlist = dao.getAll();
-	    List<Food_ListVO> resultlist = null;
-	    resultlist = fdlist.stream()
-	      .filter(f -> f.getFood_name().contains(keyword.toUpperCase()))
-	      .collect(Collectors.collectingAndThen(
-	        Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(Food_ListVO::getStore_no))),
-	        ArrayList::new));
-	    
-	    return resultlist;
-	 }
+//	========================複合式搜尋 by 麻麻========================
+	public Map<String, List<String>> searchbystring(String keyword, String loc) {
+		Map<String, List<String>> resultlist = new TreeMap<>();
+		List<Food_ListVO> fdlist = dao.getAll();
+		List<Store_MemVO> smlist = sdao.getAll();
+		Map<String, List<String>> newlist =null;
+		
+		for (Store_MemVO slist : smlist) {
+			List<String> list = new ArrayList<>();
+			list.add(slist.getStore_name()+slist.getAddr());
+			resultlist.put(slist.getStore_no(), list);
+		}
+		
+		for (Food_ListVO alist : fdlist) {
+			resultlist.get(alist.getStore_no()).add(alist.getFood_no()
+			+ alist.getFood_name());
+		}
+		newlist = resultlist.entrySet().stream()
+				.filter(a ->a.getValue().toString().contains(loc))
+				.filter(f -> f.getValue().toString().contains(keyword))
+				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+		
+//		newlist.keySet().stream().forEach(e -> System.out.println(e));
+//		newlist.values().stream().forEach(e -> System.out.println(e));
+		return newlist;
+		}
+
 
 }

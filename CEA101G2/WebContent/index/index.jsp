@@ -150,14 +150,19 @@
                                     <input type="text" name="keyword" placeholder="Search...">
                                     <input type="hidden" name="action" value="search">
                                     <div class="select__option">
-                                        <select>
+                                        <select name="loc">
                                             <option value="">搜尋地點</option>
+                                            <option value="台北市">台北市</option>
+                                            <option value="新北市">新北市</option>
+                                            <option value="桃園市">桃園市</option>
+                                            <option value="台中市">台中市</option>
+                                            <option value="台南市">台南市</option>
+                                            <option value="高雄市">高雄市</option>
                                         </select>
                                     </div>
                                     <button type="submit"><i class="fas fa-search"></i></button>
                                 </div>
                             </form>
-                            
                         </div>
                     </div>
                 </div>

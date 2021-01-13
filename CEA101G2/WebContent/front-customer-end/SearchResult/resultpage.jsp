@@ -126,27 +126,24 @@
 		<div class="listRestaurant">
 			<c:forEach var="fdVO" items="${fdVO}">
 				<div class="listing__item">
-				<a href="<%=request.getContextPath() %>/store/store.do?store_no=${fdVO.store_no}&action=getThisStore&location=/front-customer-end/shopping/EShop.jsp" >
-					<img class="listing__item__pic set-bg"
-						src="<%=request.getContextPath() %>/store/store.do?store_no=${fdVO.store_no}&action=getOneImage">
-					<img
-						src="<%=request.getContextPath()%>/front-customer-end/SearchResult/img/listing/list_icon-4.png"
+				<a href="<%=request.getContextPath() %>/store/store.do?store_no=${fdVO}&action=getThisStore&location=/front-customer-end/shopping/EShop.jsp" >
+					<img class="listing__item__pic set-bg" src="<%=request.getContextPath() %>/store/store.do?store_no=${fdVO}&action=getOneImage">
+					<img src="<%=request.getContextPath()%>/front-customer-end/SearchResult/img/listing/list_icon-4.png"
 						class="small" alt="">
 					<div class="listing__item__pic__tag">Popular</div>
-					<!-- </div> -->
 					<div class="listing__item__text">
 						<div class="listing__item__text__inside">
-							<h5>${storeSvc.getOneStore_Mem(fdVO.store_no).store_name}</h5>
+							<h5>${storeSvc.getOneStore_Mem(fdVO).store_name}</h5>
 							<div class="listing__item__text__rating">
 								<div class="listing__item__rating__star">
-									<span class="icon_star"></span> <span class="icon_star"></span>
-									<span class="icon_star"></span> <span class="icon_star"></span>
-									<span class="ic on_star-half_alt"></span>
+									<c:forEach begin="1" end="${storeSvc.getOneStore_Mem(fdVO).star_total}" varStatus="j" step="1">
+										<span class="icon_star"></span>
+										<span class="ic on_star-half_alt"></span>
+									</c:forEach>
 								</div>
-<!-- 								<h6>$40 - $70</h6> -->
 							</div>
 							<ul>
-								<li><span class="icon_pin_alt"></span>${storeSvc.getOneStore_Mem(fdVO.store_no).addr}</li>
+								<li><span class="icon_pin_alt"></span>${storeSvc.getOneStore_Mem(fdVO).addr}</li>
 								<li><span class="icon_phone"></span> (+12) 345-678-910</li>
 							</ul>
 						</div>
@@ -156,15 +153,13 @@
 									src="<%=request.getContextPath()%>/front-customer-end/SearchResult/img/listing/list_small_icon-1.png"
 									alt=""> <span>Restaurant</span>
 							</div>
-							 <a href="<%=request.getContextPath()%>/store/store.do?store_no=${fdVO.store_no}&action=getThisStore&location=/front-customer-end/booking/booking.jsp" class="bookingHref">
+							 <a href="<%=request.getContextPath()%>/store/store.do?store_no=${fdVO}&action=getThisStore&location=/front-customer-end/booking/booking.jsp" class="bookingHref">
                             <button class="bookingButtom">我要訂位</button>
                        		 </a>
 						</div>
 					</div>
 				</div>
 			</c:forEach>
-			<!-- </div> -->
-			<!-- ===================在這前面加餐廳列表============== -->
 		</div>
 		<!-- </div> -->
 
