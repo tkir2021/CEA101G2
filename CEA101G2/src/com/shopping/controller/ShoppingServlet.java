@@ -157,7 +157,6 @@ public class ShoppingServlet extends HttpServlet {
 		
 		//餘額不足
 		if(cost < 0 ) {
-//			return "insufficient";
 			req.setAttribute("check", "fail");
 		}
 		else {
@@ -167,7 +166,6 @@ public class ShoppingServlet extends HttpServlet {
 			Mem_DataService mem_dataSvc = new Mem_DataService();
 			mem_dataSvc.updateDeposit_ByShopping(mem_dataVO, orderMasterVO, list);
 			
-//			return "OK";
 			req.setAttribute("check", "success");
 		}
 		
