@@ -57,7 +57,7 @@
                 <img class="banner" src="<%=request.getContextPath()%>/back-end/emp/img/logo-04.png" alt="">
             </div>
             <div class="login-icon">
-                <a href="#" class="login-btn" title="登出"><i class="fa fa-user"></i></a>
+                <a href="<%=request.getContextPath() %>/emp/emp.do?action=logout" class="login-btn" title="登出"><i class="fa fa-user"></i></a>
             </div>
         </div>
     </header>

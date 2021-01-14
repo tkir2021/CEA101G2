@@ -159,45 +159,20 @@ public class EmpServlet extends HttpServlet {
 			}
 		}
 		if ("update".equals(action)) {
-			List<String> errorMsgs = new LinkedList<String>();
-			req.setAttribute("errorMsgs", errorMsgs);
 			try {
 				String emp_no = new String(req.getParameter("emp_no"));
 				String emp_name = new String(req.getParameter("emp_name"));
 
-				String enameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
-				if (emp_name == null || emp_name.trim().length() == 0) {
-					errorMsgs.add("員工姓名: 請勿空白");
-				} else if (!emp_name.trim().matches(enameReg)) {
-					errorMsgs.add("員工姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
-				}
+//				String enameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
 
 				String emp_mail = new String(req.getParameter("emp_mail"));
-				String mailReg = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
-				if (emp_mail == null || emp_mail.trim().length() == 0) {
-					errorMsgs.add("員工E-MAIL：請勿空白");
-				} else if (!emp_mail.trim().matches(mailReg)) {
-					errorMsgs.add("請輸入正確之mail格式。");
-				}
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/emp/back_emplist.jsp");
-					failureView.forward(req, res);
-					return;
-				}
-				
+//				String mailReg = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+
 				java.sql.Date emp_date;
-				try {
 					emp_date = java.sql.Date.valueOf(req.getParameter("emp_date"));
-				} catch (IllegalArgumentException e) {
-					emp_date = new java.sql.Date(System.currentTimeMillis());
-					errorMsgs.add("請輸入日期!");
-				}
 
-				Integer emp_status = 1;
-				if (emp_status < 0 || emp_status > 1) {
-					errorMsgs.add("請選擇該員工的在職情況");
-				}
-
+					Integer emp_status = new Integer(req.getParameter("emp_status"));
+				
 				EmpVO empVO = new EmpVO();
 				empVO.setEmp_no(emp_no);
 				empVO.setEmp_name(emp_name);
@@ -205,27 +180,27 @@ public class EmpServlet extends HttpServlet {
 				empVO.setEmp_date(emp_date);
 				empVO.setEmp_status(emp_status);
 
-				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("empVO", empVO); // 含有輸入格式錯誤的empVO物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/emp/update_emp.jsp");
-					failureView.forward(req, res);
-					return; // 程式中斷
-				}
 				EmpService empSvc = new EmpService();
 				empVO = empSvc.updateEmp(emp_no, emp_name, emp_mail, emp_date, emp_status);// emp_img,
 
 				req.setAttribute("empVO", empVO);
-				String url = "/back-end/emp/listOneEmp.jsp";
+				String url = "/back-end/emp/back_emplist.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 			}
 
 			catch (Exception e) {
-				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/emp/update_emp.jsp");
+				System.out.println("修改資料失敗:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/emp/back_emplist.jsp");
 				failureView.forward(req, res);
 			}
-
+		}
+		// 01/05新增logout
+		if ("logout".equals(action)) {
+			HttpSession session = req.getSession();
+			session.invalidate();
+			// 改轉回首頁
+			res.sendRedirect(req.getContextPath() + "/back-end/emp/back_login.jsp");
 		}
 	}
 }

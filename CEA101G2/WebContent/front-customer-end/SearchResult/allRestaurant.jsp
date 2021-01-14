@@ -172,58 +172,7 @@
 		<!-- </div> -->
 
 	</section>
-	<!-- 內容end 請在以上區塊做切版-->
-	<!-- ===========================================Footer====================================== -->
-	<footer class="footer">
-		<div class="container">
-			<div class="footer__about">
-				<div class="footer__about__logo">
-					<a href="./index.html"><img
-						src="<%=request.getContextPath()%>/front-customer-end/SearchResult/img/logo-06.png"
-						alt=""></a>
-				</div>
-				<div class="footer__address">
-					<ul>
-						<li><span>Call Us:</span>
-							<p>(+12) 345-678-910</p></li>
-						<li><span>Email:</span>
-							<p>info.colorlib@gmail .com</p></li>
-						<li><span>Fax:</span>
-							<p>(+12) 345-678-910</p></li>
-						<li><span>Connect Us:</span>
-							<div class="foote -->r__social">
-								<img
-									src="<%=request.getContextPath()%>/front-customer-end/SearchResult/img/icon/iconfinder_46-facebook_104458.png">
-								<img
-									src="<%=request.getContextPath()%>/front-customer-end/SearchResult/img/icon/iconfinder_Instagram_1298747.png">
-								<img
-									src="<%=request.getContextPath()%>/front-customer-end/SearchResult/img/icon/iconfinder_Twitter_570625.png">
-							</div></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-lg-12">
-				<div class="footer__copyright">
-					<div class="footer__copyright__text">
-						<p>
-							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-							Copyright &copy;
-							<script>
-								document.write(new Date().getFullYear());
-							</script>
-							All rights reserved | We are Group2 CEA_101 <i
-								class="fa fa-heart" aria-hidden="true"></i> I appreciate that we
-							are the "team".
-							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-						</p>
-					</div>
-				</div>
-			</div>
-		</div>
-		</div>
-	</footer>
+
 	<!-- footer end 以上內容待置換-->
 	<!-- JS引用 -->
 	<script src="<%=request.getContextPath()%>/front-customer-end/SearchResult/js/jquery-3.3.1.min.js"></script>
