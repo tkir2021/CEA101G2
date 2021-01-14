@@ -21,7 +21,7 @@
 
 <body class="ov-hid">
 
-	<section class="main">
+	<section class="main" style="margin-top:10px">
 		<div class="emplist">
 			<div id="apps" class="container">
 				<div class="emprow mt-5">
@@ -54,18 +54,18 @@
 									<tbody>
 										<c:forEach var="empVO" items="${list}">
 											<tr id="mytabletr" style="line-height: 33px; text-align:center;height:0px">
-												<td>${empVO.emp_no}</td>
-												<td>${empVO.emp_name}</td>
-												<td>${empVO.emp_date}</td>
-												<td>${empVO.emp_mail}</td>
-												<td>${empVO.emp_status==1? '在職': '離職'}</td>
+												<td class="empNo">${empVO.emp_no}</td>
+												<td class="empName">${empVO.emp_name}</td>
+												<td class="empDate">${empVO.emp_date}</td>
+												<td class="empEmail">${empVO.emp_mail}</td>
+												<td class="empStatus">${empVO.emp_status==1? '在職': '離職'}</td>
 												<td>
 													<form method="post"	action="<%=request.getContextPath()%>/emp/emp.do">
 														<div class="btn-group">
 														<input type="hidden" name="emp_no"  value="${empVO.emp_no}">
 															<button type="button" class="btn btn-primary"
 																data-toggle="modal" data-target="#modalUpdate"
-																style="margin: 0px" name="action" value="getOne_For_Update">Edit</button>
+																style="margin: 0px">Edit</button>
 														</div>
 													</form>
 
@@ -80,6 +80,7 @@
 					</div>
 				</div>
 				<!-- Modal add-->
+				<form method="post"	action="<%=request.getContextPath()%>/emp/emp.do">
 				<div class="modal fade" id="modalAdd" tabindex="-1" role="dialog"
 					aria-labelledby="exampleModalLabel" aria-hidden="true">
 					<div class="modal-dialog" role="document">
@@ -91,41 +92,27 @@
 									<span aria-hidden="true">&times;</span>
 								</button>
 							</div>
-							<form method="post"
-								action="<%=request.getContextPath()%>/emp/emp.do">
-								<div class="modal-body">
-									<c:if test="${not empty errorMsgs}">
-										<font style="color: red">請修正以下錯誤:</font>
-										<ul>
-											<c:forEach var="message" items="${errorMsgs}">
-												<li style="color: red">${message}</li>
-											</c:forEach>
-										</ul>
-									</c:if>
-									<div class="form-group">
-										<label>員工姓名</label> <input type="text" name="emp_name"
-											value="${empVO.emp_name}" class="form-control">
-									</div>
-									<div class="form-group">
-										<label>到職日</label> <input type="date" name="emp_date"
-											value="${empVO.emp_date}" class="form-control">
-									</div>
-									<div class="form-group">
-										<label>電子郵件</label> <input type="email" name="emp_mail"
-											value="${empVO.emp_mail}" class="form-control">
-									</div>
+							<div class="modal-body">
+								<div class="form-group">
+									<label>員工姓名</label> <input type="text" name="emp_name"
+											value="${empVO.emp_name}" class="form-control" placeholder="輸入姓名" pattern="^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,6}$" required>
 								</div>
+								<div class="form-group">
+									<label>到職日</label> <input type="date" name="emp_date"
+											value="${empVO.emp_date}" class="form-control" required>
+								</div>
+								<div class="form-group">
+									<label>電子郵件</label> <input type="email" name="emp_mail"
+											value="${empVO.emp_mail}" class="form-control" pattern="^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$" required>
+								</div>
+							</div>							
 								<div class="modal-footer">
-									<button type="button" class="btn btn-outline-secondary"
-										data-dismiss="modal">Close</button>
-
-									<button type="submit" name="action" value="insert"
-										class="btn btn-success">Save</button>
-								</div>
-							</form>
+									<button type="submit" name="action" value="insert" class="btn btn-success">Save</button>
+								</div>							
 						</div>
 					</div>
 				</div>
+			</form>
 				<!-- Update --> 	
 				<div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog"
 					aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -139,28 +126,36 @@
 									<span aria-hidden="true">&times;</span>
 								</button>
 							</div>
+						<form METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do">
 							<div class="modal-body">
-								<form METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do">
+									<input type="text" name="emp_no"
+											 class="form-control" id="update_empno" style="display:none">
+									
 									<div class="form-group">
 										<label>員工姓名</label> <input type="text" name="emp_name"
-											value="${empVO.emp_name}" class="form-control">
+											 class="form-control" id="update_empname">
 									</div>
 									<div class="form-group">
-										<label>Salary</label> <input type="text" class="form-control"
-											v-model="updateEmployee.salary">
+										<label>在職日</label> <input type="date" name="emp_date" class="form-control"
+											id="update_empdate">
 									</div>
 									<div class="form-group">
-										<label>Age</label> <input type="text" class="form-control"
-											v-model="updateEmployee.age">
+										<label>電子郵件</label> <input type="email" name="emp_mail" class="form-control"
+											id="update_empemail">
 									</div>
-								</form>
+									<div class="form-group">
+										<label>是否在職</label> 
+										<label><input type="radio" name="emp_status" id="update_empstatus" class="onduty" value="1">在職</label>
+										<label><input type="radio" name="emp_status" id="update_empstatus" class="quit" value="0">離職</label>
+									</div>
 							</div>
+							
 							<div class="modal-footer">
-								<button type="button" class="btn btn-outline-secondary"
-									data-dismiss="modal">Close</button>
-								<button type="button" class="btn btn-success"
-									@click="onUpdateEmployee">Save</button>
+								<!-- <button type="button" class="btn btn-outline-secondary"
+									data-dismiss="modal">Close</button> -->
+								<button type="submit" class="btn btn-success" name="action" value="update">Save</button>
 							</div>
+						</form>
 						</div>
 					</div>
 				</div>
@@ -171,6 +166,26 @@
 	<%@ include file="/back-end/scriptpart.file"%>
 	<!-- 自訂新增 -->
 
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+	<script>
+	/*當.btn.btn-primary click後，update燈箱中的id為update_empXXX中的屬性val去取btn.btn-primary的父層td裡的鄰居empno*/
+$(".btn.btn-primary").click(function(){
+	$("#update_empno").val($(this).parents("td").siblings(".empNo").text());
+	$("#update_empname").val($(this).parents("td").siblings(".empName").text());
+	/*console.log($(this).parents("td").siblings(".empName").text());*/
+	$("#update_empdate").val($(this).parents("td").siblings(".empDate").text());
+	$("#update_empemail").val($(this).parents("td").siblings(".empEmail").text());
+// 	$("#update_empstatus").val($(this).parents("td").siblings(".empStatus").text());
+
+	if($(this).parents("td").siblings(".empStatus").text()=="在職"){
+		$(".onduty").attr("checked",true);
+	}else{
+		$(".quit").attr("checked",true);
+	}
+	
+	});
+	
+</script>
 </body>
 
 
