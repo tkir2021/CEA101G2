@@ -2,8 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.storeOpen.model.*"%>
- 
-<!DOCTYPE html>
+
 <html lang="zxx">
 <head>
  <title>Store_Openhour</title>    
@@ -49,21 +48,17 @@
 			</c:if>
 			<fieldset class="time">
 				<legend>您的營業時段</legend>
-				<c:forEach var="openVO" items="${openlist}">
+				<jsp:useBean id="openSvc" class="com.storeOpen.model.S_openService"></jsp:useBean>
+				<c:forEach var="openVO" items="${openSvc.getOneOpen(store_no)}">
 					<div>
 						<p class="opentime">${openVO.timeperiod}</p>
-						<FORM class="deleteform" METHOD="post"
-							ACTION="<%=request.getContextPath()%>/store/openHour.do">
+						<FORM class="deleteform" METHOD="post" ACTION="<%=request.getContextPath()%>/store/openHour.do">
 							<input type="button" class="delete" value="刪除">
-							 <input
-								type="hidden" name="storeno" value="${openVO.storeno}">
-							<input type="hidden" name="timeperiod"
-								value="${openVO.timeperiod}">
-								 <input type="hidden"
-								class="godelete" name="action" value="delete">
+							<input type="hidden" name="storeno" value="${openVO.storeno}">
+							<input type="hidden" class="time" name="timeperiod" value="">
+							<input type="hidden" class="godelete" name="action" value="delete">
 						</FORM>
 					</div>
-
 				</c:forEach>
 			</fieldset>
 			
@@ -78,16 +73,17 @@
 	<script src="<%=request.getContextPath() %>/front-store-end/store/js/jquery-storeOpenhour.js"></script>
 	
 	<script>
-		$(document).ready(function() {
-			$(".delete").click(function() {
-				let yes =confirm('你確定要刪除嗎？');
-				if (yes) {
-					$(".deleteform").submit();
+	$(document).ready(function() {	
+			$(".delete").click(function(){
+				if (confirm('您確定要刪除嗎？')) {
+					console.log($(this).parents().siblings("p").text());
+ 					$(".time").val($(this).parents().siblings("p").text());
+ 						$(".deleteform").submit();
 				} else {
 					alert("取消刪除");
 				}
 			});
-		});
+	});
 	</script>
 	
 </body>

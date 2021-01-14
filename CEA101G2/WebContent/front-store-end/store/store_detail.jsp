@@ -5,13 +5,6 @@
 <%@ page import="com.booking.model.*"%>
 <%@ page import="com.ordermaster.model.*"%>
 
-<%
-	////List<B_orderVO> list = (List<B_orderVO>)request.getAttribute("SorderList");
-   // pageContext.setAttribute("list",list);
-    
-   // List<OrderMasterVO> orderList = (List<OrderMasterVO>)request.getAttribute("orderMaster");
-   // pageContext.setAttribute("orderList",orderList);
-%>
 <title>Store_Detail</title>
 
 <!DOCTYPE html>
@@ -23,9 +16,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
     <link rel="stylesheet" href="<%=request.getContextPath() %>/front-store-end/store/css/store_detail.css">
 </head>
-
-
-<!-- 更動body style="height: fit-content;"footer style="top:-38px" -->
 
 <body style="height: fit-content;">
  <!-- Page Preloder -->
@@ -104,15 +94,18 @@
 										<td>${orderVO.people}</td> 
 										<td>${(orderVO.bookingstatus==0)?"失敗":"成功"}</td>
 										<td>${(orderVO.attendstatus==0)?"未出席":"已出席"}</td>
+										
+										<FORM method="post" class="form1" action="<%=request.getContextPath()%>/booking/booking.do">              
+	                                		<select name="mem_auth" onchange="submit(),alert('${store_no}的出席狀態已改變')">
+	                                			<option value="0" ${(orderVO.attendstatus==0)?'selected':''} >未出席</option>
+	                                			<option value="1" ${(orderVO.attendstatus==1)?'selected':''}>已出席</option>
+	                                		</select>
+	                                		<input type="hidden" name="store_no" class="store_no" value="${store_no}">
+	                                		<input type="hidden" name="action" value="updateStatus">
+	                        		 	</FORM> 
+										
 										<td>${orderVO.givestar}</td>
 										<td><fmt:formatDate value="${orderVO.ordercommit}" pattern="yyyy-MM-dd"/></td>
-							<%-- 		<td>${orderVO.ordercommit}</td> --%>
-<!-- 									<td> -->
-<%-- 										<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do" style="margin-bottom: 0px;"> --%>
-<!-- 										<input type="submit" value="修改"> -->
-<%-- 										<input type="hidden" name="empno"  value="${empVO.empno}"> --%>
-<!-- 										<input type="hidden" name="action"	value="getOne_For_Update"></FORM>										 -->
-<!-- 									</td>											 -->
 									</tr>
 								</c:forEach>
                                 </tbody>

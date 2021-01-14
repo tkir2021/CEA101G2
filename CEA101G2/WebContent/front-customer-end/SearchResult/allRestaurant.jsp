@@ -104,11 +104,8 @@
                                 </li>
                                 <li><a href="<%=request.getContextPath()%>/store/store.do?action=getOne_For_Store&action2=getALL">店家專區</a>
                                     <ul class="dropdown">
-                                    <li><a href="<%=request.getContextPath()%>/front-store-end/store/store_Login.jsp">店家登入</a></li>
                                         <li><a href="<%=request.getContextPath()%>/front-store-end/store/update_Store_Mem_input.jsp">店家資料管理</a></li>
-                                        <li><a href="<%=request.getContextPath()%>/store/store.do?action=getOne_For_Store&action2=getALL">我的歷史紀錄</a></li>
                                         <li><a href="<%=request.getContextPath()%>/front-store-end/store/listAllFood_List.jsp" id="to_position">我的餐點</a></li>
-                                        <li><a href="<%=request.getContextPath()%>/front-store-end/store/addFood_List.jsp">餐點上架</a></li>
                                         <li><a href="<%=request.getContextPath()%>/front-store-end/store/listOneOpenHour.jsp">營業時段管理</a></li>
                                     </ul>
                                 </li>
@@ -162,7 +159,7 @@
 									src="<%=request.getContextPath()%>/front-customer-end/SearchResult/img/listing/list_small_icon-1.png"
 									alt=""> <span>Restaurant</span>
 							</div>									
-							  <a href="<%=request.getContextPath()%>/store/store.do?store_no=${smVO.store_no}&action=getThisStore&location=/front-customer-end/booking/booking.jsp" class="bookingHref">
+							  <a href="<%=request.getContextPath()%>/front-customer-end/booking/booking.jsp?store_no=${smVO.store_no}" class="bookingHref">
                             <button class="bookingButtom">我要訂位</button>
                        		 </a>
 						</div>

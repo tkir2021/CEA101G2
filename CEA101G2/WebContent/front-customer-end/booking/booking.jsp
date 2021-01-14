@@ -5,7 +5,7 @@
 <%@ page import="com.store.model.*"%>
 <%@ page import="com.mem.model.*" %>
 <% 
-    String storeno =(String)session.getAttribute("store_no");
+    String storeno =request.getParameter("store_no");
     String account = (String)session.getAttribute("account");
     System.out.println(account);
     
@@ -120,6 +120,11 @@
             beforeShowDay: noSomedays,
             onSelect: function(date) {
             	$(".bookingDate").val(date);
+//         		alert("==="+$(".bookingDate").val()+"==");
+// 				alert("==="+$(".opentime").hasClass("greyBottom")+"==");
+            	if($(".bookingDate").val() && $(".opentime").text()) {
+            		myAjax();
+            	}
             }
          });
     });
@@ -165,74 +170,16 @@
             
 		$(document).ready(function() {		
 			$(".opentime").click(function() {
-				$.ajax({
-					type : "post",
-					url : "/CEA101G2/booking/order.do",
-					data : createQueryString(
-						$(".bookingDate").val(),$(this).text()),
-					dataType : "json",
-					success : function(data) {
-					clearSelection();
-					let restpeople = ${storeVO.table_limit} - data.peopleSum;
-// 					$(".sel__box__options.sel__box__options--black-panther").text(1 + "&nbsp" +"guest");
-					if (restpeople > 10) {
-						for (let i = 1; i <= 10; i++) {
-							switch (i) {
-							case 1:
-							$(".people").append(
-							"<option value='1'>1&nbsp guest</options>");
-							break;
-							default:
-							$(".people").append("<option value='"+i+"'>"+ i+ "&nbsp guests"+ "</option>");
-							break;
-							};											
-					};
-						console.log("該日期+時段的剩餘人數"+ restpeople);
-						} else if (0 < restpeople && restpeople <= 10) {
-							for (let i = 1; i <= restpeople; i++) {
-								switch (i) {
-								case 1:
-								$(".people").append(
-								"<option value='1'>1&nbsp guest</options>");
-								break;
-								default:
-								$(".people").append(
-								"<option value='"+i+"'>"+ i+ "&nbsp guests"+ "</option>");
-								break;
-								};
-							};
-							for (let j = restpeople+1 ; j<=10 ;j++){
-								$(".people").append(
-								"<option disabled value='"+j+"'>"+ j+ "&nbsp guests(full)"+ "</option>");
-							}
-										
-						} else if (restpeople !== null && restpeople <= 0) {
-							alert("親，桌位滿了換一個時段或日期吧！");
-						} else {
-							alert("請重新操作一次~");
-						};
-					},
-					error : function() {
-// 						alert("AJAX-class發生錯誤囉!")
-					}
-				});
+// 				alert("==="+$(".bookingDate").val()+"==");
+// 				alert("==="+$(".opentime").hasClass("greyBottom")+"==");
+				if($(".bookingDate").val() && $(".opentime").text()) {
+            		myAjax();
+            	}
 			});
-						function createQueryString(bookingdate, time) {
-							var queryString = {
-								"action" : "getPeople",
-								//	"storeno" : storeno,
-								"bookingdate" : bookingdate,
-								"openHour" : time
-							};
-							console.log(queryString);
-							return queryString;
-						}
 
-						function clearSelection() {
-							$(".people").empty();
-							$(".people").append(
-									"<option value='-1' disabled>Choose:</option>");
-						}
+			
+			
+
 //-------------------------------------------------------------------------------------						
 	$(".submit").click(function(){
 		$.ajax({
@@ -275,7 +222,80 @@
 				};
 				return queryString2;
 			};
+			
+			
 	});
+		
+		
+		function myAjax () {
+			$.ajax({
+				type : "post",
+				url : "/CEA101G2/booking/order.do",
+				data : createQueryString($(".bookingDate").val(), $(".opentime").text()),
+				dataType : "json",
+				success : function(data) {
+				clearSelection();
+				let restpeople = ${storeVO.table_limit} - data.peopleSum;
+//					$(".sel__box__options.sel__box__options--black-panther").text(1 + "&nbsp" +"guest");
+				if (restpeople > 10) {
+					for (let i = 1; i <= 10; i++) {
+						switch (i) {
+						case 1:
+						$(".people").append(
+						"<option value='1'>1&nbsp guest</options>");
+						break;
+						default:
+						$(".people").append("<option value='"+i+"'>"+ i+ "&nbsp guests"+ "</option>");
+						break;
+						};											
+				};
+					console.log("該日期+時段的剩餘人數"+ restpeople);
+					} else if (0 < restpeople && restpeople <= 10) {
+						for (let i = 1; i <= restpeople; i++) {
+							switch (i) {
+							case 1:
+							$(".people").append(
+							"<option value='1'>1&nbsp guest</options>");
+							break;
+							default:
+							$(".people").append(
+							"<option value='"+i+"'>"+ i+ "&nbsp guests"+ "</option>");
+							break;
+							};
+						};
+						for (let j = restpeople+1 ; j<=10 ;j++){
+							$(".people").append(
+							"<option disabled value='"+j+"'>"+ j+ "&nbsp guests(full)"+ "</option>");
+						}
+									
+					} else if (restpeople !== null && restpeople <= 0) {
+						alert("親，桌位滿了換一個時段或日期吧！");
+					} else {
+						alert("請重新操作一次~");
+					};
+				},
+				error : function() {
+//						alert("AJAX-class發生錯誤囉!")
+				}
+			});
+		}
+		
+		function createQueryString(bookingdate, time) {
+			var queryString = {
+				"action" : "getPeople",
+				//	"storeno" : storeno,
+				"bookingdate" : bookingdate,
+				"openHour" : time
+			};
+			console.log(queryString);
+			return queryString;
+		}
+
+		function clearSelection() {
+			$(".people").empty();
+			$(".people").append(
+					"<option value='-1' disabled>Choose:</option>");
+		}
     </script>
 </body>
 

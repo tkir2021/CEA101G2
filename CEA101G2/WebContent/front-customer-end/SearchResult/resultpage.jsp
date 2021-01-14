@@ -84,7 +84,7 @@
 	<!-- ===========================================Header====================================== -->
 	<header class="header">
 		<div class="header__logo">
-			<a href="<%=request.getContextPath() %>/index/index.jsp<%=request.getContextPath() %>/index/index.jsp">
+			<a href="<%=request.getContextPath() %>/index/index.jsp">
 			<img src="<%=request.getContextPath()%>/front-customer-end/SearchResult/img/logo.png"
 				alt=""></a>
 		</div>
@@ -153,7 +153,7 @@
 									src="<%=request.getContextPath()%>/front-customer-end/SearchResult/img/listing/list_small_icon-1.png"
 									alt=""> <span>Restaurant</span>
 							</div>
-							 <a href="<%=request.getContextPath()%>/store/store.do?store_no=${fdVO}&action=getThisStore&location=/front-customer-end/booking/booking.jsp" class="bookingHref">
+							 <a href="<%=request.getContextPath()%>/front-customer-end/booking/booking.jsp?store_no=${fdVO}" class="bookingHref">
                             <button class="bookingButtom">我要訂位</button>
                        		 </a>
 						</div>

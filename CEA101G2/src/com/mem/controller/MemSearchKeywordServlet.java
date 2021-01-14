@@ -31,6 +31,7 @@ public class MemSearchKeywordServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		String keyword = req.getParameter("keyword");
 		String loc = req.getParameter("loc");
+		System.out.println(loc);
 		String keywordlist = keyword + loc;
 		List<String> errorMsgs = null;
 

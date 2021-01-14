@@ -27,7 +27,7 @@ public class LoginFilter implements Filter{
 		Object account = session.getAttribute("account");
 		if (account == null) {
 			//將請求的頁面存入location
-			session.setAttribute("location", req.getRequestURI());
+			session.setAttribute("location", req.getRequestURI()+"?"+req.getQueryString());
 			//重導回登入頁面
 			res.sendRedirect(req.getContextPath() + "/front-customer-end/member/memLogin.jsp");
 			return;

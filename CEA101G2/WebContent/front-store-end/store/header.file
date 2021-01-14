@@ -52,7 +52,7 @@
                                     <li><a href="<%=request.getContextPath()%>/front-store-end/store/addFood_List.jsp">上架餐點</a></li></li>
 				</ul>
 		    <li><a href="<%=request.getContextPath()%>/front-store-end/store/update_Store_Mem_input.jsp" id="to_position">資料修改</a></li>
-	            <li><a href="<%=request.getContextPath()%>/store/openHour.do?action=getOne_For_Display" id="to_position">營業時段管理</a></li>
+	            <li><a href="<%=request.getContextPath()%>/front-store-end/store/listOneOpenHour.jsp" id="to_position">營業時段管理</a></li>
                     <li><a href="<%=request.getContextPath()%>/store/store.do?action=getOne_For_Store&action2=getALL" id="to_position">店家首頁</a></li>
                 </ul>
             </nav>
