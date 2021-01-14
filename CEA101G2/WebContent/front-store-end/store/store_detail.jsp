@@ -95,14 +95,14 @@
 										<td>${(orderVO.bookingstatus==0)?"失敗":"成功"}</td>
 										<td>${(orderVO.attendstatus==0)?"未出席":"已出席"}</td>
 										
-										<FORM method="post" class="form1" action="<%=request.getContextPath()%>/booking/booking.do">              
-	                                		<select name="mem_auth" onchange="submit(),alert('${store_no}的出席狀態已改變')">
-	                                			<option value="0" ${(orderVO.attendstatus==0)?'selected':''} >未出席</option>
-	                                			<option value="1" ${(orderVO.attendstatus==1)?'selected':''}>已出席</option>
-	                                		</select>
-	                                		<input type="hidden" name="store_no" class="store_no" value="${store_no}">
-	                                		<input type="hidden" name="action" value="updateStatus">
-	                        		 	</FORM> 
+<%-- 										<FORM method="post" class="form1" action="<%=request.getContextPath()%>/booking/booking.do">               --%>
+<%-- 	                                		<select name="mem_auth" onchange="submit(),alert('${store_no}的出席狀態已改變')"> --%>
+<%-- 	                                			<option value="0" ${(orderVO.attendstatus==0)?'selected':''} >未出席</option> --%>
+<%-- 	                                			<option value="1" ${(orderVO.attendstatus==1)?'selected':''}>已出席</option> --%>
+<!-- 	                                		</select> -->
+<%-- 	                                		<input type="hidden" name="store_no" class="store_no" value="${store_no}"> --%>
+<!-- 	                                		<input type="hidden" name="action" value="updateStatus"> -->
+<!-- 	                        		 	</FORM>  -->
 										
 										<td>${orderVO.givestar}</td>
 										<td><fmt:formatDate value="${orderVO.ordercommit}" pattern="yyyy-MM-dd"/></td>
