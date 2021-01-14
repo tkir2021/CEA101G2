@@ -256,6 +256,18 @@
 		<dispatcher>ERROR</dispatcher>
 		<dispatcher>ASYNC</dispatcher>
 	</filter-mapping>
-
+	
+	
+	<filter>
+		<filter-name>storeFilter</filter-name>
+		<filter-class>filters.storeLoginFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>storeFilter</filter-name>
+		<url-pattern>/front-store-end/store/store_detail.jsp</url-pattern>
+		<url-pattern>/front-store-end/store/listAllFood_List.jsp</url-pattern>
+		<url-pattern>/front-store-end/store/listOneOpenHour.jsp</url-pattern>
+		<url-pattern>/front-store-end/store/update_Store_Mem_input.jsp</url-pattern>
+	</filter-mapping>
 
 </web-app>
