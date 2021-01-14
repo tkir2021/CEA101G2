@@ -11,6 +11,8 @@ public interface OrderMasterDAO_interface {
 	public void delete(String order_no);
 	public OrderMasterVO findByPrimaryKey(String order_no);
 	public List<OrderMasterVO> getAll();
+	/************************更新取餐狀況by Bella*******************************/
+	//public void updateGetFood(String order_no);
 	/************************購物車：新增訂餐主檔 by Sheng*************************/
 	public void updateByShopping(OrderMasterVO orderMasterVO, List<OrderDetailVO> list, Connection con);	
 	/************************取得訂餐資料 by Sheng*************************/
