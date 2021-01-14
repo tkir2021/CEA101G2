@@ -292,7 +292,7 @@ public class Food_ListServlet extends HttpServlet {
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("Food_ListVO", food_ListVO); // 含有輸入格式錯誤的empVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front-store-end/foodlist/addFood_List.jsp");
+							.getRequestDispatcher("/front-store-end/store/addFood_List.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -304,14 +304,14 @@ public class Food_ListServlet extends HttpServlet {
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 
-				String url = "/front-store-end/foodlist/listAllFood_List.jsp";
+				String url = "/front-store-end/store/listAllFood_List.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-store-end/foodlist/addFood_List.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-store-end/store/addFood_List.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -333,7 +333,7 @@ public class Food_ListServlet extends HttpServlet {
 				foodListSvc.deleteFood_List(food_no);
 
 				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
-				String url = "/front-store-end/foodlist/listAllFood_List.jsp";
+				String url = "/front-store-end/store/listAllFood_List.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 				successView.forward(req, res);
 
@@ -341,7 +341,7 @@ public class Food_ListServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/front-store-end/foodlist/listAllFood_List.jsp");
+						.getRequestDispatcher("/front-store-end/store/listAllFood_List.jsp");
 				failureView.forward(req, res);
 			}
 		}
