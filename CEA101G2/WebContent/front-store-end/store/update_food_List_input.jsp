@@ -81,7 +81,7 @@
 	</tr>
 	<tr>
 		<td>店家編號:</td>
-		<td><input type="TEXT" name="store_no" size="45" value="<%=food_ListVO.getStore_no()%>" /></td>
+		<td><input type="TEXT" name="store_no" size="45" value="<%=food_ListVO.getStore_no()%>" readonly="true" /></td>
 	</tr>
 	<tr>
 		<td>餐點名稱:</td>

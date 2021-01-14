@@ -33,7 +33,7 @@
 
 <style>
   table {
-	width: 800px;
+	width: max-content;
 	background-color: white;
 	margin:0 auto 140px auto;
   }
@@ -91,7 +91,7 @@
 			<c:when test="${food_ListVO.food_status ==0}">¤U¬[</c:when>
 			<c:otherwise>¤W¬[</c:otherwise>
 			</c:choose></td>
-			<td>
+			
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/store/food.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="­×§ï">

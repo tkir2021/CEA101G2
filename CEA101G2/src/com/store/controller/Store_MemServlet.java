@@ -623,7 +623,7 @@ public class Store_MemServlet extends HttpServlet {
 			System.out.println(store_no);
 			List<Store_MemVO> thisStore = new ArrayList<>();
 
-			try {
+//			try {
 				String location = req.getParameter("location");						
 					session.setAttribute("store_no", store_no);
 						RequestDispatcher successView = req.getRequestDispatcher(location);
@@ -634,13 +634,13 @@ public class Store_MemServlet extends HttpServlet {
 				res.setCharacterEncoding("UTF-8");
 				PrintWriter out = res.getWriter();
 				out.write(jsa.toString());
-				System.out.println(jsa.getJSONObject(0).getString("store_name"));
+//				System.out.println(jsa.getJSONObject(0).getString("store_name"));
 				out.flush();
 				out.close();
 
-			} catch (JSONException j) {
-				j.printStackTrace();
-			}
+//			} catch (JSONException j) {
+//				j.printStackTrace();
+//			}
 
 		}
 		/************************************

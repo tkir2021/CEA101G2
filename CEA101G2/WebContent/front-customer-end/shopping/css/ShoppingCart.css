@@ -1,116 +1,410 @@
-html, body {
-	font: 15px verdana, Times New Roman, arial, helvetica, sans-serif, Microsoft JhengHei;
-	background-color: #FFFFFF;
+* {
+    box-sizing: border-box;
 }
 
-.shopname{
-	width:90%;
-	margin:20px auto;
-	display:flex;
-	align-items:center;
-	justify-content:center;
-	color:rgba(34, 39, 54, 1);
+body {
+    margin: 0;
+    font-size: 0px;
+    padding: 0;
 }
 
-.main{
-	width:90%;
-	margin:20px auto;
-	border:1px solid #eee;
-	box-shadow:0px 7px 30px 0px #ccccccbd;
-	border-radius:5px;
+footer {
+    top: 0px;
 }
 
-table#table-1 {
-	width:90%;
-	margin:0 auto;
-	background-color: #e93f00;
-	border-radius:5px;
-	padding:10px;
-/* 	border: 2px solid black; */
-	text-align: center;
-	color:white;
-	font-size:20px;
-}
-
-table {
-	width: 90%;
-	margin:10px auto;
-/* 	background-color: white; */
-/* 	margin-top: 1px; */
-/* 	margin-bottom: 2px; */
-}
-
-table, th, td {
-/* 	border: 0px solid #CCCCFF; */
-	font-weight: bold;
-}
-
-
-
-tr:hover{
-/* background-color: #CCCCFF; */
-}
-
-/* th, td { */
-/* 	border: 1px solid #CCCCFF; */
-/* 	padding: 1px; */
-/* 	text-align: center; */
+/* .header__nav{ */
+/* 	padding-top:10px!important; */
 /* } */
-
-
-
-form {
-	margin:20px auto;
-/* 	margin-bottom: 0px; */
-	
+.header__logo{
+	padding-top:10px;
+	padding-bottom:10px;
+	width:21%;
+}
+.main {
+    width: 90%;
+    margin: 30px auto;
+    font-size: 18px;
+    color: #6D696F;
 }
 
-h3, h4 {
-	color: red;
-	display: inline;
-	margin-right: 5px;
+
+#shopname {
+    text-align: center;
+    letter-spacing: 10px;
+    /*color: #e93f00;*/
+    color: white;
+    font-size: 28px;
+    background-color: #e93f00;
+    border-radius: 10px;
 }
 
-a:visited, a:link {
-	display:inherit;
-	text-align: center;
-	color: blue;
-	font-weight: bold;
-	/* 	text-decoration: none; */
+#shopname h2 {
+    padding: 5px;
+    color: white;
+     font-size: 28px;
+     font-weight:bold;
 }
 
-a:hover, a:active {
-	display:inherit;
-	color: red;
-	font-weight: bold;
-	text-decoration: none;
+#menu {
+    width: 90%;
+    margin: 0 auto;
+    /*background-color: #eee;*/
+
+}
+
+.shopmenu {
+    width: 30%;
+    display: inline-block;
+    margin: 20px 15px;
+}
+
+.item {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0px 2px 10px 0px #ccccccbd;
+    background-color: white;
+    overflow: hidden;
+
+}
+
+.itempic {
+    width: 100%;
+    height:200px;
+    overflow: hidden;
+    text-align: center;
+    /*border-radius: 10px;*/
+    display:flex;
+}
+
+.itempic img {
+    width: 100%;
+    height: 100%;
+/*     max-height: 210px; */
+/*     max-width: 300px; */
+/*     object-fit: cover; */
+    transform: scale(1, 1);
+    transition: all 1s ease-out;
+}
+
+.itempic img:hover {
+    transform: scale(1.2, 1.2);
+}
+
+.itemname {
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    line-height: 1.5;
+    text-align: center;
+    background-color: #e93f00;
+    color: white;
+}
+
+.desc {
+    font-size: 18px;
+    line-height:1.5;
+    padding: 5px;
+}
+
+.itemBottom {
+    padding: 10px;
+}
+
+.order {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.count {
+    display: flex;
+    align-items: center;
+}
+
+.count input {
+    background-color: lightblue;
+    border-radius: 5px;
+    border-style: none;
+    width: 50px;
+    height: 25px;
+    font-size: 18px;
+    text-align: center;
+/*     color: #6D696F; */
+    color:white;
+}
+
+.price {
+    color: red;
+    font-size: 24px;
+    font-weight: bold;
+
+}
+
+.cart {
+    text-align: center;
+
 }
 
 .button {
-    border: none;
-    padding: 5px 5px;
+    width: 120px;
+    height: 50px;
+    background-color: white;
+    border-style: none;
     border-radius: 5px;
-    width: 80px;
-/*     background: orange; */
-    box-shadow: inset 0 0 10px #000000;
-/*     font-weight: bold; */
+    font-size: 20px;
+    color: #e93f00;
+    border: 1px solid #e93f00;
 }
 
 .button:hover {
-    background: orange;
+    cursor: pointer;
+    background-color: #e93f00;
+    color: white;
 }
 
-#logo {
-	width: 10%;
-	margin-right:100px;
+/*======購物車內容========*/
+#shoppingcart {
+    width: 90%;
+    margin: 50px auto;
+    font-size: 20px;
+    background-color: #FBB551;
+    /*background-color: #eee;*/
+    border-radius: 10px;
+    padding: 10px;
 }
 
-.displayImg{
-	width: 50%;
+#top {
+    width: 90%;
+    margin: 20px auto;
+    font-size: 26px;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+    letter-spacing: 10px;
 }
 
-footer{
-	top:0px;
+#bottom {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.cartitem {
+    display: flex;
+    width: 30%;
+    border-radius: 5px;
+    padding: 10px;
+    justify-content: space-around;
+    margin: 20px 12px;
+    background-color: white;
+    color: #6D696F;
+}
+
+.cartitem:hover {
+    cursor: pointer;
+    animation: headShake;
+    animation-duration: 1s;
+}
+
+.itemleft {
+    width: 50%;
+    overflow: hidden;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.itemleft img {
+    width: 100%;
+    max-width: 200px;
+    max-height: 150px;
+    border-radius: 5px;
+}
+
+.itemright {
+    width: 45%;
+}
+
+.itemright div {
+    margin-top: 7px;
+}
+
+.cartcount,
+.cartprice {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cartname {
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    background-color: #e93f00;
+    color: white;
+    border-radius: 5px;
+}
+
+.delbtn {
+    text-align: right;
+}
+
+.delbutton {
+    border-style: none;
+    background-color: white;
+    border: 1px solid #e93f00;
+    border-radius: 5px;
+    color: #e93f00;
+    font-size: 20px;
+}
+
+.delbutton:hover {
+    background-color: #e93f00;
+    color: white;
+    cursor: pointer;
+}
+
+.pay {
+    width: 90%;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.paybutton {
+    width: 100px;
+    height: 50px;
+    background-color: #e93f00;
+    color: white;
+    cursor: pointer;
+    border-style: none;
+    font-size: 20px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.paybutton:hover {
+    background-color: white;
+    color: #e93f00;
+    border: 1px solid #e93f00;
+
+}
+
+.item:hover {
+    animation: pulse;
+    animation-duration: 1s;
+
+}
+
+/*======結帳頁面=======*/
+
+#shopping {
+    width: 90%;
+    margin: 20px auto;
+    color: #e93f00;
 }
 
 
+#shoppingtop {
+    text-align: center;
+    font-size: 28px;
+    letter-spacing: 10px;
+    font-weight: bold;
+    color: #e93f00;
+    margin-bottom: 20px;
+}
+
+.fa-smile {
+    margin-left: 10px;
+}
+
+#shoppingbottom {
+    width: 100%;
+    border-radius: 15px;
+    /*background-color: #e17b34;*/
+    /*background-color: #eec362;*/
+    background-color: white;
+    box-shadow: 0px 5px 10px 0px #ccccccbd;
+
+}
+
+.buytop {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    text-align: center;
+    font-size: 26px;
+    font-weight: bold;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 3px solid #e93f00;
+    justify-content: space-around;
+
+}
+
+.buytop div {
+    width: 20%;
+}
+
+.buyitem {
+    width: 95%;
+    margin: 0 auto;
+    display: flex;
+    font-size: 24px;
+    text-align: center;
+    padding: 20px;
+    color: #e93f00;
+    justify-content: space-around;
+    border-bottom: 1px dotted #e93f00;
+    align-items: center;
+}
+
+.buyitem div {
+    width: 20%;
+}
+
+.buyimg {
+    overflow: hidden;
+}
+
+.buyimg img {
+    width: 100%;
+    max-height: 100px;
+    max-width: 150px;
+    margin: 0 auto;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.total {
+    width: 71%;
+    margin: 10px auto;
+    color: #e93f00;
+    font-size: 24px;
+    text-align: right;
+    padding: 10px;
+    font-weight: bold;
+    letter-spacing: 2;
+}
+
+.backindex {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+
+.backindex a {
+    color: #e93f00;
+    text-decoration: none;
+    border: 1px solid #e93f00;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.backindex :hover {
+    background-color: #e93f00;
+    color: white;
+}

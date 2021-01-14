@@ -15,11 +15,7 @@
 
 </head>
 <body>
-    <!-- Page Preloder -->
-<!--     <div id="preloder"> -->
-<!--         <div class="loader"></div> -->
-<%--         <img class="loaderpic" src="<%=request.getContextPath() %>/front-customer-end/member/img/logo-07.png" alt=""> --%>
-<!--     </div> -->
+ 
     <!-- ===========================================Header====================================== -->
     <header class="header">
         <div class="header__logo">

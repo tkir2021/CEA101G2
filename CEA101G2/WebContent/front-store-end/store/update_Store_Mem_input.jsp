@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*"%>
 <%@ page import="com.store.model.*"%>
 
 <%
@@ -17,10 +18,11 @@ Store_MemVO store_MemVO = storeSvc.getOneStore_Mem(store_no);
 <style>
   table {
 	width: 450px;
+	
 	background-color: white;
 	margin-top: 1px;
 	margin-bottom: 1px;
-	margin:0 auto;
+/* 	margin:0 auto; */
   }
   table, th, td {
     border: 0px solid #CCCCFF;
@@ -29,9 +31,10 @@ Store_MemVO store_MemVO = storeSvc.getOneStore_Mem(store_no);
     padding: 1px;
   }
   h3{
-  position:relative;
-  left:50%;
-  margin-left:-100px;
+/*   position:relative; */
+/*   left:50%; */
+/*   margin-left:-100px; */
+	text-align: center;
   }
   
   footer{
@@ -45,6 +48,21 @@ Store_MemVO store_MemVO = storeSvc.getOneStore_Mem(store_no);
   .red{
    color:red;
   }
+   #displayImg{
+   width: 400px;
+   height: 400px;
+  }
+  
+  div{
+  	display:inline-block;
+  
+  }
+  
+  #big{
+  width:80%;
+  	margin-left: 225px;
+  }
+  
 </style>
 
 </head>
@@ -69,7 +87,11 @@ Store_MemVO store_MemVO = storeSvc.getOneStore_Mem(store_no);
 <jsp:useBean id="storeSvc2" scope="page" class="com.store.model.Store_MemService" />
 
 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/store/store.do" name="form1">
-<table>
+<div id="big">
+<div><img id="displayImg" src="<%=request.getContextPath()%>/store/store.do?store_no=${storeSvc2.getOneStore_Mem(store_no).store_no}&action=getOneImage"></div>
+<div>
+<table >
+
 	<tr>
 		<td>店家編號:<font color=red></font></td>
 		<td>${storeSvc2.getOneStore_Mem(store_no).store_no}</td>
@@ -144,6 +166,9 @@ Store_MemVO store_MemVO = storeSvc.getOneStore_Mem(store_no);
 		<td><b class="red">*</b>桌位上限:</td>
 		<td><input type="TEXT" name="table_limit" size="45" value="<%=store_MemVO.getTable_limit()%>" /></td>
 	</tr>
+	
+		
+	
 		
 		
 		<jsp:useBean id="store_MemSvc" scope="page" class="com.store.model.Store_MemService" />
@@ -163,6 +188,9 @@ Store_MemVO store_MemVO = storeSvc.getOneStore_Mem(store_no);
 <!-- 	</tr> -->
 
 </table>
+</div>
+</div>
+
 <br>
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="store_no" value="<%=store_MemVO.getStore_no()%>">
@@ -170,6 +198,3 @@ Store_MemVO store_MemVO = storeSvc.getOneStore_Mem(store_no);
 </section>
 <%@ include file="footer.file" %>
 </body>
-
-
-

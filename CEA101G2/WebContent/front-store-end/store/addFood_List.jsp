@@ -1,8 +1,17 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.food_list.model.*"%>
+<%@ page import="com.store.model.*"%>
+
 
 <%
+	String store_no =(String) session.getAttribute("store_no");
+	Store_MemVO store_memVO = new Store_MemService().getOneStore_Mem(store_no);
+	String store_no2 = store_memVO.getStore_no();
+
+
+	pageContext.setAttribute("store_memVO",store_memVO);
+
 	Food_ListVO food_ListVO = (Food_ListVO) request.getAttribute("food_ListVO");
 %>
 
@@ -79,7 +88,7 @@ footer{
 			<tr>
 				<td>店家編號:</td>
 				<td><input type="TEXT" name="store_no" size="45"
-					value="<%=(food_ListVO == null) ? "SM00000004" : food_ListVO.getStore_no()%>" /></td>
+					value="<%=store_no2 %>" readonly="true" /></td>
 			</tr>
 			<tr>
 				<td>餐點名稱:</td>

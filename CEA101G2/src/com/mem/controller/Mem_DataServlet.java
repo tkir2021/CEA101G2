@@ -105,11 +105,11 @@ public class Mem_DataServlet extends HttpServlet {
 						String location = (String) session.getAttribute("location");
 						if (location != null) {
 							session.removeAttribute("location"); // *工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
-							System.out.println(location);
 							res.sendRedirect(location);
 							return;
 						}
 						// 若沒來源網頁，改成回到首頁
+						
 						res.sendRedirect(req.getContextPath() + "/front-customer-end/member/memUpdate.jsp"); // *工作3://
 																												// (-->如無來源網頁:則重導至login_success.jsp)
 					}

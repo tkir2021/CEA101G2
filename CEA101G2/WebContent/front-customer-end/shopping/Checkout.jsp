@@ -2,11 +2,16 @@
 <%@ page import="java.util.* , com.shopping.controller.Food"%>
 <%@ page import="com.food_list.model.*"%>
 
-<html>
+<!DOCTYPE html>
+<html lang="zh-tw">
+<%@ include file="/front-customer-end/shopping/header.file" %>
+
 <head>
- <title>餐點結帳</title>
- <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/front-customer-end/shopping/css/ShoppingCart.css">
- </head>
+    <title>餐點結帳</title>
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/front-customer-end/shopping/css/ShoppingCart.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css">
+</head>
+
 <body>
 
 <%
@@ -18,18 +23,19 @@
 	}
 	
 %>
-<img src="<%=request.getContextPath()%>/front-customer-end/shopping/images/tomcat.gif"> <font size="+3">網路書店 - 結帳：（Checkout.jsp）</font>
-<hr><p>
 
-<table id="table-1" style="margin: auto;">
-	<tr>
-		<th width="200">餐點名稱</th>
-		<th width="100">餐點圖片</th>
-		<th width="100">售價</th>
-		<th width="100">數量</th>
-	</tr></table><table style="margin: auto;">
-
-	<%  @SuppressWarnings("unchecked")
+    <div id="shopping">
+        <div id="shoppingtop">感謝購買<i class="far fa-smile"></i></div>
+        <div id="shoppingbottom">
+            <div class="buytop">
+                <div>餐點圖片</div>
+                <div>餐點名稱</div>
+                <div>數量</div>
+                <div>售價</div>
+            </div>
+            <div class="buybottom">
+            
+    <%  @SuppressWarnings("unchecked")
 		Vector<Food> buylist = (Vector<Food>) session.getAttribute("shoppingcheckout");
 		String amount =  (String) request.getAttribute("amount");
 	%>	
@@ -42,37 +48,41 @@
 			Integer quantity = order.getQuantity();
 			
 	%>
-	<tr>
-		<td width="200"><%=name%>     </td>
-		<td width="100"><img class="displayImg" style="width:40%" src="<%=request.getContextPath() %>/food/food.do?food_no=<%=food_no %>&action=getOneImage"> </td>
-		<td width="100"><%=price%>    </td>
-		<td width="100"><%=quantity%> </td>
-	</tr>
-	<%
+            
+                <div class="buyitem">
+                    <div class="buyimg">
+                        <img class="displayImg" style="width:40%" src="<%=request.getContextPath() %>/food/food.do?food_no=<%=food_no %>&action=getOneImage">
+                    </div>
+                    <div><%=name%></div>
+                    <div><%=quantity%></div>
+                    <div>$<span><%=price%></span></div>
+                </div>
+    <%
 		}
-	%>
-	
-	<tr>
-		<td colspan="6" style="text-align:right;"> 
-		   <font size="+2">總金額： <h4>$<%=amount%></h4> </font>
-	    </td>
-	</tr>
-</table>
-       
-       <p><a href="<%=request.getContextPath()%>/index/index.jsp"><font size="+1">返回首頁</font></a>
-
-	<script src="<%=request.getContextPath() %>/front-customer-end/shopping/js/jquery-3.3.1.min.js"></script>
+	%>          
+            </div>
+            <div class="total">
+                <div>總金額：$<span><%=amount%></span></div>
+            </div>
+        </div>
+        <div class="backindex">
+            <a href="<%=request.getContextPath()%>/index/index.jsp">返回首頁</a>
+        </div>
+    </div>
+    
+    
+    <script src="<%=request.getContextPath() %>/front-customer-end/shopping/js/jquery-3.3.1.min.js"></script>
 	<script src="<%=request.getContextPath() %>/front-customer-end/shopping/js/sweetalert.min.js"></script>
 	
-	<script>
-		
-	if("${check}" === "fail"){
-    	swal("扣款失敗！餘額不足，請進行儲值。", "", "error");
+    <script>
+    if ("success" === "fail") {
+        swal("扣款失敗！餘額不足，請進行儲值。", "", "error");
+    } else if ("success" === "success") {
+        swal("購買成功！", "", "success");
     }
-    else if("${check}" === "success"){
-    	swal("購買成功！", "", "success");
-    }	
-	
-	</script>
+    </script>
+    
+    <jsp:include page="/front-customer-end/shopping/Cart.jsp" flush="true" />
 </body>
+
 </html>
