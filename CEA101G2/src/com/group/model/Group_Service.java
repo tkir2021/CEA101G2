@@ -8,7 +8,8 @@ public class Group_Service {
 	private Group_DAO_interface dao;
 	
 	public Group_Service() {
-		dao = new Group_JDBCDAO();
+//		dao = new Group_JDBCDAO();
+		dao = new Group_DAO();
 	}
 	
 	public Group_VO addGroup_(String mem_no, String store_no, String booking_no, Integer gp_kind, Integer mem_least, 

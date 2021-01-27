@@ -33,7 +33,7 @@
 
 <style>
   table {
-	width: max-content;
+	width: 1000px;
 	background-color: white;
 	margin:0 auto 140px auto;
   }
@@ -41,10 +41,9 @@
     border: 1px solid #CCCCFF;
   }
   th, td {
-    padding: 5px;
+    width:77px;
     text-align: center;
   }
-  
    #displayImg{
    width: 150px;
    height: 150px;

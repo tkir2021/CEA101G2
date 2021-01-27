@@ -271,7 +271,7 @@ public class Mem_DataServlet extends HttpServlet {
 				if (mem_name == null || mem_name.trim().length() == 0) {
 					errorMsgs.add("會員姓名：請勿空白！");
 				} else if (!mem_name.trim().matches(mNameReg)) { // 以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("員工姓名: 只能是中、英文字母、數字和_ , 且長度必需在1到6之間");
+					errorMsgs.add("會員姓名: 只能是中、英文字母、數字和_ , 且長度必需在1到6之間");
 				}
 
 				String men_phone = req.getParameter("men_phone");

@@ -133,7 +133,7 @@
 		});
         
 
-        //上傳圖片
+        //預覽圖片
         let myFile = document.getElementById("myFile");
         let display = document.getElementById("display");
         

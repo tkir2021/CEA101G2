@@ -16,10 +16,7 @@
 </head>
 
 <body>
-<% String account =(String) session.getAttribute("account");
- 	
-%>
-<%=account %>
+<% String account =(String) session.getAttribute("account");%>
 
 <% 
 	String store_no="";

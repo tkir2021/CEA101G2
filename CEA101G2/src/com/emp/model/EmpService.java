@@ -6,7 +6,8 @@ public class EmpService {
     private EmpDAO_interface dao;
     
     public EmpService() {
-    	dao = new EmpJDBCDAO();
+//    	dao = new EmpJDBCDAO();
+    	dao = new EmpDAO();
     }
     
     public EmpVO addEmp (String emp_name, java.sql.Date emp_date, String emp_mail) { //Byte[] emp_img

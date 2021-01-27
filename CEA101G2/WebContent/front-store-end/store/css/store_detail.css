@@ -1,7 +1,13 @@
         @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400|Inconsolata);
         @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
       
-              /**************************­qÀ\©ú²Ó*********************************************/
+         /************************searchBar*********************************/
+       	 input .searchBar {
+         	position:absolute;
+        	top:42%;
+         	left:77%;
+        }
+        /**************************­qÀ\©ú²Ó*********************************************/
         button {
             width: 70px;
             height: 30px;
@@ -586,9 +592,10 @@
          tr:nth-child(odd) {
             background-color: #f8f9fa;
         }
-tr:hover{
-	background-color:lifhtblue !important;
-}
+		tr:hover{
+			background-color:lightblue !important;
+			color:black;
+		}
         th {
             padding: 20px 15px;
             text-align: left;

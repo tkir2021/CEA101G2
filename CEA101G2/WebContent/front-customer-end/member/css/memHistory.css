@@ -1,13 +1,21 @@
-        /*         #tableArea .dataTables_wrapper { */
-        /*             position: relative; */
-        /*             clear: both; */
-        /*             zoom: 1; */
-        /*             overflow-x: auto; */
-        /*         } */
-        /*         #tableArea table { */
-        /*             width: 800px; */
-        /*         } */
+/*                 #tableArea .dataTables_wrapper { */
+/*                     position: relative; */
+/*                     clear: both; */
+/*                     zoom: 1; */
+/*                     overflow-x: auto; */
+/*                 } */
+/*                 #tableArea table { */
+/*                     width: 800px; */
+/*                 } */
+        
+        .header__logo{
+	        width:21%;
+	        padding:9px 20px;
+        }
 
+		.header__nav{
+			padding:17px 85px;
+		}
         th, td {
             text-align: center;
         }

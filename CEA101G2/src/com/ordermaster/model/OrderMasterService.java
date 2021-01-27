@@ -12,7 +12,8 @@ public class OrderMasterService {
 	private OrderMasterDAO_interface dao;
 
 	public OrderMasterService() {
-		dao = new OrderMasterJDBCDAO();
+//		dao = new OrderMasterJDBCDAO();
+		dao = new OrderMasterDAO();
 	}
 
 	public OrderMasterVO addOrderMaster(String mem_no, String store_no, String sale_no,
@@ -84,6 +85,15 @@ public class OrderMasterService {
 		return dao.findByPrimaryKey(order_no);
 	}
 	
+	/************************更新取餐狀態 by Bella*************************/
+	 public OrderMasterVO upGetFood(String order_no, String take_status) {
+	  OrderMasterVO orderMasterVO = new OrderMasterVO();
+	  orderMasterVO.setOrder_no(order_no);
+	  orderMasterVO.setTake_status(take_status);
+	  dao.updateGetFood(order_no, take_status);
+	  return orderMasterVO;
+	 }
+	 
 	/************************取得訂餐資料 by Sheng*************************/
 	public List<OrderMasterVO> findByNumber(String number){
 		return dao.findByNumber(number);

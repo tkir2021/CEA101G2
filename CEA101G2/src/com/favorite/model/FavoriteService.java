@@ -7,7 +7,8 @@ public class FavoriteService {
 	private FavoriteDAO_interface dao;
 
 	public FavoriteService() {
-		dao = new FavoriteJDBCDAO();
+//		dao = new FavoriteJDBCDAO();
+		dao = new FavoriteDAO();
 	}
 
 	public FavoriteVO addFavorite(String store_no, String mem_no

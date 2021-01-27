@@ -7,7 +7,8 @@ public class MemGradeService {
 	private Mem_GradeDAO_interface dao;
 
 	public MemGradeService() {
-		dao = new Mem_GradeJDBCDAO();
+//		dao = new Mem_GradeJDBCDAO();
+		dao = new Mem_GradeDAO();
 	}
 
 	public Mem_GradeVO addGrade(Integer grade_no, Integer consume_level, Double discount

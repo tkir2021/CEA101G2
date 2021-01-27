@@ -146,7 +146,15 @@
             <%@ include file="footer.file" %>
             <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js'></script>
             <script src='https://unpkg.com/vue-the-mask@0.11.1/dist/vue-the-mask.js'></script>
+            <script src="<%=request.getContextPath() %>/front-customer-end/shopping/js/sweetalert.min.js"></script>
             <script src="<%=request.getContextPath() %>/front-customer-end/member/js/credit card.js"></script>
+            
+            <script>
+    if ("${check}" === "fail") {
+        swal("扣款失敗！餘額不足，請進行儲值。", "", "error");
+    }
+    
+    </script>
 </body>
 
 </html>

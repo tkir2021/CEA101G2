@@ -8,7 +8,7 @@ public class DepositService {
 	private DepositDAO_interface dao;
 
 	public DepositService() {
-		dao = new DepositJDBCDAO();
+		dao = new DepositDAO();
 	}
 
 	public DepositVO addDeposit(String mem_no, Integer charge,

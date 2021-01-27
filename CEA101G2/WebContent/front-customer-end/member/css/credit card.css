@@ -6,6 +6,11 @@
             height:auto;
         }
         
+         .header__logo{
+        width:21%;
+        padding:8px 20px;
+        }
+        
         footer{
         top:0px!important}
 

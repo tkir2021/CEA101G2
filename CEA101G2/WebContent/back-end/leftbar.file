@@ -92,12 +92,12 @@
 <%--                 <a class="dropdown-item" href="<%=request.getContextPath()%>/back-end/emp/report/back_reportlist.jsp">檢舉紀錄</a> --%>
 <!--             </div> -->
 <!--         </div> -->
-        <div class="dropdown_area">
-            <button class="btn btn-secondary" type="button">商品管理 </button>
-            <div class="dropdown_content">
-                <a class="dropdown-item" href="#">商品規格管理</a>
-            </div>
-        </div>
+<!--         <div class="dropdown_area"> -->
+<!--             <button class="btn btn-secondary" type="button">商品管理 </button> -->
+<!--             <div class="dropdown_content"> -->
+<!--                 <a class="dropdown-item" href="#">商品規格管理</a> -->
+<!--             </div> -->
+<!--         </div> -->
         <div class="dropdown_area">
             <button class="btn btn-secondary" type="button">帳務管理 </button>
             <div class="dropdown_content">

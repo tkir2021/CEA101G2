@@ -36,15 +36,15 @@ public class ShoppingServlet extends HttpServlet {
 
 		if (!action.equals("CHECKOUT")) {
 			
-			// 刪除購物車中的書籍
+			// 刪除購物車中的商品
 			if (action.equals("DELETE")) {
 				String del = req.getParameter("del");
 				int d = Integer.parseInt(del);
 				buylist.remove(d);
 			}
-			// 新增書籍至購物車中
+			// 新增商品至購物車中
 			else if (action.equals("ADD")) {
-				// 取得後來新增的書籍
+				// 取得後來新增的商品
 				Food afood = getFood(req);
 
 				if (buylist == null) {
@@ -68,7 +68,7 @@ public class ShoppingServlet extends HttpServlet {
 			rd.forward(req, res);
 		}
 
-		// 結帳，計算購物車書籍價錢總數
+		// 結帳，計算購物車商品價錢總數
 		else if (action.equals("CHECKOUT")) {
 			Integer total = 0;
 			List<OrderDetailVO> list = new ArrayList<OrderDetailVO>();
@@ -83,7 +83,7 @@ public class ShoppingServlet extends HttpServlet {
 				total += (price * quantity);
 				
 				orderDetailVO.setFood_no(order.getFood_no());
-				orderDetailVO.setFood_scale("無");
+				orderDetailVO.setFood_scale("一般");
 				orderDetailVO.setFood_price(order.getPrice());
 				orderDetailVO.setQuantity(order.getQuantity());
 				orderDetailVO.setTotal(price * quantity);
@@ -115,17 +115,25 @@ public class ShoppingServlet extends HttpServlet {
 			orderMasterVO.setSale_percent(1.0f);
 			orderMasterVO.setDiscount(1.0f);
 			orderMasterVO.setOrder_status("1");
-			orderMasterVO.setTake_status("1");
+			orderMasterVO.setTake_status("0");
 			orderMasterVO.setGive_star(0f);
 			
-			insterData(total, mem_dataVO, orderMasterVO, list, req);
+			String getCheck = insterData(total, mem_dataVO, orderMasterVO, list, req);
 			session.setAttribute("shoppingcheckout", session.getAttribute("shoppingcart"));
 			session.removeAttribute("shoppingcart");
 			/*********************購物車：insterData********************/
 			
-			String url = "/front-customer-end/shopping/Checkout.jsp";
-			RequestDispatcher rd = req.getRequestDispatcher(url);
-			rd.forward(req, res);
+			if(getCheck.equals("NG")) {
+				String url = "/front-customer-end/member/creditcard.jsp";
+				RequestDispatcher rd = req.getRequestDispatcher(url);
+				rd.forward(req, res);
+			}
+			else {
+				String url = "/front-customer-end/shopping/Checkout.jsp";
+				RequestDispatcher rd = req.getRequestDispatcher(url);
+				rd.forward(req, res);
+			}
+			
 
 		}
 	}
@@ -138,26 +146,27 @@ public class ShoppingServlet extends HttpServlet {
 		String food_no = req.getParameter("food_no");
 		String price = req.getParameter("price");
 
-		Food book = new Food();
+		Food food = new Food();
 		
-//		book.setStore_no(store_no);
-		book.setFood_no(food_no);
-		book.setName(name);
-		book.setPrice(new Integer(price));
-		book.setQuantity((new Integer(quantity)).intValue());
-		return book;
+//		food.setStore_no(store_no);
+		food.setFood_no(food_no);
+		food.setName(name);
+		food.setPrice(new Integer(price));
+		food.setQuantity((new Integer(quantity)).intValue());
+		return food;
 	}
 	
 	
 	
-	private void insterData(Integer total, Mem_DataVO mem_dataVO, OrderMasterVO orderMasterVO, List<OrderDetailVO> list, HttpServletRequest req) {
+	private String insterData(Integer total, Mem_DataVO mem_dataVO, OrderMasterVO orderMasterVO, List<OrderDetailVO> list, HttpServletRequest req) {
 		
 		Integer cost = mem_dataVO.getDeposit() - total;
 		Integer consume = mem_dataVO.getConsume_times() + total;
 		
 		//餘額不足
-		if(cost < 0 ) {
+		if(cost <= 0 ) {
 			req.setAttribute("check", "fail");
+			return "NG";
 		}
 		else {
 			//更新：會員儲值金、訂餐主檔、訂餐明細
@@ -165,8 +174,8 @@ public class ShoppingServlet extends HttpServlet {
 			mem_dataVO.setConsume_times(consume);
 			Mem_DataService mem_dataSvc = new Mem_DataService();
 			mem_dataSvc.updateDeposit_ByShopping(mem_dataVO, orderMasterVO, list);
-			
 			req.setAttribute("check", "success");
+			return "OK";
 		}
 		
 			

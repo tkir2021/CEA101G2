@@ -9,11 +9,23 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 public class B_orderDAO implements B_orderDAO_interface {
-	String driver = "oracle.jdbc.driver.OracleDriver";
-	String url = "jdbc:oracle:thin:@localhost:1521:XE";
-	String userid = "CEA101G2"; // DB名稱記得改!!!!!!!!!!!!!!!!!!!!!!
-	String passwd = "CEA101G2";
+
+	// 一個應用程式中,針對一個資料庫 ,共用一個DataSource即可
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/CEA101G2");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
 
 	// 新增資料
 	private static final String INSERT_STMT_GROUP = "INSERT INTO BOOKING_ORDER (BOOKING_NO,MEM_NO,STORE_NO,GROUP_NO,BOOKING_DATE,TIME_PERIOD,PEOPLE,BOOKING_STATUS,ATTEND_STATUS) VALUES (('BO' || LPAD(BOOKINGORDER_SEQ.NEXTVAL, 8, '0')),?,?,?,?,?,?,1,0)";
@@ -22,24 +34,26 @@ public class B_orderDAO implements B_orderDAO_interface {
 	// 用bookingno查單筆
 	private static final String GET_ONE_STMT = "SELECT booking_no, mem_no,store_no,group_no,To_char(booking_date, 'yyyy-mm-dd')BOOKING_DATE,time_period, people,booking_status,attend_status,give_star,ORDER_COMMIT FROM booking_order WHERE booking_no = ?";
 	// 用storeno查單筆
-	private static final String GET_ONE_STORE = "SELECT booking_no, mem_no,store_no,group_no,To_char(booking_date, 'yyyy-mm-dd')BOOKING_DATE,time_period, people,booking_status,attend_status,give_star,ORDER_COMMIT FROM booking_order WHERE store_no = ?";
+	private static final String GET_ONE_STORE = "SELECT booking_no, mem_no,store_no,group_no,To_char(booking_date, 'yyyy-mm-dd')BOOKING_DATE,time_period, people,booking_status,attend_status,give_star,ORDER_COMMIT FROM booking_order WHERE store_no = ? order by BOOKING_DATE DESC";
 	// 用memno查單筆
 	private static final String GET_ONE_MEMBER = "SELECT booking_no, mem_no,store_no,group_no,To_char(booking_date, 'yyyy-mm-dd')BOOKING_DATE,time_period, people,booking_status,attend_status,give_star,ORDER_COMMIT FROM booking_order WHERE mem_no = ?";
 	// 修改
 	private static final String UPDATE = "UPDATE BOOKING_ORDER set BOOKING_STATUS=? ,ATTEND_STATUS=? ,GIVE_STAR=? where booking_no = ?";
 	/*** 更新評分 by Sheng ***/
 	private static final String UP_GIVE_STAR = "UPDATE BOOKING_ORDER SET GIVE_STAR=? WHERE BOOKING_NO = ?";
+	/*** 更新出席狀態 by Bella ***/
+	private static final String UP_ATTEND_STATUS = "UPDATE BOOKING_ORDER SET ATTEND_STATUS=? WHERE BOOKING_NO = ?";
 	/*** 更新評分 by Sheng ***/
-	//用storeno,date,timeperiod查people總和
-	 private static final String GET_ONE_PEOPLE = "SELECT SUM(people) AS people_SUM FROM booking_order WHERE store_no = ? and BOOKING_DATE=? and time_period=?";
+	// 用storeno,date,timeperiod查people總和
+	private static final String GET_ONE_PEOPLE = "SELECT SUM(people) AS people_SUM FROM booking_order WHERE store_no = ? and BOOKING_DATE=? and time_period=?";
 
 	@Override
 	public void insert(B_orderVO b_orderVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT_GROUP);
 			pstmt.setString(1, b_orderVO.getMemno());
 			pstmt.setString(2, b_orderVO.getStoreno());
@@ -50,9 +64,6 @@ public class B_orderDAO implements B_orderDAO_interface {
 
 			pstmt.executeUpdate();
 			System.out.println("成功了");
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -82,8 +93,7 @@ public class B_orderDAO implements B_orderDAO_interface {
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setInt(1, b_orderVO.getBookingstatus());
@@ -94,9 +104,6 @@ public class B_orderDAO implements B_orderDAO_interface {
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -127,8 +134,7 @@ public class B_orderDAO implements B_orderDAO_interface {
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UP_GIVE_STAR);
 
 			pstmt.setDouble(1, givestar);
@@ -137,9 +143,6 @@ public class B_orderDAO implements B_orderDAO_interface {
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -162,7 +165,44 @@ public class B_orderDAO implements B_orderDAO_interface {
 
 	}
 
-	/************************ 更新評分 by Sheng **************************/
+	/************************ 更新出席狀態 by Bella **************************/
+	@Override
+	public void upAttendstatus(String bookingno, Integer attendStatus) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UP_ATTEND_STATUS);
+
+			pstmt.setDouble(1, attendStatus);
+			pstmt.setString(2, bookingno);
+
+			pstmt.executeUpdate();
+
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
 
 	@Override
 	public B_orderVO findByPrimaryKey(String bookingno) {
@@ -173,8 +213,7 @@ public class B_orderDAO implements B_orderDAO_interface {
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
 			pstmt.setString(1, bookingno);
@@ -198,9 +237,6 @@ public class B_orderDAO implements B_orderDAO_interface {
 			}
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -239,8 +275,8 @@ public class B_orderDAO implements B_orderDAO_interface {
 		ResultSet rs = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_PEOPLE);
 			pstmt.setString(1, storeno);
 			pstmt.setDate(2, bookingdate);
@@ -264,9 +300,6 @@ public class B_orderDAO implements B_orderDAO_interface {
 //	    orderVO.setOrdercommit(rs.getTimestamp("order_commit"));
 			}
 
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -307,8 +340,7 @@ public class B_orderDAO implements B_orderDAO_interface {
 		ResultSet rs = null;
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 
@@ -329,9 +361,6 @@ public class B_orderDAO implements B_orderDAO_interface {
 			}
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -371,8 +400,8 @@ public class B_orderDAO implements B_orderDAO_interface {
 		ResultSet rs = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+
+			con = ds.getConnection();
 
 			// 判別首字是S(storeno)還是M(memno)，以區隔查找單筆的方式
 //			char firstWord = number.charAt(0);
@@ -414,9 +443,6 @@ public class B_orderDAO implements B_orderDAO_interface {
 			}
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources

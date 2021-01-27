@@ -5,6 +5,17 @@
 <%@ page import="com.booking.model.*"%>
 <%@ page import="com.ordermaster.model.*"%>
 
+<% 
+ String store_no = (String)session.getAttribute("store_no");
+ OrderMasterService omSvc = new OrderMasterService();
+ List <OrderMasterVO> orderVO = omSvc.findByNumber(store_no);
+ pageContext.setAttribute("orderMaster", orderVO);
+ 
+ B_orderService orderSvc = new B_orderService();
+ List<B_orderVO> SorderList = orderSvc.getOrderByNo(store_no);
+ pageContext.setAttribute("SorderList",SorderList);
+%>
+
 <title>Store_Detail</title>
 
 <!DOCTYPE html>
@@ -44,6 +55,7 @@
         <div id="introduction">
             <h1>Welcome Back!</h1>
         </div>
+        <input type="text" placeholder="Search..." class="searchBar" style="position:absolute; top:42%; left:77%;">
         <!-- TABS LIST -->
         <ul id="tabs-list">
             <!-- MENU TOGGLE -->
@@ -51,8 +63,7 @@
             <li id="li-for-panel-1">
                 <label class="panel-label" for="panel-1-ctrl">訂位紀錄</label>
             </li>
-            <!--INLINE-BLOCK FIX
- -->
+            <!--INLINE-BLOCK FIX-->
             <li id="li-for-panel-2">
                 <label class="panel-label" for="panel-2-ctrl">訂餐紀錄</label>
             </li>
@@ -67,47 +78,65 @@
                             <table cellpadding="0" cellspacing="0" border="0">
                                 <thead>
                                     <tr>
-										<th>訂位編號</th>
-										<th>會員編號</th>
-										<th>揪團編號</th>
-										<th>訂位日期</th>
-										<th>訂位時段</th>
-										<th>訂位人數</th>
-										<th>訂位狀態</th>
-										<th>參加狀態</th>
-										<th>評分數</th>
-										<th>訂位成立日期</th>
+							          <th>訂位編號</th>
+							          <th>會員編號</th>
+							          <th>訂位日期</th>
+							          <th>訂位時段</th>
+							          <th>訂位人數</th>
+							          <th>訂位狀態</th>
+							          <th>參加狀態</th>
+							          <th>評分數</th>
+							          <th>訂位成立日期</th>
                                     </tr>
                                 </thead>
                             </table>
                         </div>
                         <div class="tbl-content">
-                            <table cellpadding="0" cellspacing="0" border="0">
-                                <tbody>
-                                    <c:forEach var="orderVO" items="${SorderList}" >
-									<tr>
-										<td>${orderVO.bookingno}</td>
-										<td>${orderVO.memno}</td>
-										<td>${orderVO.groupno}</td>
-										<td>${orderVO.bookingdate}</td>
-										<td>${orderVO.timeperiod}</td>
-										<td>${orderVO.people}</td> 
-										<td>${(orderVO.bookingstatus==0)?"失敗":"成功"}</td>
-										<td>${(orderVO.attendstatus==0)?"未出席":"已出席"}</td>
-										
-<%-- 										<FORM method="post" class="form1" action="<%=request.getContextPath()%>/booking/booking.do">               --%>
-<%-- 	                                		<select name="mem_auth" onchange="submit(),alert('${store_no}的出席狀態已改變')"> --%>
-<%-- 	                                			<option value="0" ${(orderVO.attendstatus==0)?'selected':''} >未出席</option> --%>
-<%-- 	                                			<option value="1" ${(orderVO.attendstatus==1)?'selected':''}>已出席</option> --%>
-<!-- 	                                		</select> -->
-<%-- 	                                		<input type="hidden" name="store_no" class="store_no" value="${store_no}"> --%>
-<!-- 	                                		<input type="hidden" name="action" value="updateStatus"> -->
-<!-- 	                        		 	</FORM>  -->
-										
-										<td>${orderVO.givestar}</td>
-										<td><fmt:formatDate value="${orderVO.ordercommit}" pattern="yyyy-MM-dd"/></td>
-									</tr>
-								</c:forEach>
+                           <table cellpadding="0" cellspacing="0" border="0">
+                             <tbody>
+                             <c:choose>
+                             <c:when test="${SorderList==[]}">
+                               <h6 style="position:relative; top:20%;">目前尚無訂位紀錄</h6>
+                             </c:when>
+                             <c:otherwise>
+                                <c:forEach var="bookingVO" items="${SorderList}" >
+          <tr>
+           <td class="bookingno">${bookingVO.bookingno}</td>
+           <td>${bookingVO.memno}</td>
+           <jsp:useBean id="now" class="java.util.Date"/>
+           <fmt:formatDate value="${now}" dateStyle="long" pattern="yyyy-MM-dd" var="nowDate"/>
+           <c:choose>
+            <c:when test="${bookingVO.bookingdate == now}">
+             <td style="color:red">${bookingVO.bookingdate}</td>
+            </c:when>
+            <c:otherwise>
+             <td style="color:darkgrey">${bookingVO.bookingdate}</td>
+            </c:otherwise>
+           </c:choose>
+             <td>${bookingVO.timeperiod}</td>
+             <td>${bookingVO.people}</td> 
+             <td>${(bookingVO.bookingstatus==0)?"失敗":"成功"}</td>
+             <td>
+           <c:choose>
+           <c:when test="${bookingVO.attendstatus==0}">
+           <FORM method="post" class="takeStatus" action="<%=request.getContextPath()%>/booking/booking.do">
+             <select name="attend" class="attend" onchange="submit()">
+                                      <option value="0" ${(bookingVO.attendstatus==0)?'selected':''} >未出席</option>
+                                      <option value="1" ${(bookingVO.attendstatus==1)?'selected':''}>已出席</option>
+                                     </select>
+                                   <input type="hidden" name="bookingno" class="bookingno" value="${bookingVO.bookingno}">
+                                   <input type="hidden" name="action" value="updateAttend_status">
+           </FORM>
+           </c:when>
+           <c:otherwise>已出席</c:otherwise>
+           </c:choose>
+           </td>
+           <td>${bookingVO.givestar}</td>
+           <td><fmt:formatDate value="${bookingVO.ordercommit}" pattern="yyyy-MM-dd"/></td>
+          </tr>
+         </c:forEach>
+         </c:otherwise>
+                             </c:choose>
                                 </tbody>
                             </table>
                         </div>
@@ -134,20 +163,41 @@
                         <div class="tbl-content">
                             <table cellpadding="0" cellspacing="0" border="0" class="order">
                                 <tbody>
+                                 <c:choose>
+                               <c:when test="${orderMaster==[]}">
+                                <h6 style="position:relative; top:20%;">目前尚無訂餐紀錄</h6>
+                               </c:when>
+                              <c:otherwise>
                                      <c:forEach var="orderList" items="${orderMaster}" >
-									<tr>
-										<td class="orderno">${orderList.order_no}</td>
-										<td>${orderList.mem_no}</td>
-										<td>${orderList.order_date}</td>
-										<td>										
-										${(orderList.pay_type==0)?"儲值金":"信用卡"}
-										</td> 
-										<td>${orderList.order_total}</td>
-										<td>${(orderList.take_status==0)?"未取餐":"已取餐"}</td>
-										<td>${orderList.give_star}</td>
-										<td><button class="botton">訂餐明細</button></td>
-									</tr>
-								</c:forEach>
+         <tr>
+          <td class="orderno">${orderList.order_no}</td>
+          <td>${orderList.mem_no}</td>
+          <td>${orderList.order_date}</td>
+          <td>          
+          ${(orderList.pay_type==0)?"儲值金":"信用卡"}</td> 
+          <td>${orderList.order_total}</td>
+          <td>
+           <c:choose>
+            <c:when test="${orderList.take_status==0}">
+             <FORM method="post" class="takeStatus" action="<%=request.getContextPath()%>/ordermaster/ordermaster.do">
+              <select name="take_status" class="take_status" onchange="submit()">
+                                       <option value="0" ${(orderList.take_status==0)?'selected':''} >未取餐</option>
+                                       <option value="1" ${(orderList.take_status==1)?'selected':''}>已取餐</option>
+                                      </select>
+                                      <input type="hidden" name="order_no" class="oder_no" value="${orderList.order_no}">
+                                      <input type="hidden" name="take_status" value="1">
+                                      <input type="hidden" name="action" value="updateTake_status">
+             </FORM>
+            </c:when>
+            <c:otherwise>已取餐</c:otherwise>
+            </c:choose>
+            </td>
+            <td>${orderList.give_star}</td>
+            <td><button class="botton">訂餐明細</button></td>
+           </tr>
+          </c:forEach>
+          </c:otherwise>
+         </c:choose>
                                 </tbody>
                             </table>
                         </div>
@@ -163,48 +213,65 @@
           
         <!-- JS引用 -->        
         <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<!--         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
         <script src="<%=request.getContextPath() %>/front-store-end/store/js/store_detail.js"></script>
-<script>
-$(document).ready(function() {	
-$("button").click(function() {
-	$.ajax({
-		type:"post",
-		url:"/CEA101G2/store/store.do",
- 		data:createQueryString($(this).parent().siblings(".orderno").text()),
-		dataType:"json",
-		success:function(data){
-			clearTD();
-// 			$(".showDetail table").remove("td");
-			
-			for(x in data){
-				console.log(data[x].food_scale);				
-				$(".showDetail table").append(
-				"<tr><td>"+data[x].food_no+"</td><td>"+data[x].food_scale+"</td><td>"+data[x].quantity+"</td><td>"+data[x].food_price+"</td><td>"+data[x].total+"</td></tr>");
-			$(".showDetail,.detailBack").show(1000);
-			}						
-		}
-	});
-});
-	function createQueryString(orderno){
-		let queryString = {
-			"action":"getOrderDetail",
-			"orderno":orderno		
-		}; 
-		console.log(queryString);
-		return queryString;
-	}
-	function clearTD(){
-		$(".showDetail table").empty();
-		$(".showDetail table").append("<tr><th>食物編號</th><th>食物規格</th><th>商品數量</th><th>商品單價</th><th>商品總額</th></tr>")
-	}
-	
-
-$(".showDetail p").click(function() {
-    $(".showDetail,.detailBack").hide(1000);
-});
-});
-</script>
-
-</body>
-
+  <script>
+   $(document).ready(function() { 
+    $("button").click(function() {
+     $.ajax({
+      type:"post",
+      url:"/CEA101G2/store/store.do",
+       data:createQueryString($(this).parent().siblings(".orderno").text()),
+      dataType:"json",
+      success:function(data){
+       clearTD();
+       for(x in data){
+        console.log(data[x].food_scale);    
+        $(".showDetail table").append(
+        "<tr><td>"+data[x].food_no+"</td><td>"+data[x].food_scale+"</td><td>"+data[x].quantity+"</td><td>"+data[x].food_price+"</td><td>"+data[x].total+"</td></tr>");
+       $(".showDetail,.detailBack").show(1000);
+       }      
+      }
+     });
+    });
+    function createQueryString(orderno){
+     let queryString = {
+      "action":"getOrderDetail",
+      "orderno":orderno  
+     }; 
+      console.log(queryString);
+      return queryString;
+     }
+    function clearTD(){
+     $(".showDetail table").empty();
+     $(".showDetail table").append("<tr><th>食物編號</th><th>食物規格</th><th>商品數量</th><th>商品單價</th><th>商品總額</th></tr>")
+    }
+    $(".showDetail p").click(function() {
+        $(".showDetail,.detailBack").hide(1000);
+    });
+//---------------------------------------------------------------------    
+    $(".searchBar").keyup(function(){
+     let value = $(this).val().toLowerCase();
+     $("table tbody tr").filter(function(){
+      $(this).toggle($(this).text().toLowerCase().indexOf(value)>-1);
+     });
+    });
+//---------------------------------------------------------------------
+console.log(${SorderList==[]});
+//     $(".attend").change(function() {
+//      $.ajax({
+//       type:"post",
+//       url:"/CEA101G2/booking/booking.do",
+//        data:createQueryString($(this).parent().siblings(".bookingno").text()),
+//       dataType:"json",
+//       success:function(data){
+//        $(this).empty();
+//        $(this).append("已取餐");
+//        alert("該顧客已取餐");  
+//       }
+//      });
+//     });
+   });
+  </script>
+ </body>
 </html>

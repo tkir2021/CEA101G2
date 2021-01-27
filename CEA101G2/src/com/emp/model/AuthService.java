@@ -6,7 +6,7 @@ public class AuthService {
 	private AuthDAO_interface dao;
 
 	public AuthService() {
-		dao= new AuthJDBCDAO();
+		dao= new AuthDAO();
 	}
 	
 	public AuthVO addAuth(String auth_no, String auth_name) {

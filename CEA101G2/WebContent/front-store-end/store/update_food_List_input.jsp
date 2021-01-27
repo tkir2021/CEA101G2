@@ -40,7 +40,7 @@
 <style>
   table {
   	margin: 0 auto;
-	width: 450px;
+/*  	width: 450px; */
 	background-color: white;
 	margin-top: 1px;
 	margin-bottom: 1px;
@@ -73,8 +73,8 @@
 	</ul>
 </c:if>
 
-<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/store/food.do" name="form1">
-<table>
+<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/store/food.do" name="form1" enctype="multipart/form-data">
+<table style="width: 500px;">
 	<tr>
 		<td>餐點編號:<font color=red><b>*</b></font></td>
 		<td><%=food_ListVO.getFood_no()%></td>
@@ -92,7 +92,7 @@
 		<td><input type="TEXT" name="food_price" size="45" type="text" value="<%=food_ListVO.getFood_price()%>" /></td>
 	</tr>
 	<tr>
-		<td>限制可銷售數量:</td>
+		<td style="width:130px;">限制可銷售數量:</td>
 		<td><input type="TEXT" name="limit_" size="45"	value="<%=food_ListVO.getLimit_()%>" /></td>
 	</tr>
 	<tr>
@@ -116,6 +116,16 @@
 			
 		</select></td>
 	</tr>
+	
+	<tr>
+  <td><b class="req"></b>圖片修改:</td>
+  <td> <input type="file" autocomplete="off" name="food_img2"/></td>
+ </tr>
+
+<tr>
+<td></td>
+ <td><img id="displayImg" src="<%=request.getContextPath() %>/store/food.do?food_no=${food_ListVO.food_no}&action=getOneImage"></td>
+ </tr>
 
 </table>
 <br>

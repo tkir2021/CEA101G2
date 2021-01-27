@@ -93,12 +93,12 @@ footer{
 			<tr>
 				<td>餐點名稱:</td>
 				<td><input type="TEXT" name="food_name" size="45"
-					value="<%=(food_ListVO == null) ? "xizza" : food_ListVO.getFood_name()%>" /></td>
+					value="<%=(food_ListVO == null) ? "甘露麒麟海斑件" : food_ListVO.getFood_name()%>" /></td>
 			</tr>
 			<tr>
 				<td>售價:</td>
 				<td><input type="TEXT" name="food_price" size="45"
-					value="<%=(food_ListVO == null) ? "100" : food_ListVO.getFood_price()%>" />
+					value="<%=(food_ListVO == null) ? "" : food_ListVO.getFood_price()%>" />
 				</td>
 			</tr>
 			<tr>
@@ -109,26 +109,23 @@ footer{
 			<tr>
 				<td>餐點簡介:</td>
 				<td><input type="TEXT" name="food_info" size="45"
-					value="<%=(food_ListVO == null) ? "好吃的菜" : food_ListVO.getFood_info()%>" /></td>
+					value="<%=(food_ListVO == null) ? "主廚選用不到一公斤的青斑，肉質更細嫩，味道鮮美" : food_ListVO.getFood_info()%>" /></td>
 			</tr>
 
 			<jsp:useBean id="foodListSvc" scope="page"
 				class="com.food_list.model.Food_ListService" />
 
-			<!-- 	<tr> -->
-			<!-- 		<td>餐點狀態:</td> -->
-			<!-- 		<td><input type="TEXT" name="food_status" size="45" -->
-			<%-- 			 value="<%= (food_ListVO==null)? "狀態" : food_ListVO.getFood_status()%>" /></td> --%>
-			<!-- 	</tr> -->
+<!-- 				<tr> -->
+<!-- 					<td>餐點狀態:</td> -->
+<!-- 					<td><input type="TEXT" name="food_status" size="45" -->
+<%-- 						 value="<%= (food_ListVO==null)? "0" : food_ListVO.getFood_status()%>" /></td> --%>
+<!-- 				</tr> -->
 
 			<tr>
-				<td>餐點狀態:<font color=red><b>*</b></font></td>
-				<td><select size="1" name="food_status">
-
-						<option value="1" >上架</option>
-						<option value="0" >下架</option>
-
-				</select></td>
+<!-- 				<td>餐點狀態:<font color=red><b>*</b></font></td> -->
+				<td>
+				<input type="hidden" name="food_status" value="0" readonly=true >
+				</td>
 			</tr>
 			<tr>
 			

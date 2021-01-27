@@ -51,7 +51,7 @@
             
                 <div class="buyitem">
                     <div class="buyimg">
-                        <img class="displayImg" style="width:40%" src="<%=request.getContextPath() %>/food/food.do?food_no=<%=food_no %>&action=getOneImage">
+                        <img class="displayImg" src="<%=request.getContextPath() %>/food/food.do?food_no=<%=food_no %>&action=getOneImage">
                     </div>
                     <div><%=name%></div>
                     <div><%=quantity%></div>
@@ -75,9 +75,9 @@
 	<script src="<%=request.getContextPath() %>/front-customer-end/shopping/js/sweetalert.min.js"></script>
 	
     <script>
-    if ("success" === "fail") {
+    if ("${check}" === "fail") {
         swal("扣款失敗！餘額不足，請進行儲值。", "", "error");
-    } else if ("success" === "success") {
+    } else if ("${check}" === "success") {
         swal("購買成功！", "", "success");
     }
     </script>

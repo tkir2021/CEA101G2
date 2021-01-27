@@ -46,28 +46,28 @@
                       <!--  <span></span>
                         <span></span>
                         <span></span>-->
-                       <i class="fas fa-user-plus"></i> 
-                   	<i class="fas fa-undo-alt"></i>
+                       <i class="fas fa-user-plus change"></i> 
+                   	<i class="fas fa-undo-alt change"></i>
                     </button>
                     <div class="form8__log">
                         <span class="form8__text">登入會員 </span>
                         <form id="loginForm" METHOD="post" action="<%=request.getContextPath()%>/member/member.do">
-                            <input id="account" type="text" name="account" value="" class="form8__inpt" placeholder="會員帳號" />
-                            <input id="password" type="password" name="password" value="" class="form8__inpt" placeholder="密碼" />
+                            <div class="iconinput"><i class="fas fa-user"></i><input id="account" type="text" name="account" value="" class="form8__inpt" placeholder="會員帳號" /></div>
+                            <div class="iconinput"><i class="fas fa-key"></i> <input id="password" type="password" name="password" value="" class="form8__inpt" placeholder="密碼" /></div>
                             <input id="action" type="hidden" name="action" value="loginCheck">
 <!--                             <input type="submit" class="form8__btn" value="Login"> -->
                             <button type="submit" class="form8__btn">Login</button>
                         </form>
                     </div>
                     <div class="form8__reg">
-                        <span class="form8__text">註冊會員</span>
+                        <span id="signup" class="form8__text">註冊會員</span>
                         <form id="signUpForm"METHOD="post" action="<%=request.getContextPath()%>/member/member.do">
-                            <input id="acc" type="text" name="mem_acct" value="" class="form8__inpt" maxlength='20' placeholder="會員帳號" />
-                            <input id="psw" type="password" name="mem_pwd" value="" class="form8__inpt" maxlength='8' placeholder="密碼(英文或數字4~8碼)" />
-                            <input id="conPsw" type="password" name="conmem_pwd" value="" class="form8__inpt" maxlength='8' placeholder="確認密碼" />
-                            <input id="name" type="text" name="mem_name" value="" class="form8__inpt" maxlength='6' placeholder="會員姓名(2~6碼)" />
-                            <input id="email" type="email" name="mem_mail" value="" class="form8__inpt" maxlength='50' placeholder="電子信箱" />
-                            <input id="phone" type="text" name="men_phone" value="" class="form8__inpt" maxlength='10' placeholder="手機號碼" />
+                            <div class="iconinput"><i class="fas fa-user"></i><input id="acc" type="text" name="mem_acct" value="" class="form8__inpt" maxlength='20' placeholder="會員帳號" /></div>
+                            <div class="iconinput"><i class="fas fa-key"></i><input id="psw" type="password" name="mem_pwd" value="" class="form8__inpt" maxlength='8' placeholder="密碼(英文或數字4~8碼)" /></div>
+                            <div class="iconinput"><i class="fab fa-expeditedssl"></i><input id="conPsw" type="password" name="conmem_pwd" value="" class="form8__inpt" maxlength='8' placeholder="確認密碼" /></div>
+                            <div class="iconinput"><i class="fas fa-id-card"></i><input id="name" type="text" name="mem_name" value="" class="form8__inpt" maxlength='6' placeholder="會員姓名(2~6碼)" /></div>
+                            <div class="iconinput"><i class="fas fa-at"></i><input id="email" type="email" name="mem_mail" value="" class="form8__inpt" maxlength='50' placeholder="電子信箱" /></div>
+                            <div class="iconinput"><i class="fas fa-mobile-alt"></i><input id="phone" type="text" name="men_phone" value="" class="form8__inpt" maxlength='10' placeholder="手機號碼" /></div>
                             <input id="newaction" type="hidden" name="action" value="insert">
                             <button id="signUpSubmit" type="submit" class="form8__btn">Submit</button>
                         </form>
@@ -104,7 +104,8 @@
     	 for (let i = 0; i < inputs.length; i++){
     		 if(inputs.eq(i).val() === ""){
     			 inputs.eq(i).focus();
-    			 alert("尚有資料未填寫！");
+//     			 alert("尚有資料未填寫！");
+				 swal("尚有資料未填寫！", "", "error");
     			 return;
     		 }
     	 }
@@ -143,11 +144,13 @@
 	            type: "post",
 	            success: function(msg){
 					if(msg === "NG"){
-						alert("帳號或密碼錯誤！");
+// 						alert("帳號或密碼錯誤！");
+						swal("帳號或密碼錯誤！", "", "error");
 						$("#account").val("");
 						$("#password").val("");
 					} else if(msg === "verifyNG"){
-						alert("帳號尚末啟用！");
+// 						alert("帳號尚末啟用！");
+						swal("帳號尚末啟用！", "", "error");
 						$("#account").val("");
 						$("#password").val("");
 					}else {
@@ -219,8 +222,25 @@
 		
 		//更換登入或註冊頁面
         $(document).on("click", ".form8__btncircle", function(){
-        	 $(".fas").toggle();
+        	 $(".change").toggle();
+        	 //===============清除註冊假資料=============
+        	 $("#acc").val("");
+ 			 $("#psw").val("");
+ 			 $("#conPsw").val("");
+ 			 $("#name").val("");
+ 			 $("#email").val("");
+ 			 $("#phone").val("");
         });
+		
+		
+		$(document).on("click" , "#signup", function(){
+			$("#acc").val("seafood999");
+			$("#psw").val("seafood");
+			$("#conPsw").val("seafood");
+			$("#name").val("大衛海鮮");
+			$("#email").val("david.wu.seafood@gmail.com");
+			$("#phone").val("0912345678");
+		});
 		
 	});
 	

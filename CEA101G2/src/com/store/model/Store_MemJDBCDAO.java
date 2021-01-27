@@ -22,7 +22,7 @@ public class Store_MemJDBCDAO implements Store_Mem_interface {
 	private static final String GET_ALL_STMT = "SELECT store_no,store_acct,store_pwd,store_name,addr,open_dates,email,s_category,store_info,upload_status,S_permission,sum_grade,blocked,star_total,star_times,table_limit,rest_img FROM store_mem order by store_no";
 	private static final String GET_ONE_STMT = "SELECT store_no,store_acct,store_pwd,store_name,addr,open_dates,email,s_category,store_info,upload_status,S_permission,sum_grade,blocked,star_total,star_times,table_limit,rest_img FROM store_mem where store_no = ?";
 	private static final String DELETE = "DELETE FROM store_mem where STORE_NO = ?";
-	private static final String UPDATE = "UPDATE store_mem set store_acct=?, store_pwd=?, store_name=?, addr=?, open_dates=?, email=? ,s_category=?, store_info=?, upload_status=?, S_permission=?, sum_grade=?, blocked=?, star_total=?, star_times=?, table_limit=? where store_no = ?";
+	private static final String UPDATE = "UPDATE store_mem set store_acct=?, store_pwd=?, store_name=?, addr=?, open_dates=?, email=? ,s_category=?, store_info=?, upload_status=?, S_permission=?, sum_grade=?, blocked=?, star_total=?, star_times=?, table_limit=?, rest_img=? where store_no = ?";
 	// ========================更新店家審核上架狀態 by Mike========================
 	private static final String UPDATE_Upload_Status = "UPDATE store_mem set upload_status=? where store_no = ?";
 	// ========================更新店家平台權限狀態 by Mike========================
@@ -111,7 +111,9 @@ public class Store_MemJDBCDAO implements Store_Mem_interface {
 			pstmt.setDouble(13, store_memVO.getStar_total());
 			pstmt.setInt(14, store_memVO.getStar_times());
 			pstmt.setInt(15, store_memVO.getTable_limit());
-			pstmt.setString(16, store_memVO.getStore_no());
+			pstmt.setBytes(16, store_memVO.getRest_img());
+			pstmt.setString(17, store_memVO.getStore_no());
+			
 			pstmt.executeUpdate();
 			// Handle any driver errors
 		} catch (ClassNotFoundException e) {

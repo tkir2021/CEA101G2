@@ -97,6 +97,17 @@ public class OrderMasterServlet extends HttpServlet {
 					String storename = smSvc.getOneStore_Mem(storeno).getStore_name();
 					jsob.put("storename", storename);
 					jsob.put("information", "");
+					jsob.put("give_star", jsob.getString("take_status") + "-" + Integer.toString(jsob.getInt("give_star")));
+					
+					
+					
+					//以是否取餐來判斷可否評分
+//					if(take_status.equals("0")) {
+//						System.out.println(take_status + "－" + Integer.toString(jsob.getInt("give_star")));
+//					}
+//					else {
+//						System.out.println(take_status + "－" + Integer.toString(jsob.getInt("give_star")));
+//					}
 
 				} catch (JSONException e) {
 					e.printStackTrace();
@@ -153,6 +164,26 @@ public class OrderMasterServlet extends HttpServlet {
 			}
 
 		}
+		
+		/***********************改變訂餐訂單的取餐狀態 by Bella *************************/ 
+		  if("updateTake_status".equals(action)) {
+		   try {
+		    String order_no = req.getParameter("order_no");
+		    String take_status = req.getParameter("take_status");
+		    //System.out.println(take_status);
+		    //System.out.println(order_no);
+		    OrderMasterService omSvc = new OrderMasterService();
+		    OrderMasterVO omVO = omSvc.upGetFood(order_no, take_status);
+		    
+		    req.setAttribute("omVO", omVO);
+		    RequestDispatcher successView =req.getRequestDispatcher("/front-store-end/store/store_detail.jsp");
+		    successView.forward(req, res);
+		   }catch(Exception e) {
+		    System.out.println(e.getMessage());
+		    RequestDispatcher failureView = req.getRequestDispatcher("/front-store-end/store/store_detail.jsp");
+		    failureView.forward(req, res);
+		   }
+		  }
 
 		if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
 

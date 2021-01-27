@@ -19,6 +19,17 @@
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/front-store-end/store/css/loginstyle.css">
     <link rel="stylesheet" href="<%=request.getContextPath() %>/front-store-end/store/js/font-awesome.min.css" type="text/css">
 	<link rel="icon" href="<%=request.getContextPath() %>/front-store-end/store/img/favicon.ico" type="image/x-icon"> 
+
+<style>
+
+body {
+  background-image: url("<%=request.getContextPath() %>/front-store-end/store/img/shoplogin.jpg");
+  background-repeat:no-repeat;
+  background-size:cover;
+}
+
+</style>
+
 </head>
 
 <body>
@@ -60,7 +71,7 @@
         </div>
         
         <div id="login">   
-         <h1>Sign Up for Eat</h1>
+         <h1 id="signup">Sign Up for Eat</h1>
     	<%-- 錯誤表列 --%>
 	<c:if test="${not empty errorMsgs}">
 		<font style="color: red">請修正以下錯誤:</font>
@@ -143,7 +154,7 @@
           </div>
           
            <div class="field-wrap">
-            <label><br>
+            <label>
               店家圖片上傳<span class="req">*</span>
               
             </label>
@@ -182,5 +193,19 @@
     		layer.msg("you removed")
     	})
     })
+    
+    //註冊假資料
+   $(document).on("click" , "#signup", function(){
+   $('input[name="store_acct"]').val("tabletw");
+   $('input[name="store_pwd"]').val("12345");
+   $('input[name="store_name"]').val("辦桌二人組");
+   $('input[name="addr"]').val("台北市文山區復興路19號");
+   $('input[name="open_dates"]').val("1010101");
+   $('input[name="email"]').val("tabletwo@yahoo.com");
+   $('input[name="s_category"]').val("1");
+   $('input[name="store_info"]').val("嚴選認證食材 打造頂級海鮮，把關每一道細節，讓賓主都能享有最頂級的時令海鮮饗宴！");
+   $('input[name="table_limit"]').val("12");
+  });
+    
     </script>
 </body></html>

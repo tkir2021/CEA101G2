@@ -45,15 +45,15 @@
                     <table id="bookingTable">
                         <thead>
                             <th>訂位編號</th>
-                            <!--                     		<th>會員編號</th> -->
-                            <!-- 							<th>店家編號</th> -->
+<!--                     		<th>會員編號</th> -->
+<!-- 							<th>店家編號</th> -->
                             <th>店家名稱</th>
-                            <!--                            <th>揪團編號</th> -->
+<!--                            <th>揪團編號</th> -->
                             <th>訂位日期</th>
                             <th>訂位時段</th>
                             <th>訂位人數</th>
-                            <!--                     		<th>訂位狀況</th> -->
-                            <!--                     		<th>出席狀況</th> -->
+<!--                     		<th>訂位狀況</th> -->
+<!--                     		<th>出席狀況</th> -->
                             <th>評分</th>
                             <th>訂單日期</th>
                         </thead>
@@ -150,6 +150,7 @@
                         alert("資料取得錯誤！");
                     },
                 },
+                order: [[ 0, "desc" ]],
                 columns: [
                     { data: "bookingno" },
                     // 			    { data: "memno" },
@@ -159,8 +160,8 @@
                     { data: "bookingdate" },
                     { data: "timeperiod" },
                     { data: "people" },
-                    // 			    { data: "bookingstatus" },
-                    // 			    { data: "attendstatus" },
+//                     			    { data: "bookingstatus" },
+//                     			    { data: "attendstatus" },
                     {
                         data: "givestar",
                         defaultContent: "",
@@ -250,6 +251,7 @@
     	                alert("資料取得錯誤！");
     	            },	            
     			},
+    			order: [[ 0, "desc" ]],
     			columns: [
     			    { data: "order_no" },
     				{ data: "storename" },
@@ -283,17 +285,35 @@
     			    	}
     			    },
     			    { data: "give_star", defaultContent: "", "render": function (data, type, obj, meta) {
-    			    	if(data === 0){
-                    		let opstr = "";
-                    		
-                    		for(let i=1; i<=5; i++){
-                    			opstr +="<option value ="+ i +">"+ i +"</option>"
-                    		}
-                    		return '<select class="star">' + opstr + '</select>'+'&nbsp;<button id="om_givestar" type="button" class="btn btn-primary" value="" />評分</button>';
-                    	}
-                    	else{
-                    		return data;
-                    	}
+    			    	console.log(data.split("-")[0]);
+    			    	
+    			    	if(data.split("-")[0] === "0" ){
+    			    		return "無法評分";
+    			    	}
+    			    	else{
+    			    		if(data.split("-")[1] === "0"){
+                        		let opstr = "";
+                        		for(let i=1; i<=5; i++){
+                        			opstr +="<option value ="+ i +">"+ i +"</option>"
+                        		}
+                        		return '<select class="star">' + opstr + '</select>'+'&nbsp;<button id="om_givestar" type="button" class="btn btn-primary" value="" />評分</button>';
+                        	}
+                        	else{
+                        		return data.split("-")[1];
+                        	}
+    			    	}
+    			    	
+    			    	
+//     			    	if(data === 0){
+//                     		let opstr = "";
+//                     		for(let i=1; i<=5; i++){
+//                     			opstr +="<option value ="+ i +">"+ i +"</option>"
+//                     		}
+//                     		return '<select class="star">' + opstr + '</select>'+'&nbsp;<button id="om_givestar" type="button" class="btn btn-primary" value="" />評分</button>';
+//                     	}
+//                     	else{
+//                     		return data;
+//                     	}
                     } 
                     },
                     { data: "info", defaultContent: "", "render": function (data, type, obj, meta) {

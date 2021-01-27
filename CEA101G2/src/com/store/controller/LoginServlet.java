@@ -48,12 +48,13 @@ public class LoginServlet extends HttpServlet {
 
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		System.out.println(username);
+//		System.out.println(username);
 		String store_no = null;
 		try {
 			Store_MemService storemem = new Store_MemService();
 			List<Store_MemVO> storeVO = new ArrayList<>();
 			storeVO = storemem.getAll().stream().filter(d -> d.getStore_acct().equals(username))
+					.filter(p ->p.getStore_pwd().equals(password))
 					.collect(Collectors.toList());
 			store_no = storeVO.get(0).getStore_no();
 		} catch (IndexOutOfBoundsException e) {
@@ -63,34 +64,35 @@ public class LoginServlet extends HttpServlet {
 		LoginBean loginBean = new LoginBean();
 		loginBean.setUsername(username);
 		loginBean.setPassword(password);
-		System.out.println("Username" + username + "Password" + password);
+//		System.out.println("Username" + username + "Password" + password);
 		HttpSession session = request.getSession();
 
 		if (loginDao.validate(loginBean)) {
-			System.out.println("login");
+//			System.out.println("login");
 			session.setAttribute("store_no", store_no);
 			session.setAttribute("username", username);
 			try {
 				String location = (String) session.getAttribute("location");
 				if (location != null) {
 					session.removeAttribute("location"); // *工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
-					System.out.println("location:" + location);
+//					System.out.println("location:" + location);
 					response.sendRedirect(location);
 //					RequestDispatcher successView = request.getRequestDispatcher(location);
 //					successView.forward(request, response);
 					return;
 				} else {
-					request.setAttribute("action1", "getOne_For_Store");
-					request.setAttribute("action3", "getALL");
-					String url = "/store/store.do";
+					//request.setAttribute("action1", "getOne_For_Store");
+					//request.setAttribute("action3", "getALL");
+					//String url = "/store/store.do";
+					String url = "/front-store-end/store/store_detail.jsp";
 					RequestDispatcher successView = request.getRequestDispatcher(url);
 					successView.forward(request, response);
-					response.sendRedirect(request.getContextPath() + "/store/store.do");// 放修改資料
+					//response.sendRedirect(request.getContextPath() + "/store/store.do");// 放修改資料
 				}
 			} catch (Exception ignored) {
 			}
 		} else {
-			System.out.println("logout");
+//			System.out.println("logout");
 			session.invalidate();
 			RequestDispatcher logout = request.getRequestDispatcher(request.getContextPath() + "/index/index.jsp");
 		}

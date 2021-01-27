@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <%
 	Food_ListService foodlistSvc = new Food_ListService();
-	List<Food_ListVO> list = foodlistSvc.getAll();
+	List<Food_ListVO> list = foodlistSvc.getAll2();
 	pageContext.setAttribute("list", list);
 %>
 
@@ -30,7 +30,6 @@
 			<th>餐點編號</th>
 			<th>店家編號</th>
 			<th>餐點名稱</th>
-			<th>餐點簡介</th>
 			<th>餐點圖片</th>
 			<th>餐點狀況</th>
 			<th>審核</th>
@@ -42,7 +41,6 @@
 				<td>${food_ListVO.food_no}</td>
 				<td>${food_ListVO.store_no}</td>
 				<td>${food_ListVO.food_name}</td>
-				<td>${food_ListVO.food_info}</td>
 				<td><img id="displayImg"
 					src="<%=request.getContextPath() %>/food/food.do?food_no=${food_ListVO.food_no}&action=getOneImage"></td>
 				<td>

@@ -10,7 +10,7 @@ public class Mem_DataService {
 	private Mem_DataDAO_interface dao;
 
 	public Mem_DataService() {
-		dao = new Mem_DataJDBCDAO();
+		dao = new Mem_DataDAO();
 	}
 
 	public Mem_DataVO addMem(Integer mem_grade, String mem_acct,

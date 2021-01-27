@@ -6,7 +6,8 @@ public class MemReportService {
     private MemReportDAO_interface dao;
  
     public MemReportService() {
-    	dao = new MemReportJDBCDAO();
+//    	dao = new MemReportJDBCDAO();
+    	dao = new MemReportDAO();
     }
     
     public MemReportVO addMR (String group_no, String reported_mem, String report_mem, String report_reason) {

@@ -7,7 +7,8 @@ public class Store_ScaleService {
 	private Store_Scale_interface dao;
 	
 	public Store_ScaleService() {
-		dao = new Store_ScaleJDBCDAO();
+//		dao = new Store_ScaleJDBCDAO();
+		dao = new Store_ScaleDAO();
 	}
 		
 	public Store_ScaleVO addStore_Scale(String food_no,String food_scale) {

@@ -7,6 +7,9 @@ public interface Food_List_interface {
 	 
 	// ========================更新餐點上架狀態 by Mike========================
 	 public void updateStatus(String food_no, Integer food_status);
+	 
+//		========================ListAll餐點上架狀態order by審核與否by Mike========================
+	 public List<Food_ListVO> getAll2();
 		 
 	 public void delete(String food_ListVO);
 	 public Food_ListVO findByPrimaryKey(String food_no);

@@ -93,7 +93,7 @@ public class RegistServlet extends HttpServlet {
 				}
 				
 				
-				Integer upload_status = 1;
+				Integer upload_status = 0;
 //				try {
 //					upload_status = new Integer(req.getParameter("upload_status").trim());
 //				} catch (NumberFormatException e) {

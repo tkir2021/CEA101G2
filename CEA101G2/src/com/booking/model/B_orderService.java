@@ -61,7 +61,15 @@ public class B_orderService {
 		
 		return b_orderVO;
 	}
-	/*******************更新評分 by Sheng********************/
+	/*******************更新出席狀態 by Bella********************/
+	 public B_orderVO upAttendStatus(String bookingno,Integer attendStatus ) {
+	  B_orderVO b_orderVO = new B_orderVO();
+	  b_orderVO.setBookingno(bookingno);
+	  b_orderVO.setAttendstatus(attendStatus);
+	  dao.upAttendstatus(bookingno, attendStatus);
+	  
+	  return b_orderVO;
+	 }
 	
 	public B_orderVO getOneOrder(String bookingno) {
 		return dao.findByPrimaryKey(bookingno);

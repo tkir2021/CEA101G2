@@ -1,7 +1,9 @@
         .header {
             margin-bottom: 30px;
         }
-        
+        .header__nav{
+			padding:17px 85px;
+		}
         footer{
         top:0px;
         }

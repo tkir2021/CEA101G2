@@ -42,7 +42,7 @@ public class Store_MemService {
 
 	
 	public Store_MemVO update_Store_Mem_input(String store_no, String store_acct, String store_pwd, String store_name, String addr, String open_dates, String email, String s_category, String store_info, 
-			Integer upload_status, Integer s_permission, Integer sum_grade, Integer blocked, Double star_total, Integer star_times, Integer table_limit ) {
+			Integer upload_status, Integer s_permission, Integer sum_grade, Integer blocked, Double star_total, Integer star_times, Integer table_limit ,byte[] rest_img) {
 		
 		Store_MemVO store_MemVO = new Store_MemVO();
 		 store_MemVO.setStore_no(store_no);
@@ -61,7 +61,7 @@ public class Store_MemService {
 		 store_MemVO.setStar_total(star_total);
 		 store_MemVO.setStar_times(star_times);
 		 store_MemVO.setTable_limit(table_limit);
-//		 store_MemVO.setRest_img(rest_img);		
+		 store_MemVO.setRest_img(rest_img);		
 		 dao.update(store_MemVO);
 		return store_MemVO;
 		}

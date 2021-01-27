@@ -12,6 +12,7 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import com.food_list.model.Food_ListService;
 import com.food_list.model.Food_ListVO;
@@ -165,6 +166,28 @@ public class Food_ListServlet extends HttpServlet {
 				if (food_info == null || food_name.trim().length() == 0) {
 					errorMsgs.add("餐點簡介請勿空白");
 				}
+				
+				byte food_img2[] = null;
+			    try {
+			     Part part = req.getPart("food_img2");
+			     if(part.getContentType() != null ) {
+			     InputStream in = req.getPart("food_img2").getInputStream();
+			     food_img2 = new byte[in.available()];
+			     in.read(food_img2);
+			     in.close();
+			     }else {
+			      System.out.println("no upload");
+			      Food_ListService food_listSvc = new Food_ListService();
+			      Food_ListVO food_listVO = food_listSvc.getOneFood_List(food_no);
+			      food_img2 = food_listVO.getFood_img();
+			      System.out.println(food_img2);
+			      
+			     }
+			    } catch (Exception e) {
+			     e.printStackTrace();
+			     System.out.println("上傳圖片失敗");
+			     errorMsgs.add("沒有圖片");
+			    }
 
 				Integer food_status = new Integer(req.getParameter("food_status").trim());
 
@@ -176,6 +199,7 @@ public class Food_ListServlet extends HttpServlet {
 				food_ListVO.setLimit_(limit_);
 				food_ListVO.setFood_info(food_info);
 				food_ListVO.setFood_status(food_status);
+				food_ListVO.setFood_img(food_img2);
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
@@ -190,8 +214,8 @@ public class Food_ListServlet extends HttpServlet {
 //				EmpService empSvc = new EmpService();
 //				empVO = empSvc.updateEmp(empno, ename, job, hiredate, sal,comm, deptno);
 				Food_ListService foodListSvc = new Food_ListService();
-				food_ListVO = foodListSvc.update_food_List_input(food_no, store_no, food_name, food_price, limit_,
-						food_info, food_status);
+			    food_ListVO = foodListSvc.update_food_List_input(food_no, store_no, food_name, food_price, limit_,
+			      food_info, food_status,food_img2);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("food_ListVO", food_ListVO); // 資料庫update成功後,正確的的empVO物件,存入req

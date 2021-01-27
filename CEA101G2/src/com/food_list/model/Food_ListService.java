@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
+import com.store.model.Store_MemDAO;
 import com.store.model.Store_MemJDBCDAO;
 import com.store.model.Store_MemVO;
 import com.store.model.Store_Mem_interface;
@@ -16,8 +17,10 @@ public class Food_ListService {
 	private Store_Mem_interface sdao;
 
 	public Food_ListService() {
-		dao = new Food_ListJDBCDAO();
-		sdao = new Store_MemJDBCDAO();
+//		dao = new Food_ListJDBCDAO();
+//		sdao = new Store_MemJDBCDAO();
+		dao = new Food_ListDAO();
+		sdao = new Store_MemDAO();
 	}
 
 	public Food_ListVO addFood_List(String store_no, String food_name, Integer food_price, Integer limit_,
@@ -35,7 +38,7 @@ public class Food_ListService {
 	}
 
 	public Food_ListVO update_food_List_input(String food_no, String store_no, String food_name, Integer food_price,
-			Integer limit_, String food_info, Integer food_status) {
+			Integer limit_, String food_info, Integer food_status,byte[]food_img) {
 		Food_ListVO food_ListVO = new Food_ListVO();
 		food_ListVO.setFood_no(food_no);
 		food_ListVO.setStore_no(store_no);
@@ -44,6 +47,7 @@ public class Food_ListService {
 		food_ListVO.setLimit_(limit_);
 		food_ListVO.setFood_info(food_info);
 		food_ListVO.setFood_status(food_status);
+		food_ListVO.setFood_img(food_img);
 		dao.update(food_ListVO);
 		return food_ListVO;
 	}
@@ -73,6 +77,13 @@ public class Food_ListService {
 //	========================更新餐點上架狀態 by Mike========================
 	public void updateStatus(String food_no, Integer food_status) {
 		dao.updateStatus(food_no, food_status);
+	}
+	
+	
+//	========================ListAll餐點上架狀態order by審核與否by Mike========================
+	
+	public List<Food_ListVO> getAll2() {
+		return dao.getAll2();
 	}
 	
 //	========================複合式搜尋 by 麻麻========================

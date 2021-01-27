@@ -244,6 +244,18 @@ public class Store_MemServlet extends HttpServlet {
 					table_limit = 0;
 					errorMsgs.add("桌位上限請填數字.");
 				}
+				
+				 byte rest_img2[] = null;
+				    try {
+				     InputStream in = req.getPart("rest_img").getInputStream();
+				     rest_img2 = new byte[in.available()];
+				     in.read(rest_img2);
+				     in.close();
+				    } catch (Exception e) {
+				     e.printStackTrace();
+				   //  System.out.println("上傳圖片失敗");
+				     errorMsgs.add("沒有圖片");
+				    }
 
 				Store_MemVO store_MemVO = new Store_MemVO();
 				store_MemVO.setStore_no(store_no);
@@ -262,7 +274,7 @@ public class Store_MemServlet extends HttpServlet {
 				store_MemVO.setStar_total(star_total);
 				store_MemVO.setStar_times(star_times);
 				store_MemVO.setTable_limit(table_limit);
-//				store_MemVO.setRest_img(rest_img);	
+				store_MemVO.setRest_img(rest_img2);	
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
@@ -276,9 +288,9 @@ public class Store_MemServlet extends HttpServlet {
 //				/***************************2.開始修改資料*****************************************/
 
 				Store_MemService store_MemSvc = new Store_MemService();
-				store_MemVO = store_MemSvc.update_Store_Mem_input(store_no, store_acct, store_pwd, store_name, addr,
-						open_dates, email, s_category, store_info, upload_status, s_permission, sum_grade, blocked,
-						star_total, star_times, table_limit);
+			    store_MemVO = store_MemSvc.update_Store_Mem_input(store_no, store_acct, store_pwd, store_name, addr,
+			      open_dates, email, s_category, store_info, upload_status, s_permission, sum_grade, blocked,
+			      star_total, star_times, table_limit,rest_img2);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("store_MemVO", store_MemVO); // 資料庫update成功後,正確的的empVO物件,存入req
@@ -352,9 +364,9 @@ public class Store_MemServlet extends HttpServlet {
 
 				Integer upload_status = null;
 				try {
-					upload_status = new Integer(req.getParameter("upload_status").trim());
-				} catch (NumberFormatException e) {
+					//upload_status = new Integer(req.getParameter("upload_status").trim());
 					upload_status = 0;
+				} catch (NumberFormatException e) {
 					errorMsgs.add("上架狀態請填數字.");
 				}
 
@@ -428,7 +440,7 @@ public class Store_MemServlet extends HttpServlet {
 				store_MemVO.setEmail(email);
 				store_MemVO.setS_category(s_category);
 				store_MemVO.setStore_info(store_info);
-				store_MemVO.setUpload_status(upload_status);
+				store_MemVO.setUpload_status(0);
 				store_MemVO.setS_permission(s_permission);
 				store_MemVO.setSum_grade(sum_grade);
 				store_MemVO.setBlocked(blocked);
@@ -667,18 +679,24 @@ public class Store_MemServlet extends HttpServlet {
 		}
 
 		// ========================更新店家平台權限狀態 by Mike========================
-		if ("update_s_permission".equals(action)) {
-			String store_no = req.getParameter("store_no");
-			System.out.println(store_no);
-			Integer s_permission = new Integer((1));
-			Store_MemService store_memSvc = new Store_MemService();
-			store_memSvc.updateStatusPermission(store_no, s_permission);
+				if ("update_s_permission".equals(action)) {
+					String store_no = req.getParameter("store_no");
+					System.out.println(store_no);
+					Integer s_permission = new Integer(req.getParameter("s_permission"));
+					System.out.println(s_permission);
+					if (s_permission == 0) {
+					s_permission = new Integer((1));
+					} else {
+						s_permission = new Integer((0));
+					}
+					Store_MemService store_memSvc = new Store_MemService();
+					store_memSvc.updateStatusPermission(store_no, s_permission);
 
-			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
-			req.setAttribute("store_no", store_no); // 資料庫update成功後,正確的的empVO物件,存入req
-			String url = "/back-end/store/store_arr_my.jsp";
-			RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
-			successView.forward(req, res);
-		}
+					/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
+					req.setAttribute("store_no", store_no); // 資料庫update成功後,正確的的empVO物件,存入req
+					String url = "/back-end/store/store_arr_my.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
+					successView.forward(req, res);
+				}
 	}
 }

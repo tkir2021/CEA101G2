@@ -22,18 +22,19 @@ public class OrderMasterJDBCDAO implements OrderMasterDAO_interface {
 	private static final String DELETE = "DELETE FROM ORDER_MASTER where order_no = ?";
 	private static final String GET_ONE_STMT = "SELECT order_no, mem_no, store_no, sale_no, order_date, pay_type, order_total, sale_percent, discount, order_status, take_status, give_star FROM ORDER_MASTER where order_no = ?";
 	private static final String GET_ALL_STMT = "SELECT order_no, mem_no, store_no, sale_no, order_date, pay_type, order_total, sale_percent, discount, order_status, take_status, give_star FROM ORDER_MASTER order by order_no";
-	
-	/************************取得訂餐資料 by Sheng*************************/
+
+	/************************ 取得訂餐資料 by Sheng *************************/
 	private static final String GET_STORE_OM = "SELECT order_no, mem_no, store_no, sale_no, order_date, pay_type, order_total, sale_percent, discount, order_status, take_status, give_star FROM ORDER_MASTER WHERE store_no = ?";
 	private static final String GET_MEM_OM = "SELECT order_no, mem_no, store_no, sale_no, order_date, pay_type, order_total, sale_percent, discount, order_status, take_status, give_star FROM ORDER_MASTER WHERE mem_no = ?";
-	/************************取得訂餐資料 by Sheng*************************/
-	
-	/************************更新評分 by Sheng*************************/
+	/************************ 取得訂餐資料 by Sheng *************************/
+
+	/************************ 更新評分 by Sheng *************************/
 	private static final String UP_OM_GIVE_STAR = "UPDATE ORDER_MASTER SET give_star=? WHERE order_no = ?";
-	/************************更新評分 by Sheng*************************/
-	
-	
-	
+	/************************ 更新訂餐狀態 by Bella *************************/
+	private static final String UP_ORDERSTATUS = "UPDATE ORDER_MASTER SET take_status=? WHERE order_no = ?";
+
+	/************************ 更新評分 by Sheng *************************/
+
 	@Override
 	public void insert(OrderMasterVO orderMasterVO) {
 		Connection con = null;
@@ -134,20 +135,18 @@ public class OrderMasterJDBCDAO implements OrderMasterDAO_interface {
 		}
 	}
 
-	
-	
-	/************************購物車：新增訂餐主檔 by Sheng*************************/
+	/************************ 購物車：新增訂餐主檔 by Sheng *************************/
 	@Override
 	public void updateByShopping(OrderMasterVO orderMasterVO, List<OrderDetailVO> list, Connection con) {
-		
+
 		PreparedStatement pstmt = null;
 
 		try {
 
 			con = DriverManager.getConnection(url, userid, passwd);
-			
+
 			// 先新訂餐主檔
-			String cols[] = {"ORDER_NO"};			
+			String cols[] = { "ORDER_NO" };
 			pstmt = con.prepareStatement(INSERT_STMT, cols);
 			pstmt.setString(1, orderMasterVO.getMem_no());
 			pstmt.setString(2, orderMasterVO.getStore_no());
@@ -160,28 +159,26 @@ public class OrderMasterJDBCDAO implements OrderMasterDAO_interface {
 			pstmt.setString(9, orderMasterVO.getOrder_status());
 			pstmt.setString(10, orderMasterVO.getTake_status());
 			pstmt.setFloat(11, orderMasterVO.getGive_star());
-			
+
 			pstmt.executeUpdate();
 
-			
 			String next_order_no = null;
-			ResultSet rs = pstmt.getGeneratedKeys(); //取出綁定資料庫自增主鍵值	
+			ResultSet rs = pstmt.getGeneratedKeys(); // 取出綁定資料庫自增主鍵值
 			if (rs.next()) {
 				next_order_no = rs.getString(1);
-				System.out.println("自增主鍵值= " + next_order_no +"(剛新增成功的部門編號)");
+				System.out.println("自增主鍵值= " + next_order_no + "(剛新增成功的部門編號)");
 			} else {
 				System.out.println("未取得自增主鍵值");
 			}
 			rs.close();
-			
-			
-			//再同時新增訂餐明細
+
+			// 再同時新增訂餐明細
 			OrderDetailService orderDetailSvc = new OrderDetailService();
 			for (OrderDetailVO aODVO : list) {
-				aODVO.setOrder_no(next_order_no) ;
-				orderDetailSvc.updateByShopping(aODVO,con);
+				aODVO.setOrder_no(next_order_no);
+				orderDetailSvc.updateByShopping(aODVO, con);
 			}
-			
+
 			// Handle any driver errors
 		} catch (SQLException se) {
 			if (con != null) {
@@ -204,15 +201,48 @@ public class OrderMasterJDBCDAO implements OrderMasterDAO_interface {
 					se.printStackTrace(System.err);
 				}
 			}
-			
+
 		}
 	}
 
-	/************************購物車：新增訂餐主檔 by Sheng*************************/
-	
-	
-	
-	/************************更新評分 by Sheng**************************/
+	/************************ 購物車：新增訂餐主檔 by Sheng *************************/
+	@Override
+	public void updateGetFood(String order_no, String take_status) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(UP_ORDERSTATUS);
+
+			pstmt.setString(1, take_status);
+			pstmt.setString(2, order_no);
+			pstmt.executeUpdate();
+
+		} catch (ClassNotFoundException ce) {
+			throw new RuntimeException("Check your database driver" + ce.getMessage());
+		} catch (SQLException se) {
+			throw new RuntimeException("Check your database driver" + se.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException sql) {
+					sql.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+
+	/************************ 更新評分 by Sheng **************************/
 	@Override
 	public void upGivestar(String order_no, double om_givestar) {
 		Connection con = null;
@@ -223,7 +253,7 @@ public class OrderMasterJDBCDAO implements OrderMasterDAO_interface {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(UP_OM_GIVE_STAR);
-			
+
 			pstmt.setDouble(1, om_givestar);
 			pstmt.setString(2, order_no);
 
@@ -252,13 +282,11 @@ public class OrderMasterJDBCDAO implements OrderMasterDAO_interface {
 				}
 			}
 		}
-		
+
 	}
-	
-	/************************更新評分 by Sheng**************************/
-	
-	
-	
+
+	/************************ 更新評分 by Sheng **************************/
+
 	@Override
 	public void delete(String order_no) {
 
@@ -368,13 +396,13 @@ public class OrderMasterJDBCDAO implements OrderMasterDAO_interface {
 		}
 		return orderMasterVO;
 	}
-	
-	/************************取得訂餐資料 by Sheng*************************/
+
+	/************************ 取得訂餐資料 by Sheng *************************/
 	@Override
 	public List<OrderMasterVO> findByNumber(String number) {
 		OrderMasterVO orderMasterVO = null;
 		List<OrderMasterVO> list = new ArrayList<OrderMasterVO>();
-		
+
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -383,13 +411,13 @@ public class OrderMasterJDBCDAO implements OrderMasterDAO_interface {
 
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
-			
-			//以店家搜尋訂餐資料
-			if(number.charAt(0) == 'S') {
+
+			// 以店家搜尋訂餐資料
+			if (number.charAt(0) == 'S') {
 				pstmt = con.prepareStatement(GET_STORE_OM);
 			}
-			//以會員搜尋訂餐資料
-			else if(number.charAt(0) == 'M') {
+			// 以會員搜尋訂餐資料
+			else if (number.charAt(0) == 'M') {
 				pstmt = con.prepareStatement(GET_MEM_OM);
 			}
 
@@ -412,7 +440,7 @@ public class OrderMasterJDBCDAO implements OrderMasterDAO_interface {
 				orderMasterVO.setOrder_status(rs.getString("order_status"));
 				orderMasterVO.setTake_status(rs.getString("take_status"));
 				orderMasterVO.setGive_star(rs.getFloat("give_star"));
-				
+
 				list.add(orderMasterVO);
 			}
 
@@ -447,10 +475,11 @@ public class OrderMasterJDBCDAO implements OrderMasterDAO_interface {
 			}
 		}
 		return list;
-		
+
 	}
-	/************************取得訂餐資料 by Sheng*************************/
-	
+
+	/************************ 取得訂餐資料 by Sheng *************************/
+
 	@Override
 	public List<OrderMasterVO> getAll() {
 		List<OrderMasterVO> list = new ArrayList<OrderMasterVO>();
@@ -594,5 +623,4 @@ public class OrderMasterJDBCDAO implements OrderMasterDAO_interface {
 
 	}
 
-	
 }

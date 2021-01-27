@@ -25,7 +25,7 @@
         <div class="header__nav">
             <nav class="header__menu mobile-menu">
                 <ul>
-                    <li><a href="<%=request.getContextPath() %>/front-customer-end/member/memLogin.jsp" id="to_position">個人資料與修改</a>
+                    <li><a href="<%=request.getContextPath() %>/front-customer-end/member/memUpdate.jsp" id="to_position">個人資料與修改</a>
 <%--                     	<ul class="dropdown"> --%>
 <%--                             <li><a href="<%=request.getContextPath() %>/front-customer-end/member/memLogin.jsp">會員登入</a></li> --%>
 <%--                             <li><a href="<%=request.getContextPath() %>/front-customer-end/member/memLogin.jsp">會員註冊</a></li> --%>

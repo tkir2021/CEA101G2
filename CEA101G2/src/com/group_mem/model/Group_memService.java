@@ -7,7 +7,8 @@ public class Group_memService {
 	private Group_memDAO_interface dao;
 	
 	public Group_memService() {
-		dao = new Group_memJDBCDAO();
+//		dao = new Group_memJDBCDAO();
+		dao = new Group_memDAO();
 	}
 	
 	public Group_memVO addGroup_mem(String group_no, String mem_no) {

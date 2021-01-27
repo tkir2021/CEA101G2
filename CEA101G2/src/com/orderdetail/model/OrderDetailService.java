@@ -8,7 +8,8 @@ public class OrderDetailService {
 	private OrderDetailDAO_interface dao;
 	
 	public OrderDetailService() {
-		dao = new OrderDetailJDBCDAO();
+//		dao = new OrderDetailJDBCDAO();
+		dao = new OrderDetailDAO();
 	}
 	
 	public OrderDetailVO addOrderDetail(String order_no, String food_no, String food_scale, 

@@ -37,9 +37,9 @@
                     </div>
                     <div class="delbtn">
                        <form name="deleteForm" action="<%=request.getContextPath()%>/shopping/shopping.do" method="POST">
-                            <input type="hidden" name="store_no" value="null">
+                            <input type="hidden" name="store_no" value="<%=request.getParameter("store_no")%>">
                             <input type="hidden" name="action" value="DELETE">
-                            <input type="hidden" name="del" value="0">
+                            <input type="hidden" name="del" value="<%= index %>">
                             <input type="submit" value="刪 除" class="delbutton">
                         </form>
                     </div>

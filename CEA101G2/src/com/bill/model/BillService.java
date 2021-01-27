@@ -8,7 +8,8 @@ public class BillService {
 	private BillDAO_interface dao;
 	
 	public BillService() {
-		dao = new BillJDBCDAO();
+//		dao = new BillJDBCDAO();
+		dao = new BillDAO();
 	}
 	
 	public BillVO addBill(String store_no, Integer bill_price, Timestamp bill_date, String bill_period) {

@@ -86,7 +86,7 @@ Store_MemVO store_MemVO = storeSvc.getOneStore_Mem(store_no);
 
 <jsp:useBean id="storeSvc2" scope="page" class="com.store.model.Store_MemService" />
 
-<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/store/store.do" name="form1">
+<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/store/store.do" name="form1" enctype="multipart/form-data">
 <div id="big">
 <div><img id="displayImg" src="<%=request.getContextPath()%>/store/store.do?store_no=${storeSvc2.getOneStore_Mem(store_no).store_no}&action=getOneImage"></div>
 <div>
@@ -98,7 +98,7 @@ Store_MemVO store_MemVO = storeSvc.getOneStore_Mem(store_no);
 	</tr>
 	<tr>
 		<td>登入帳號:</td>
-		<td><input type="TEXT" name="store_acct" size="45" value="<%=store_MemVO.getStore_acct()%>" readonly="true" /></td>
+		<td><input type="TEXT" name="store_acct" size="45" style="border:none" value="<%=store_MemVO.getStore_acct()%>" readonly="true" /></td>
 	</tr>
 	<tr>
 		<td><b class="red">*</b>登入密碼:</td>
@@ -132,42 +132,46 @@ Store_MemVO store_MemVO = storeSvc.getOneStore_Mem(store_no);
 		<td><input type="TEXT" name="store_info" size="45" value="<%=store_MemVO.getStore_info()%>" /></td>
 	</tr>
 	
-	<tr>
-		<td>上架狀態:</td>
-		<td><input type="TEXT" name="upload_status" size="45" value="<%=store_MemVO.getUpload_status()%>" readonly="true" /></td>
-	</tr>
-	
-	<tr>
-		<td>平台權限狀態:</td>
-		<td><input type="TEXT" name="s_permission" size="45" value="<%=store_MemVO.getS_permission()%>" readonly="true" /></td>
-	</tr>
-	
-	<tr>
-		<td>累計檢舉評分:</td>
-		<td><input type="TEXT" name="sum_grade" size="45" value="<%=store_MemVO.getSum_grade()%>" readonly="true" /></td>
-	</tr>
-	
-	<tr>
-		<td>被檢舉次數:</td>
-		<td><input type="TEXT" name="blocked" size="45" value="<%=store_MemVO.getBlocked()%>" readonly="true" /></td>
-	</tr>
-	
-	<tr>
-		<td>評價總分:</td>
-		<td><input type="TEXT" name="star_total" size="45" value="<%=store_MemVO.getStar_total()%>" readonly="true" /></td>
-	</tr>
-	
-	<tr>
-		<td>總評價次數:</td>
-		<td><input type="TEXT" name="star_times" size="45" value="<%=store_MemVO.getStar_times()%>" readonly="true" /></td>
-	</tr>
-	
-	<tr>
+		<tr>
 		<td><b class="red">*</b>桌位上限:</td>
 		<td><input type="TEXT" name="table_limit" size="45" value="<%=store_MemVO.getTable_limit()%>" /></td>
 	</tr>
 	
-		
+	 <tr>
+  <td><b class="req"></b>圖片修改:</td>
+  <td> <input type="file"  autocomplete="off" name="rest_img"/></td>
+ </tr>
+	
+	<tr>
+		<td>上架狀態:</td>
+		<td><input type="TEXT" name="upload_status" size="45" style="border:none" value="<%=store_MemVO.getUpload_status()%>" readonly="true" /></td>
+	</tr>
+	
+	<tr>
+		<td>平台權限狀態:</td>
+		<td><input type="TEXT" name="s_permission" size="45"  style="border:none" value="<%=store_MemVO.getS_permission()%>" readonly="true" /></td>
+	</tr>
+	
+	<tr>
+		<td>累計檢舉評分:</td>
+		<td><input type="TEXT" name="sum_grade" size="45" style="border:none" value="<%=store_MemVO.getSum_grade()%>" readonly="true" /></td>
+	</tr>
+	
+	<tr>
+		<td>被檢舉次數:</td>
+		<td><input type="TEXT" name="blocked" size="45" style="border:none" value="<%=store_MemVO.getBlocked()%>" readonly="true" /></td>
+	</tr>
+	
+	<tr>
+		<td>評價總分:</td>
+		<td><input type="TEXT" name="star_total" size="45" style="border:none" value="<%=store_MemVO.getStar_total()%>" readonly="true" /></td>
+	</tr>
+	
+	<tr>
+		<td>總評價次數:</td>
+		<td><input type="TEXT" name="star_times" size="45" style="border:none" value="<%=store_MemVO.getStar_times()%>" readonly="true" /></td>
+	</tr>
+	
 	
 		
 		

@@ -21,9 +21,13 @@ public class Food_ListJDBCDAO implements Food_List_interface {
 	private static final String GET_ALL_STMT = "SELECT food_no,store_no,food_name,food_price,limit_,food_info,food_status,food_img FROM food_List order by food_no";
 	private static final String GET_ONE_STMT = "SELECT food_no,store_no,food_name,food_price,limit_,food_info,food_status,food_img FROM food_List where food_no = ?";
 	private static final String DELETE = "DELETE FROM food_List where food_no = ?";
-	private static final String UPDATE = "UPDATE food_List set store_no=?, food_name=?, food_price=?, limit_=?, food_info=?, food_status=? where food_no = ?";
+	private static final String UPDATE = "UPDATE food_List set store_no=?, food_name=?, food_price=?, limit_=?, food_info=?, food_status=?, food_img where food_no = ?";
 //	========================更新餐點上架狀態 by Mike========================
 	private static final String UPDATE_Food_Status = "UPDATE food_List set food_status=? where food_no = ?";
+//	========================ListAll餐點上架狀態order by審核與否 by Mike========================
+	private static final String GET_ALL_STMT2 = "SELECT food_no,store_no,food_name,food_price,limit_,food_info,food_status,food_img FROM food_List order by food_status, food_no desc";
+	
+	
 	/************************ 購物車：取得所有食物列表 by Sheng *************************/
 	private static final String GET_ALL_FOOD_STMT = "SELECT food_no,food_name,food_price,limit_,food_info,food_status,food_img FROM food_List where store_no = ? AND food_status = 1 ORDER BY food_name";
 	/************************ 購物車：取得所有食物列表 by Sheng *************************/
@@ -95,7 +99,8 @@ public class Food_ListJDBCDAO implements Food_List_interface {
 			pstmt.setInt(4, food_ListVO.getLimit_());
 			pstmt.setString(5, food_ListVO.getFood_info());
 			pstmt.setInt(6, food_ListVO.getFood_status());
-			pstmt.setString(7, food_ListVO.getFood_no());
+			pstmt.setBytes(7, food_ListVO.getFood_img());
+			pstmt.setString(8, food_ListVO.getFood_no());
 
 			pstmt.executeUpdate();
 
@@ -462,6 +467,69 @@ public class Food_ListJDBCDAO implements Food_List_interface {
 				}
 			}
 		}
+	}
+	
+//	========================ListAll餐點上架狀態order by審核與否 by Mike========================
+	@Override
+	public List<Food_ListVO> getAll2() {
+		List<Food_ListVO> list = new ArrayList<Food_ListVO>();
+		Food_ListVO food_ListVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ALL_STMT2);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				food_ListVO = new Food_ListVO();
+				food_ListVO.setFood_no(rs.getString("food_no"));
+				food_ListVO.setStore_no(rs.getString("store_no"));
+				food_ListVO.setFood_name(rs.getString("food_name"));
+				food_ListVO.setFood_price(rs.getInt("food_price"));
+				food_ListVO.setLimit_(rs.getInt("limit_"));
+				food_ListVO.setFood_info(rs.getString("food_info"));
+				food_ListVO.setFood_status(rs.getInt("food_status"));
+				food_ListVO.setFood_img(rs.getBytes("food_img"));
+				list.add(food_ListVO); // Store the row in the list
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
 	}
 
 	public static byte[] getPicture(String pic) throws IOException {

@@ -8,11 +8,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 public class S_openDAO implements S_openDAO_interface {
-	String driver = "oracle.jdbc.driver.OracleDriver";
-	String url = "jdbc:oracle:thin:@localhost:1521:XE";
-	String userid = "CEA101G2";
-	String passwd = "CEA101G2";
+
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/CEA101G2");
+		} catch (NamingException e) {
+		e.printStackTrace();
+		}
+	}
 
 	private static final String INSERT_STMT = "INSERT INTO STORE_OPEN(time_period,store_no)values(?,?)";
 //	private static final String UPDATE ="UPDATE STORE_OPEN SET time_period=? where STORE_NO = ?";
@@ -26,16 +37,14 @@ public class S_openDAO implements S_openDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 			pstmt.setString(1, openVO.getTimeperiod());
 			pstmt.setString(2, openVO.getStoreno());
 
 			pstmt.executeUpdate();
 			System.out.println("成功了");
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
@@ -61,19 +70,14 @@ public class S_openDAO implements S_openDAO_interface {
 		PreparedStatement pstmt = null;
 		
 		try {
-			Class.forName(driver);
-			con=DriverManager.getConnection(url,userid,passwd);
+			
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(DELETE);
 			
 			pstmt.setString(1,openVO.getStoreno());
 			pstmt.setString(2,openVO.getTimeperiod());
 			pstmt.executeUpdate();
 			
-			System.out.println("������");
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -106,8 +110,8 @@ public class S_openDAO implements S_openDAO_interface {
 		ResultSet rs = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 
@@ -118,9 +122,6 @@ public class S_openDAO implements S_openDAO_interface {
 				list.add(openVO);
 			}
 
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -157,8 +158,8 @@ public class S_openDAO implements S_openDAO_interface {
 //
 //		try {
 //
-//			Class.forName(driver);
-//			con = DriverManager.getConnection(url, userid, passwd);
+//			
+//			con = ds.getConnection();
 //			pstmt = con.prepareStatement(UPDATE);
 //			pstmt.setString(1, openVO.getTimeperiod());
 //			pstmt.setString(2, openVO.getStoreno());
@@ -200,8 +201,8 @@ public class S_openDAO implements S_openDAO_interface {
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 			pstmt.setString(1, storeno);
 			rs = pstmt.executeQuery();
@@ -212,9 +213,6 @@ public class S_openDAO implements S_openDAO_interface {
 				openVO.setTimeperiod(rs.getString("time_period"));
 				list2.add(openVO);
 			}
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
